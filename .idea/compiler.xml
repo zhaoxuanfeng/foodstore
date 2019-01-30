@@ -9,6 +9,7 @@
         <module name="foodstore_bussiness" />
         <module name="foodstore_controller" />
         <module name="foodstore_model" />
+        <module name="foodstore_service" />
         <module name="foodstore_web" />
       </profile>
     </annotationProcessing>
@@ -17,6 +18,7 @@
       <module name="foodstore_bussiness" target="1.7" />
       <module name="foodstore_controller" target="1.7" />
       <module name="foodstore_model" target="1.7" />
+      <module name="foodstore_service" target="1.7" />
       <module name="foodstore_web" target="1.7" />
     </bytecodeTargetLevel>
   </component>

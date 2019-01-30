@@ -627,7 +627,7 @@ $.fn.ajaxSubmit = function(options) {
                 doc.loadXML(s);
             }
             else {
-                doc = (new DOMParser()).parseFromString(s, 'text/xml');
+                doc = (new DOMParser()).parseFromString(s, 'text/mybatis');
             }
             return (doc && doc.documentElement && doc.documentElement.nodeName != 'parsererror') ? doc : null;
         };

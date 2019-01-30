@@ -1717,7 +1717,7 @@ Expr = Sizzle.selectors = {
 
 						start = [ forward ? parent.firstChild : parent.lastChild ];
 
-						// non-xml :nth-child(...) stores cache data on `parent`
+						// non-mybatis :nth-child(...) stores cache data on `parent`
 						if ( forward && useCache ) {
 							// Seek `elem` from a previously-cached index
 							outerCache = parent[ expando ] || (parent[ expando ] = {});
@@ -1742,7 +1742,7 @@ Expr = Sizzle.selectors = {
 						} else if ( useCache && (cache = (elem[ expando ] || (elem[ expando ] = {}))[ type ]) && cache[0] === dirruns ) {
 							diff = cache[1];
 
-						// xml :nth-child(...) or :nth-last-child(...) or :nth(-last)?-of-type(...)
+						// mybatis :nth-child(...) or :nth-last-child(...) or :nth(-last)?-of-type(...)
 						} else {
 							// Use the same loop as above to seek `elem` from the start
 							while ( (node = ++nodeIndex && node && node[ dir ] ||
@@ -1866,7 +1866,7 @@ Expr = Sizzle.selectors = {
 				do {
 					if ( (elemLang = documentIsHTML ?
 						elem.lang :
-						elem.getAttribute("xml:lang") || elem.getAttribute("lang")) ) {
+						elem.getAttribute("mybatis:lang") || elem.getAttribute("lang")) ) {
 
 						elemLang = elemLang.toLowerCase();
 						return elemLang === lang || elemLang.indexOf( lang + "-" ) === 0;
@@ -8552,7 +8552,7 @@ jQuery.parseJSON = function( data ) {
 };
 
 
-// Cross-browser xml parsing
+// Cross-browser mybatis parsing
 jQuery.parseXML = function( data ) {
 	var xml, tmp;
 	if ( !data || typeof data !== "string" ) {
@@ -8561,7 +8561,7 @@ jQuery.parseXML = function( data ) {
 	try {
 		if ( window.DOMParser ) { // Standard
 			tmp = new DOMParser();
-			xml = tmp.parseFromString( data, "text/xml" );
+			xml = tmp.parseFromString( data, "text/mybatis" );
 		} else { // IE
 			xml = new ActiveXObject( "Microsoft.XMLDOM" );
 			xml.async = "false";
@@ -8886,7 +8886,7 @@ jQuery.extend({
 			"*": allTypes,
 			text: "text/plain",
 			html: "text/html",
-			xml: "application/xml, text/xml",
+			xml: "application/mybatis, text/mybatis",
 			json: "application/json, text/javascript"
 		},
 
@@ -8915,7 +8915,7 @@ jQuery.extend({
 			// Evaluate text as a json expression
 			"text json": jQuery.parseJSON,
 
-			// Parse text as xml
+			// Parse text as mybatis
 			"text xml": jQuery.parseXML
 		},
 
