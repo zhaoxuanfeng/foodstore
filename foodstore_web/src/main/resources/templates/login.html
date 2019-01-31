@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header">
+</head>
+
+<body style="margin:0px;">
+	<div id="dlgLogin" class="easyui-window" title="登录" width="420px"  collapsible="false" minimizable="false" maximizable="false" closable="false" buttons="#dlgModifyPwdButtons" style="padding:10px;bottom:200px;" toolbar="#tb">
+		<form id="formLogin" method="post">
+			<input type="hidden" name="redirectUrl" id="redirectUrl" value="${redirectUrl}" />
+			<table align="center">
+				<tr>
+					<td>用户名：</td>
+					<td><input type="text" id="userName" name="userName" prompt="请输入管理员名" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入管理员名" validateOnCreate="false" validateOnBlur="true"/></td>
+				</tr>
+				<tr>
+					<td>密&nbsp;&nbsp;&nbsp;&nbsp;码：</td>
+					<td><input type="password" id="userPwd" name="userPwd" prompt="请输入密码" class="easyui-passwordbox easyui-validatebox" validType="length[8,16]" required="true" missingMessage="请输入密码" validateOnCreate="false" validateOnBlur="true"/></td>
+				</tr>
+				<tr>
+					<td>验证码：</td>
+					<td>
+						<img id="imgVerifyCode" src="" width="65px" height="25px" style="vertical-align:middle" onclick="refreshImg()"/>
+						<input type="text" id="verifyCode" name="verifyCode" prompt="请输入验证码" style="width:83px" validType="length[4,4]" deltaX="70" class="easyui-textbox easyui-validatebox" required="true" missingMessage="请输入验证码" validateOnCreate="false" validateOnBlur="true"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><input type="button" value="登录" onclick="login()" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+
+<footer th:replace="footer :: footer"></footer>
+
+<script type="text/javascript">
+	$(function(){
+		refreshImg();
+	});
+
+	function refreshImg() {
+		$("#imgVerifyCode").attr("src", "/htm/verifyCode.htm?v=" + Math.random());
+	}
+
+	function login()
+	{
+		if ($("#formLogin").form("validate")) {
+			$.messager.progress({
+				title: "登录中",
+				msg: "正在登录，请稍候..."
+			});
+
+			$.post("/htm/loginManageUser.htm", $("#formLogin").serialize(), function (data) {
+				if (data.status == true && data.message=="成功" ) {
+					window.location.href = "/htm/main.htm";
+				} else if(data.status == false){
+					$.messager.progress("close");
+
+					var message = "登录失败，请检查用户名或密码和验证码！";
+                    if (data.message != null) {
+                        message = data.message;
+                    }
+					$.messager.alert("信息", message, "error");
+					$("#imgVerifyCode").attr("src", "verifyCode.htm?v=" + Math.random());
+				}
+			}, "json");
+		}
+	}
+</script>
+
+</html>

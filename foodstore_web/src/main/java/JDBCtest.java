@@ -1,3 +1,6 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.*;
 
 /**
@@ -9,6 +12,7 @@ import java.sql.*;
 public class JDBCtest {
 
 
+    private static final Logger logger =   LoggerFactory.getLogger(JDBCtest.class);
     public  void  select() throws SQLException, ClassNotFoundException {
 
         Class.forName("com.mysql.jdbc.Driver");
@@ -19,7 +23,7 @@ public class JDBCtest {
         boolean result = preparedStatement.execute("select * from user_info ");
         System.out.println(result);
         conn.close();
-
+        logger.info("连接数据库成功。");
 
     }
 
