@@ -7,8 +7,10 @@ import cn.zxf.self.security.VerifyCode;
 import cn.zxf.self.utils.JsonModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,9 +28,10 @@ public class LoginController extends  BaseController{
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-
+    @Autowired
     private AccountInfoBussiness accountInfoBussiness;
 
+    @Autowired
     private UserInfoBussiness userInfoBussiness;
 
     /***
@@ -60,11 +63,12 @@ public class LoginController extends  BaseController{
         *@Return  cn.zxf.self.utils.JsonModel
      **/
     @RequestMapping(value = "/htm/loginManagerAccount.htm")
+    @ResponseBody
     public JsonModel loginManagerAccount(HttpServletRequest request ,HttpSession session){
         JsonModel jsonModel = new JsonModel();
+
         String accountName = request.getParameter("accountName");
         AccountInfo accountInfo = accountInfoBussiness.getAccountInfoByAccountName(accountName);
-
         String searchClientId = request.getParameter("searchClientId");
         if(accountInfo != null){
             session.setAttribute("accountInfo",accountInfo);

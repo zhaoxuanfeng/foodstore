@@ -1,6 +1,11 @@
 package cn.zxf.self.bussiness;
 
 import cn.zxf.self.entry.AccountInfo;
+import cn.zxf.self.entry.AccountInfoExample;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 
 /**
  * @ClassName AccountInfoBussiness
@@ -8,13 +13,23 @@ import cn.zxf.self.entry.AccountInfo;
  * @Author zxf
  * @DATE 2019/2/13
  */
+@Service
 public class AccountInfoBussiness extends BaseBussiness {
 
 
-    public AccountInfo getAccountInfoByAccountName(String accountName) {
-        AccountInfo accountInfo = new AccountInfo();
-
-        return  accountInfo;
+    public AccountInfo getAccountInfoByAccountName(final String accountName) {
+        AccountInfoExample  accountInfoExample = new AccountInfoExample();
+        accountInfoExample.createCriteria()
+                            .andAccountNameEqualTo(accountName)
+                            .andUseFlagEqualTo(1);
+        List<AccountInfo> accountInfoList = accountInfoMapper.selectByExample(accountInfoExample);
+        if (accountInfoList == null || accountInfoList.isEmpty()) {
+            System.out.println(1);
+            return null;
+        } else {
+            System.out.println(2);
+            return accountInfoList.get(0);
+        }
 
     }
 }
