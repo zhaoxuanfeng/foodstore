@@ -132,11 +132,7 @@
                         <fork>true</fork>
                     </configuration>
                 </plugin>
-
-                
             </plugins>
-
-
         <pluginManagement>
 
             <plugins>

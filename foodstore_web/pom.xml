@@ -30,11 +30,7 @@
 
     <dependencies>
         <!-- 引入其他模块 -->
-        <dependency>
-            <artifactId>foodstore_controller</artifactId>
-            <groupId>cn.zxf.self</groupId>
-            <version>${project.version}</version>
-        </dependency>
+
         <dependency>
             <artifactId>foodstore_model</artifactId>
             <groupId>cn.zxf.self</groupId>

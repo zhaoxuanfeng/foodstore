@@ -1,10 +1,12 @@
+package cn.zxf.self.test;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 
 /**
- * @ClassName JDBCtest
+ * @ClassName cn.zxf.self.test.JDBCtest
  * @Description TODO
  * @Author zxf
  * @DATE 2019/1/30

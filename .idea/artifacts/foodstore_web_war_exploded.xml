@@ -7,14 +7,14 @@
           <element id="module-output" name="foodstore_web" />
         </element>
         <element id="directory" name="lib">
-          <element id="archive" name="foodstore_controller-0.0.1-SNAPSHOT.jar">
-            <element id="module-output" name="foodstore_controller" />
-          </element>
           <element id="archive" name="foodstore_model-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="foodstore_model" />
           </element>
           <element id="archive" name="foodstore_bussiness-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="foodstore_bussiness" />
+          </element>
+          <element id="archive" name="foodstore_mapper-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="foodstore_mapper" />
           </element>
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter:2.0.8.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot:2.0.8.RELEASE" />
