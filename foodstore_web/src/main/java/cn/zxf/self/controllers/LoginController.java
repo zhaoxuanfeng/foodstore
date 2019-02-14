@@ -6,6 +6,7 @@ import cn.zxf.self.entry.AccountInfo;
 import cn.zxf.self.entry.UserInfo;
 import cn.zxf.self.security.VerifyCode;
 import cn.zxf.self.utils.JsonModel;
+import cn.zxf.self.utils.MD5Untils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * @ClassName LoginController
@@ -108,6 +111,7 @@ public class LoginController extends  BaseController{
     public String userSelf(HttpSession session){
         UserInfo userInfo = (UserInfo)session.getAttribute("userInfo");
         JsonModel jsonModel = new JsonModel();
+
         if(ObjectUtils.allNotNull(userInfo)){
             jsonModel.setStatus(true);
             jsonModel.setResult(userInfo);
@@ -122,6 +126,62 @@ public class LoginController extends  BaseController{
 
     }
 
+    /***
+        *@Description  //TODO  退出登录
+        *@Param [session, request, response]
+        *@Return  java.lang.String
+     **/
+    @RequestMapping("/htm/logout.htm")
+    public String logout(HttpSession session,HttpServletRequest request,HttpServletResponse response){
+        session.removeAttribute("accountInfo");
+        session.removeAttribute("userInfo");
+        session.invalidate();
+        Cookie[] cookies = request.getCookies();
+        for(Cookie cookie : cookies){
+                if("autologin".equals(cookie.getName())){
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
+        }
+        return "main";
+    }
 
+    /***
+        *@Description  //TODO  注册功能的实现
+        *@Param [accountInfo, userInfo]
+        *@Return  java.lang.String
+     **/
+    @RequestMapping("/htm/register.htm")
+    public String registerAccount(AccountInfo accountInfo,UserInfo userInfo){
+        boolean flag = false;
+        JsonModel jsonModel = new JsonModel();
+
+        accountInfo.setUseFlag(0);
+
+        try {
+            accountInfo.setAccountPassword(MD5Untils.getMD5Str(accountInfo.getAccountPassword()));
+            userInfo.setUserAccount(accountInfo.getAccountId().toString());
+            userInfo.setUserFlag(1);
+            accountInfoBussiness.setAccountInfoAndUserInfo(accountInfo,userInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(flag){
+            jsonModel.setStatus(true);
+            jsonModel.setMessage("注册账户"+accountInfo.getAccountName()+"成功");
+            logger.info("注册："+accountInfo.getAccountName());
+            jsonModel.setResult(accountInfo);
+            return "login";
+        }else {
+            jsonModel.setStatus(false);
+            jsonModel.setMessage("注册账户"+accountInfo.getAccountName()+"失败");
+            logger.info("注册失败："+accountInfo.getAccountName());
+            jsonModel.setResult(accountInfo);
+            return "register";
+        }
+
+
+    }
 
 }

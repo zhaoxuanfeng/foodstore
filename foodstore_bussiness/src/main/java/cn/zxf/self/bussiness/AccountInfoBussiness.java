@@ -2,7 +2,9 @@ package cn.zxf.self.bussiness;
 
 import cn.zxf.self.entry.AccountInfo;
 import cn.zxf.self.entry.AccountInfoExample;
+import cn.zxf.self.entry.UserInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +29,19 @@ public class AccountInfoBussiness extends BaseBussiness {
             return null;
         } else {
             return accountInfoList.get(0);
+        }
+
+    }
+
+    @Transactional
+    public boolean setAccountInfoAndUserInfo(final  AccountInfo accountInfo, final  UserInfo userInfo) {
+
+        int acc_count = accountInfoMapper.insert(accountInfo);
+        int user_count = userInfoMapper.insertSelective(userInfo);
+        if(1 == acc_count && 1 == user_count){
+            return true;
+        }else {
+            return false;
         }
 
     }
