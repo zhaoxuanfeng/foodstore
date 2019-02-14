@@ -3,8 +3,10 @@ package cn.zxf.self.controllers;
 import cn.zxf.self.bussiness.AccountInfoBussiness;
 import cn.zxf.self.bussiness.UserInfoBussiness;
 import cn.zxf.self.entry.AccountInfo;
+import cn.zxf.self.entry.UserInfo;
 import cn.zxf.self.security.VerifyCode;
 import cn.zxf.self.utils.JsonModel;
+import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +75,9 @@ public class LoginController extends  BaseController{
         if(accountInfo != null){
             session.setAttribute("accountInfo",accountInfo);
             session.setAttribute("searchClientId",searchClientId);
+            UserInfo userInfo = userInfoBussiness.getUserInfoByAccountInfo(accountInfo.getAccountId().toString());
+            logger.info("登录用户："+userInfo.getUserName()+",账户："+accountInfo.getAccountName());
+            session.setAttribute("userInfo",userInfo);
             jsonModel.setStatus(true);
             jsonModel.setMessage("成功");
             jsonModel.setResult(accountInfo);
@@ -92,6 +97,29 @@ public class LoginController extends  BaseController{
     @RequestMapping(value = "/htm/main.htm")
     public String userMain(HttpServletRequest request){
         return  "main";
+    }
+    
+    /***
+        *@Description  //TODO  跳转个人页面
+        *@Param [session]
+        *@Return  java.lang.String
+     **/
+    @RequestMapping(value = "/htm/self.htm")
+    public String userSelf(HttpSession session){
+        UserInfo userInfo = (UserInfo)session.getAttribute("userInfo");
+        JsonModel jsonModel = new JsonModel();
+        if(ObjectUtils.allNotNull(userInfo)){
+            jsonModel.setStatus(true);
+            jsonModel.setResult(userInfo);
+            jsonModel.setMessage("跳转个人页面");
+            return "self";
+        }else{
+            jsonModel.setStatus(false);
+            jsonModel.setMessage("未找到个人信息");
+            return "main";
+        }
+
+
     }
 
 

@@ -24,10 +24,8 @@ public class AccountInfoBussiness extends BaseBussiness {
                             .andUseFlagEqualTo(1);
         List<AccountInfo> accountInfoList = accountInfoMapper.selectByExample(accountInfoExample);
         if (accountInfoList == null || accountInfoList.isEmpty()) {
-            System.out.println(1);
             return null;
         } else {
-            System.out.println(2);
             return accountInfoList.get(0);
         }
 
