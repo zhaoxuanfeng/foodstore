@@ -8,10 +8,13 @@ import cn.zxf.self.security.VerifyCode;
 import cn.zxf.self.utils.JsonModel;
 import cn.zxf.self.utils.MD5Untils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -152,7 +155,7 @@ public class LoginController extends  BaseController{
         *@Return  java.lang.String
      **/
     @RequestMapping("/htm/register.htm")
-    public String registerAccount(AccountInfo accountInfo,UserInfo userInfo){
+    public String registerAccount( AccountInfo accountInfo, UserInfo userInfo){
         boolean flag = false;
         JsonModel jsonModel = new JsonModel();
 
@@ -179,6 +182,7 @@ public class LoginController extends  BaseController{
             logger.info("注册失败："+accountInfo.getAccountName());
             jsonModel.setResult(accountInfo);
             return "register";
+
         }
 
 

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace="header :: header">
+	</head>
+
+	<body class="easyui-layout">
+		<div data-options="region:'north'" style="height:500px;padding:15px;font-size: 15px;background-color: #E0ECFF">
+			<form id="register_form" method="post">
+				<table width="100%" border="0">
+					<tr>
+						<td>帐号：</td>
+						<td>
+							<input type="text" id="" name="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入管理员名" validateOnCreate="false" validateOnBlur="true" />
+						</td>
+					</tr>
+					<tr>
+						<td>密码：</td>
+						<td>
+							<input type="text" id="" name="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入管理员名" validateOnCreate="false" validateOnBlur="true" />
+						</td>
+					</tr>
+					<tr>
+						<td>用户名：</td>
+						<td>
+							<input type="text" id="" name="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入管理员名" validateOnCreate="false" validateOnBlur="true" />
+						</td>
+					</tr>
+					<tr>
+						<td>用户名：</td>
+						<td>
+							<input type="text" id="" name="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入管理员名" validateOnCreate="false" validateOnBlur="true" />
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>年龄：</p>
+						</td>
+						<input type="checkbox" id="" name="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[0,3]" iconWidth="28" required="false" missingMessage="请输入年龄" validateOnCreate="false" validateOnBlur="true" />
+					</tr>
+					<tr>
+						<td>性别：</td>
+						<td>
+							<input type="radio" name="" id="sex" value="男" class="">男</input>
+							<input type="radio" name="" id="sex" value="女" class="">女</input>
+						</td>
+					</tr>
+					<tr>
+						<td>地址：</td>
+						<td><input type="text" name="" id="" value="" class="easyui-textbox easyui-validatebox" validType="length[4,50]" iconWidth="28" required="false" missingMessage="请输入地址" validateOnCreate="false" validateOnBlur="true" /></td>
+					</tr>
+					<tr>
+						<td>电话：</td>
+						<input type="text" name="" id="" value="${}" class="easyui-textbox easyui-validatebox" validType="length[11,11]" iconWidth="28" required="false" missingMessage="请输入地址" validateOnCreate="false" validateOnBlur="true" />
+					</tr>
+					<tr>
+						<td><input type="button" name="" id="" value="提交" class="" onclick="" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+	</body>
+
+	<footer th:replace="footer :: footer"></footer>
+
+	<script type="text/javascript">
+		$(function() {
+
+		});
+
+		function submitForm() {
+			if($("#register_form").form("validate")) {
+				$.messager.progress({
+					title: "信息检测",
+					msg: "正在注册，请稍候..."
+				});
+
+				$.post("/htm/register.htm", $("register_form").serialize(), function(data) {
+					if(data.status == true && data.message == "成功") {
+						window.location.href = "/htm/main.htm";
+					} else if(data.status == false) {
+						$.messager.progress("close");
+
+						var message = "注册失败，请检查注册信息！";
+						if(data.message != null) {
+							message = data.message;
+						}
+						$.messager.alert("信息", message, "error");
+					}
+				}, "json");
+			}
+	</script>

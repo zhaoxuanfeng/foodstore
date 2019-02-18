@@ -7,10 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="foodstore_bussiness" />
-        <module name="foodstore_controller" />
         <module name="foodstore_mapper" />
         <module name="foodstore_model" />
-        <module name="foodstore_service" />
         <module name="foodstore_web" />
       </profile>
     </annotationProcessing>
