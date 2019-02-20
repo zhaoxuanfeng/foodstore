@@ -1,5 +1,6 @@
 package cn.zxf.self.mapper;
 
+
 import cn.zxf.self.entry.AccountInfo;
 import cn.zxf.self.entry.AccountInfoExample;
 import org.apache.ibatis.annotations.Mapper;

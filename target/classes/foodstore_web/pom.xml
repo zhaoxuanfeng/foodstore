@@ -48,6 +48,9 @@
 
     </dependencies>
     <build>
+        <resources>
+                    <resource><directory>src/main/resources</directory></resource>
+        </resources>
         <plugins>
             <plugin>
                 <!--Mybatis-generator插件,用于自动生成Mapper和POJO-->

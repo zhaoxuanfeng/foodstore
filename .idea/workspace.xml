@@ -1,14 +1,232 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/controllers/LoginController.java" line="76" />
+    <bookmark url="file://$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/controllers/LoginController.java" line="73" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cfff2c45-36f4-4fdc-a302-1a6f57be0b33" name="Default" comment="整理结构，整理jar包及版本">
-      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/foodstore_bussiness/target/classes/META-INF/foodstore_bussiness.kotlin_module" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/foodstore_web/target/classes/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/foodstore_web_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/foodstore_web_war_exploded.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/foodstore.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/foodstore.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_bussiness/foodstore_bussiness.iml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_bussiness/foodstore_bussiness.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/AccountInfoBussiness.java" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/AccountInfoBussiness.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/foodstore_mapper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_mapper/foodstore_mapper.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/AccountInfoMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageGroupMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageRoleFuncRelMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageRoleMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageSystemMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageUserMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageUserRoleRelMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/UserInfoMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/AccountInfoMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/ManageGroupMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/ManageRoleFuncRelMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/ManageRoleMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/ManageSystemMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/ManageUserMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/ManageUserRoleRelMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/UserInfoMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/AccountInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/AccountInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/ManageGroupMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/ManageGroupMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/ManageRoleFuncRelMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/ManageRoleFuncRelMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/ManageRoleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/ManageRoleMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/ManageSystemMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/ManageSystemMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/ManageUserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/ManageUserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/ManageUserRoleRelMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/ManageUserRoleRelMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/UserInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_mapper/target/classes/mapper/UserInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/foodstore_model.iml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_model/foodstore_model.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/AccountInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/AccountInfoExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageGroup.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageGroupExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageRole.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageRoleExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageRoleFuncRel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageRoleFuncRelExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageSystem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageSystemExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageUserExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageUserRoleRel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageUserRoleRelExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/UserInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/UserInfoExample.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_web/foodstore_web.iml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/foodstore_web.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/controllers/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_web/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_web/src/main/resources/mybatis/mybatis-generator-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/src/main/resources/mybatis/mybatis-generator-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_web/src/main/resources/templates/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/src/main/resources/templates/header.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/foodstore_web/src/main/resources/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/src/main/resources/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_web/src/main/resources/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/src/main/resources/templates/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_web/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_web/target/classes/mybatis/mybatis-generator-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/target/classes/mybatis/mybatis-generator-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_web/target/classes/templates/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/target/classes/templates/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_web/target/classes/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/target/classes/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/foodstore_web/target/classes/templates/userAccountMain.htm" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/target/classes/templates/userAccountMain.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/.idea/artifacts/foodstore_web_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/.idea/artifacts/foodstore_web_war_exploded.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/.idea/foodstore.iml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/.idea/foodstore.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/.idea/kotlinc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_bussiness/foodstore_bussiness.iml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_bussiness/foodstore_bussiness.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_controller/foodstore_controller.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_controller/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/foodstore_mapper.iml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/foodstore_mapper.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/AccountInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/AccountInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/ManageGroupMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/ManageGroupMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/ManageRoleFuncRelMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/ManageRoleFuncRelMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/ManageRoleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/ManageRoleMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/ManageSystemMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/ManageSystemMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/ManageUserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/ManageUserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/ManageUserRoleRelMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/ManageUserRoleRelMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/UserInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/src/main/resources/mapper/UserInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/AccountInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/AccountInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/ManageGroupMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/ManageGroupMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/ManageRoleFuncRelMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/ManageRoleFuncRelMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/ManageRoleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/ManageRoleMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/ManageSystemMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/ManageSystemMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/ManageUserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/ManageUserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/ManageUserRoleRelMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/ManageUserRoleRelMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/UserInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_mapper/target/classes/mapper/UserInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_model/foodstore_model.iml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_model/foodstore_model.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_service/foodstore_service.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/foodstore_web.iml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_web/foodstore_web.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_web/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/resources/mybatis/mybatis-generator-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/resources/mybatis/mybatis-generator-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/resources/templates/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/resources/templates/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/resources/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/resources/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/resources/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/resources/templates/userAccountMain.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/css/bootstrap-datetimepicker.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/css/bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/css/css.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/css/pager.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/css/reset.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/css/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/css/style1.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/ajaxfileupload.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/bootstrap-datetimepicker.fr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/bootstrap-datetimepicker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/bootstrap-datetimepicker.zh-CN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/bootstrap.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/common.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/echarts.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/fkjava_timer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-1.11.0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-1.11.3.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/easyloader.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/easyui-lang-zh_CN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/jquery.easyui.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/jquery.easyui.mobile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/accordion.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/calendar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/combo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/combobox.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/datagrid.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/datalist.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/datebox.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/dialog.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/easyui.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/filebox.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/accordion_arrows.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/blank.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/calendar_arrows.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/combo_arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/datagrid_icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/datebox_arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/layout_arrows.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/linkbutton_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/loading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/menu_arrows.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/messager_icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/pagination_icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/panel_tools.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/passwordbox_close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/passwordbox_open.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/searchbox_button.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/slider_handle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/spinner_arrows.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/tabs_icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/tree_icons.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/images/validatebox_warning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/layout.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/linkbutton.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/menu.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/menubutton.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/messager.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/numberbox.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/pagination.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/panel.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/passwordbox.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/progressbar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/propertygrid.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/searchbox.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/slider.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/spinner.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/splitbutton.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/switchbutton.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/tabs.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/textbox.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/tooltip.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/tree.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/validatebox.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/bootstrap/window.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/color.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icon.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/blank.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/cancel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/clear.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/cut.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/edit_add.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/edit_remove.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/filesave.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/filter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/help.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/large_chart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/large_clipart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/large_picture.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/large_shapes.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/large_smartart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/lock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/man.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/mini_add.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/mini_edit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/mini_refresh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/more.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/no.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/ok.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/pencil.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/print.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/redo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/reload.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/search.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/sum.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/tip.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/icons/undo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-easyui-1.5/themes/mobile.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery-migrate-1.2.1.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/jquery.form.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/src/main/webapp/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_web/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/target/classes/mybatis/mybatis-generator-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_web/target/classes/mybatis/mybatis-generator-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/target/classes/templates/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_web/target/classes/templates/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/target/classes/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_web/target/classes/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/target/classes/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/foodstore_web/target/classes/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/foodstore_web/target/classes/templates/userAccountMain.htm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pom.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/foodstore_web/target/" />
@@ -24,18 +242,85 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
+      <file leaf-file-name="AccountInfoMapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/AccountInfoMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ManageGroupMapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageGroupMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ManageRoleMapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageRoleMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="199">
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccountInfoMapper.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/AccountInfoMapper.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2631">
+              <caret line="144" column="8" lean-forward="true" selection-start-line="144" selection-start-column="8" selection-end-line="144" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AccountInfoBussiness.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/AccountInfoBussiness.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="203">
+              <caret line="39" column="60" selection-start-line="39" selection-start-column="60" selection-end-line="39" selection-end-column="60" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="LoginController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/controllers/LoginController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="184" selection-start-line="184" selection-end-line="184" />
+            <state relative-caret-position="151">
+              <caret line="156" column="22" selection-start-line="156" selection-start-column="22" selection-end-line="156" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;class#LoginController#0" />
                 <element signature="docComment;method#login#0;class#LoginController#0" />
-                <element signature="method#login#0;class#LoginController#0" />
                 <element signature="docComment;method#verifyCode#0;class#LoginController#0" />
                 <element signature="method#verifyCode#0;class#LoginController#0" />
                 <element signature="docComment;method#loginManagerAccount#0;class#LoginController#0" />
@@ -45,70 +330,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SqlSessionFactoryBuilder.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/mybatis/mybatis/3.4.5/mybatis-3.4.5.jar!/org/apache/ibatis/session/SqlSessionFactoryBuilder.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SqlSessionFactory.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/mybatis/mybatis/3.4.5/mybatis-3.4.5.jar!/org/apache/ibatis/session/SqlSessionFactory.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="6" column="22" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="userAccountMain.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/userAccountMain.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1250">
-              <caret line="50" selection-start-line="50" selection-end-line="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/login.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1300">
-              <caret line="52" column="14" selection-start-line="52" selection-start-column="14" selection-end-line="52" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/main.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="register.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/register.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1950">
-              <caret line="78" column="37" selection-start-line="78" selection-start-column="37" selection-end-line="78" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="UserInfoBussiness.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/UserInfoBussiness.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="550">
-              <caret line="26" column="36" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
+            <state relative-caret-position="-22">
+              <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AccountInfoBussiness.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/AccountInfoBussiness.java">
+      <file leaf-file-name="ManageUserMapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageUserMapper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="42" column="15" selection-start-line="42" selection-start-column="15" selection-end-line="42" selection-end-column="15" />
+            <state relative-caret-position="100">
+              <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ManageUserRoleRelMapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageUserRoleRelMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="100">
+              <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserInfoMapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/UserInfoMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="100">
+              <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -133,8 +386,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/UserInfoMapper.java" />
-        <option value="$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/ManageSystemMapper.java" />
         <option value="$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/ManageRoleFuncRelMapper.java" />
         <option value="$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/ManageGroupMapper.java" />
         <option value="$PROJECT_DIR$/foodstore_service/pom.xml" />
@@ -150,24 +401,13 @@
         <option value="$PROJECT_DIR$/foodstore_web/src/test/java/cn/zxf/self/test/JDBCtest.java" />
         <option value="$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/utils/JsonModel.java" />
         <option value="$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/security/VerifyCode.java" />
-        <option value="$PROJECT_DIR$/foodstore_web/pom.xml" />
         <option value="$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/BaseBussiness.java" />
         <option value="$PROJECT_DIR$/foodstore_mapper/pom.xml" />
         <option value="$PROJECT_DIR$/foodstore_bussiness/pom.xml" />
         <option value="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageUserExample.java" />
         <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageSystemExample.java" />
-        <option value="$PROJECT_DIR$/foodstore_web/src/main/resources/mybatis/mybatis-generator-config.xml" />
         <option value="$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageRoleExample.java" />
-        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageRoleFuncRelMapper.java" />
-        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageRoleMapper.java" />
-        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageSystemMapper.java" />
-        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageUserMapper.java" />
-        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageGroupMapper.java" />
-        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/AccountInfoMapper.java" />
-        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageUserRoleRelMapper.java" />
-        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/UserInfoMapper.java" />
         <option value="$PROJECT_DIR$/foodstore_web/src/main/resources/mybatis/mapper/AccountInfoMapper.xml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/foodstore_web/src/main/resources/mybatis/mybatis-config.xml" />
         <option value="$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/ManageGroupMapper.xml" />
         <option value="$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/ManageRoleFuncRelMapper.xml" />
@@ -178,11 +418,24 @@
         <option value="$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/AccountInfoMapper.xml" />
         <option value="$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/UserInfoMapper.xml" />
         <option value="$PROJECT_DIR$/foodstore_web/src/main/resources/templates/login.html" />
-        <option value="$PROJECT_DIR$/foodstore_web/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/utils/MD5Untils.java" />
+        <option value="$PROJECT_DIR$/foodstore_web/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/foodstore_web/src/main/resources/templates/header.html" />
+        <option value="$PROJECT_DIR$/foodstore_web/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/foodstore_web/src/main/resources/templates/main.html" />
+        <option value="$PROJECT_DIR$/foodstore_web/src/main/resources/templates/register.html" />
+        <option value="$PROJECT_DIR$/foodstore_web/src/main/resources/mybatis/mybatis-generator-config.xml" />
+        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/UserInfoMapper.java" />
+        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageRoleFuncRelMapper.java" />
+        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageSystemMapper.java" />
+        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageUserMapper.java" />
+        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageUserRoleRelMapper.java" />
+        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/AccountInfoMapper.java" />
+        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageGroupMapper.java" />
+        <option value="$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageRoleMapper.java" />
         <option value="$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/UserInfoBussiness.java" />
         <option value="$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/AccountInfoBussiness.java" />
-        <option value="$PROJECT_DIR$/foodstore_web/src/main/resources/templates/register.html" />
         <option value="$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/controllers/LoginController.java" />
       </list>
     </option>
@@ -226,8 +479,8 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="28" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="34" />
     <option name="width" value="1346" />
     <option name="height" value="688" />
   </component>
@@ -239,15 +492,119 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
               <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_bussiness" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_bussiness" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_bussiness" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_bussiness" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_bussiness" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="bussiness" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_mapper" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mapper" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_model" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_model" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
+              <item name="foodstore" type="462c0819:PsiDirectoryNode" />
+              <item name="foodstore_model" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
@@ -309,7 +666,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
+              <item name="mybatis" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="foodstore" type="b2602c69:ProjectViewProjectNode" />
@@ -338,22 +695,23 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\sourceTreeWork\foodstore\foodstore_mapper\src\main\resources" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="cn.zxf.self.mapper" />
-      <recent name="cn.zxf.self.entry" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\sourceTreeWork\foodstore\foodstore_mapper\src\main\java\cn\zxf\self\mapper" />
       <recent name="E:\sourceTreeWork\foodstore\foodstore_web\src\main\java\mapper" />
       <recent name="E:\sourceTreeWork\foodstore\foodstore_model\src\main\java\cn\zxf\self\entry" />
       <recent name="E:\sourceTreeWork\foodstore\foodstore_web\src\main\java\cn\zxf\self" />
       <recent name="E:\sourceTreeWork\foodstore\foodstore_web\src\main\java\cn\zxf\self\utils" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cn.zxf.self.mapper" />
+      <recent name="cn.zxf.self.entry" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\sourceTreeWork\foodstore\foodstore_mapper\src\main\resources\mapper" />
+      <recent name="E:\sourceTreeWork\foodstore\foodstore_mapper\src\main\resources" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -579,6 +937,10 @@
       <workItem from="1550201030951" duration="1100000" />
       <workItem from="1550214791872" duration="71000" />
       <workItem from="1550215096801" duration="26000" />
+      <workItem from="1550470691694" duration="2973000" />
+      <workItem from="1550477258348" duration="2586000" />
+      <workItem from="1550648920598" duration="980000" />
+      <workItem from="1550652756520" duration="4503000" />
     </task>
     <task id="LOCAL-00001" summary="基本架构完成">
       <created>1548815720976</created>
@@ -596,7 +958,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41535000" />
+    <option name="totallyTimeSpent" value="52577000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -608,42 +970,79 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="34" y="0" width="1346" height="688" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="right" id="Maven Projects" order="10" weight="0.73827535" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5007776" side_tool="true" weight="0.3295238" />
+      <window_info anchor="right" id="Maven Projects" order="10" weight="0.7379471" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info id="Capture Tool" order="7" />
       <window_info id="Designer" order="2" />
-      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="right" id="Database" order="5" weight="0.32970452" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.2496112" />
       <window_info id="UI Designer" order="4" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.40103272" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32874355" />
+      <window_info anchor="bottom" id="Messages" order="12" visible="true" weight="0.32761905" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info id="Image Layers" order="3" />
       <window_info anchor="bottom" id="Java Enterprise" order="13" weight="0.32874355" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32874355" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.2030981" />
-      <window_info anchor="bottom" id="Spring" order="9" weight="0.32874355" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32874355" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26626325" />
-      <window_info anchor="right" id="Bean Validation" order="9" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4992224" weight="0.26285714" />
+      <window_info anchor="bottom" id="Spring" order="9" weight="0.32761905" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32761905" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20917574" />
+      <window_info anchor="bottom" id="Problems" />
+      <window_info anchor="right" id="Bean Validation" order="9" weight="0.32970452" />
       <window_info id="Web" order="6" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32874355" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Module Dependencies" order="8" weight="0.32980332" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Module Dependencies" order="8" weight="0.32980332" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32874355" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Designer" order="2" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Spring" order="9" weight="0.32761905" />
+      <window_info id="Image Layers" order="3" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4992224" visible="true" weight="0.3295238" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32761905" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5007776" side_tool="true" weight="0.3295238" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.32874355" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32874355" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Java Enterprise" order="13" weight="0.32874355" />
+      <window_info anchor="right" id="Module Dependencies" order="8" weight="0.32980332" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32874355" />
+      <window_info anchor="right" id="Maven Projects" order="10" weight="0.73827535" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2029549" />
+      <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info id="Web" order="6" side_tool="true" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Theme Preview" order="7" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32874355" />
+      <window_info anchor="right" id="Bean Validation" order="9" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.40103272" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -689,182 +1088,11 @@
       </configuration>
     </watches-manager>
   </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/ManageRoleMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-83">
-          <caret line="274" column="66" selection-start-line="274" selection-start-column="66" selection-end-line="274" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/ManageRoleFuncRelMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-83">
-          <caret line="275" column="66" selection-start-line="275" selection-start-column="66" selection-end-line="275" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/ManageGroupMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-108">
-          <caret line="288" column="66" selection-start-line="288" selection-start-column="66" selection-end-line="288" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/mybatis/mybatis-generator-config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1100">
-          <caret line="44" column="37" selection-start-line="44" selection-start-column="37" selection-end-line="44" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/UserInfoMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="3" column="45" selection-start-line="3" selection-start-column="45" selection-end-line="3" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-expression/5.0.12.RELEASE/spring-expression-5.0.12.RELEASE.jar!/org/springframework/expression/spel/ast/SpelNodeImpl.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="56" selection-start-line="56" selection-end-line="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.0.12.RELEASE/spring-web-5.0.12.RELEASE.jar!/org/springframework/web/context/request/AbstractRequestAttributes.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="12" column="36" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/BaseBussiness.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/thymeleaf/thymeleaf-spring5/3.0.11.RELEASE/thymeleaf-spring5-3.0.11.RELEASE.jar!/org/thymeleaf/spring5/view/ThymeleafView.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/8.5.37/tomcat-embed-core-8.5.37.jar!/org/apache/catalina/connector/Request.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="164" column="65" selection-start-line="164" selection-start-column="65" selection-end-line="164" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/8.5.37/tomcat-embed-core-8.5.37.jar!/org/apache/catalina/connector/RequestFacade.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="30" column="65" selection-start-line="30" selection-start-column="65" selection-end-line="30" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/AccountInfoExample.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
-          <caret line="119" selection-start-line="119" selection-end-line="119" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mybatis/mybatis/3.4.5/mybatis-3.4.5.jar!/org/apache/ibatis/binding/MapperProxy.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="14" column="145" selection-start-line="14" selection-start-column="145" selection-end-line="14" selection-end-column="145" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.0.12.RELEASE/spring-web-5.0.12.RELEASE.jar!/org/springframework/web/method/support/InvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="25" column="283" selection-start-line="25" selection-start-column="283" selection-end-line="25" selection-end-column="283" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.12.RELEASE/spring-webmvc-5.0.12.RELEASE.jar!/org/springframework/web/servlet/mvc/method/annotation/ServletInvocableHandlerMethod.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="17" column="239" selection-start-line="17" selection-start-column="239" selection-end-line="17" selection-end-column="239" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.12.RELEASE/spring-webmvc-5.0.12.RELEASE.jar!/org/springframework/web/servlet/mvc/method/annotation/RequestMappingHandlerAdapter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="137" column="258" selection-start-line="137" selection-start-column="258" selection-end-line="137" selection-end-column="258" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.12.RELEASE/spring-webmvc-5.0.12.RELEASE.jar!/org/springframework/web/servlet/mvc/method/AbstractHandlerMethodAdapter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="20" column="219" selection-start-line="20" selection-start-column="219" selection-end-line="20" selection-end-column="219" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.12.RELEASE/spring-webmvc-5.0.12.RELEASE.jar!/org/springframework/web/servlet/DispatcherServlet.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="107" column="153" selection-start-line="107" selection-start-column="153" selection-end-line="107" selection-end-column="153" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/5.0.12.RELEASE/spring-webmvc-5.0.12.RELEASE.jar!/org/springframework/web/servlet/FrameworkServlet.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="125" column="196" selection-start-line="125" selection-start-column="196" selection-end-line="125" selection-end-column="196" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.0.12.RELEASE/spring-web-5.0.12.RELEASE.jar!/org/springframework/web/filter/RequestContextFilter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="17" column="231" selection-start-line="17" selection-start-column="231" selection-end-line="17" selection-end-column="231" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/5.0.12.RELEASE/spring-web-5.0.12.RELEASE.jar!/org/springframework/web/filter/OncePerRequestFilter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="11" column="208" selection-start-line="11" selection-start-column="208" selection-end-line="11" selection-end-column="208" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/8.5.37/tomcat-embed-core-8.5.37.jar!/org/apache/catalina/core/ApplicationFilterChain.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="23" column="172" selection-start-line="23" selection-start-column="172" selection-end-line="23" selection-end-column="172" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/8.5.37/tomcat-embed-core-8.5.37.jar!/org/apache/catalina/core/StandardWrapperValve.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="16" column="185" selection-start-line="16" selection-start-column="185" selection-end-line="16" selection-end-column="185" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/8.5.37/tomcat-embed-core-8.5.37.jar!/org/apache/catalina/core/StandardContextValve.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="11" column="185" selection-start-line="11" selection-start-column="185" selection-end-line="11" selection-end-column="185" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/8.5.37/tomcat-embed-core-8.5.37.jar!/org/apache/catalina/core/StandardHostValve.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="15" column="185" selection-start-line="15" selection-start-column="185" selection-end-line="15" selection-end-column="185" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/apache/tomcat/embed/tomcat-embed-core/8.5.37/tomcat-embed-core-8.5.37.jar!/org/apache/catalina/valves/ErrorReportValve.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="107">
@@ -959,52 +1187,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_web/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="65">
-          <caret line="31" column="23" lean-forward="true" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/AccountInfoMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-120">
-          <caret line="139" column="24" lean-forward="true" selection-start-line="139" selection-start-column="24" selection-end-line="139" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/AccountInfoMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="49" column="17" selection-start-line="49" selection-start-column="17" selection-end-line="49" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/utils/MD5Untils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="431">
           <caret line="27" column="1" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/UserInfoBussiness.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="26" column="36" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/AccountInfoBussiness.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="42" column="15" selection-start-line="42" selection-start-column="15" selection-end-line="42" selection-end-column="15" />
         </state>
       </provider>
     </entry>
@@ -1017,23 +1203,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1250">
           <caret line="50" selection-start-line="50" selection-end-line="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1300">
-          <caret line="52" column="14" selection-start-line="52" selection-start-column="14" selection-end-line="52" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/main.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1950">
-          <caret line="78" column="37" selection-start-line="78" selection-start-column="37" selection-end-line="78" selection-end-column="37" />
         </state>
       </provider>
     </entry>
@@ -1051,15 +1220,262 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/logs" />
+    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/manageRole.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="625">
+          <caret line="25" column="45" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_web/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1275">
+          <caret line="51" column="59" selection-start-line="51" selection-start-column="59" selection-end-line="51" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/info.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1749">
+          <caret line="1647" column="75" selection-start-line="1647" selection-start-column="75" selection-end-line="1647" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="162" column="7" lean-forward="true" selection-start-line="162" selection-start-column="7" selection-end-line="162" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#iframe#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/platformChargeRecord.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="61" column="49" selection-start-line="61" selection-start-column="49" selection-end-line="61" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/register.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+          <folding>
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#1;n#tr#4;n#table#0;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/templates/userMain.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="24" column="12" selection-start-line="24" selection-start-column="12" selection-end-line="24" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/resources/mybatis/mybatis-generator-config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="37" column="93" selection-start-line="37" selection-start-column="93" selection-end-line="37" selection-end-column="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/AccountInfoExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageGroup.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageGroupExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageRole.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageRoleExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageRoleFuncRel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageRoleFuncRelExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageSystem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/ManageSystemExample.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_model/src/main/java/cn/zxf/self/entry/AccountInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageRoleFuncRelMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageSystemMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageUserMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageUserRoleRelMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/UserInfoMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/AccountInfoMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageGroupMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/java/cn/zxf/self/mapper/ManageRoleMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_mapper/src/main/resources/mapper/AccountInfoMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2631">
+          <caret line="144" column="8" lean-forward="true" selection-start-line="144" selection-start-column="8" selection-end-line="144" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/UserInfoBussiness.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-22">
+          <caret line="17" column="17" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/foodstore_bussiness/src/main/java/cn/zxf/self/bussiness/AccountInfoBussiness.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="39" column="60" selection-start-line="39" selection-start-column="60" selection-end-line="39" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/controllers/LoginController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="184" selection-start-line="184" selection-end-line="184" />
+        <state relative-caret-position="151">
+          <caret line="156" column="22" selection-start-line="156" selection-start-column="22" selection-end-line="156" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;class#LoginController#0" />
             <element signature="docComment;method#login#0;class#LoginController#0" />
-            <element signature="method#login#0;class#LoginController#0" />
             <element signature="docComment;method#verifyCode#0;class#LoginController#0" />
             <element signature="method#verifyCode#0;class#LoginController#0" />
             <element signature="docComment;method#loginManagerAccount#0;class#LoginController#0" />

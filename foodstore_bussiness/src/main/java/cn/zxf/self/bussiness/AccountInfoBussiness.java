@@ -20,7 +20,7 @@ public class AccountInfoBussiness extends BaseBussiness {
 
 
     public AccountInfo getAccountInfoByAccountName(final String accountName) {
-        AccountInfoExample  accountInfoExample = new AccountInfoExample();
+        AccountInfoExample accountInfoExample = new AccountInfoExample();
         accountInfoExample.createCriteria()
                             .andAccountNameEqualTo(accountName)
                             .andUseFlagEqualTo(1);
@@ -34,7 +34,7 @@ public class AccountInfoBussiness extends BaseBussiness {
     }
 
     @Transactional
-    public boolean setAccountInfoAndUserInfo(final  AccountInfo accountInfo, final  UserInfo userInfo) {
+    public boolean setAccountInfoAndUserInfo(final  AccountInfo accountInfo, final UserInfo userInfo) {
 
         int acc_count = accountInfoMapper.insert(accountInfo);
         int user_count = userInfoMapper.insertSelective(userInfo);

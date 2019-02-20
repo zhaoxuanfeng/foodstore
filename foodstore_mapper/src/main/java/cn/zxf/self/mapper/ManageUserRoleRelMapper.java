@@ -1,10 +1,12 @@
 package cn.zxf.self.mapper;
 
+import java.util.List;
+
 import cn.zxf.self.entry.ManageUserRoleRel;
 import cn.zxf.self.entry.ManageUserRoleRelExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Mapper
 public interface ManageUserRoleRelMapper {

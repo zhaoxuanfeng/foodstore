@@ -10,11 +10,11 @@
 			<table align="center">
 				<tr>
 					<td>用户名：</td>
-					<td><input type="text" id="userName" name="accountName" prompt="请输入管理员名" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入管理员名" validateOnCreate="false" validateOnBlur="true"/></td>
+					<td><input type="text" id="accountName" name="accountName" prompt="请输入管理员名" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入管理员名" validateOnCreate="false" validateOnBlur="true"/></td>
 				</tr>
 				<tr>
 					<td>密&nbsp;&nbsp;&nbsp;&nbsp;码：</td>
-					<td><input type="password" id="userPwd" name="accountPassword" prompt="请输入密码" class="easyui-passwordbox easyui-validatebox" validType="length[8,16]" required="true" missingMessage="请输入密码" validateOnCreate="false" validateOnBlur="true"/></td>
+					<td><input type="password" id="accountPassword" name="accountPassword" prompt="请输入密码" class="easyui-passwordbox easyui-validatebox" validType="length[8,16]" required="true" missingMessage="请输入密码" validateOnCreate="false" validateOnBlur="true"/></td>
 				</tr>
 				<tr>
 					<td>验证码：</td>
@@ -50,7 +50,7 @@
 				msg: "正在登录，请稍候..."
 			});
 
-			$.post("/htm/loginManageUser.htm", $("#formLogin").serialize(), function (data) {
+			$.post("/htm/loginManagerAccount.htm", $("#formLogin").serialize(), function (data) {
 				if (data.status == true && data.message=="成功" ) {
 					window.location.href = "/htm/main.htm";
 				} else if(data.status == false){

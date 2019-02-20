@@ -8,22 +8,17 @@ import cn.zxf.self.security.VerifyCode;
 import cn.zxf.self.utils.JsonModel;
 import cn.zxf.self.utils.MD5Untils;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.UUID;
 
 /**
  * @ClassName LoginController
@@ -51,6 +46,8 @@ public class LoginController extends  BaseController{
     public String  login(HttpSession session, HttpServletRequest request, HttpServletResponse response){
         return "login";
     }
+    @RequestMapping(value="/htm/register.htm")
+    public String registerUser(HttpSession session,HttpServletRequest request,HttpServletResponse response){return "register";}
 
     
     /***
@@ -58,7 +55,7 @@ public class LoginController extends  BaseController{
         *@Param [session, request, response]
         *@Return  void
      **/
-    @RequestMapping(value = "/htm/verifyCode.htm")
+    @RequestMapping(value="/htm/verifyCode.htm")
     public void verifyCode(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("image/png");
         String verifyCode = VerifyCode.outputVerifyImage(65,25,response.getOutputStream());
@@ -70,9 +67,9 @@ public class LoginController extends  BaseController{
         *@Param [request, session]
         *@Return  cn.zxf.self.utils.JsonModel
      **/
-    @RequestMapping(value = "/htm/loginManagerAccount.htm")
+    @RequestMapping(value="/htm/loginManagerAccount.htm")
     @ResponseBody
-    public JsonModel loginManagerAccount(HttpServletRequest request ,HttpSession session){
+    public JsonModel loginManagerAccount(HttpServletRequest request ,HttpSession session,HttpServletResponse response){
         JsonModel jsonModel = new JsonModel();
 
         String accountName = request.getParameter("accountName");
@@ -100,8 +97,8 @@ public class LoginController extends  BaseController{
         *@Param [request]
         *@Return  java.lang.String
      **/
-    @RequestMapping(value = "/htm/main.htm")
-    public String userMain(HttpServletRequest request){
+    @RequestMapping(value="/htm/main.htm")
+    public String userMain(HttpServletRequest request,HttpServletResponse response,HttpSession session){
         return  "main";
     }
     
@@ -110,7 +107,7 @@ public class LoginController extends  BaseController{
         *@Param [session]
         *@Return  java.lang.String
      **/
-    @RequestMapping(value = "/htm/self.htm")
+    @RequestMapping(value="/htm/self.htm")
     public String userSelf(HttpSession session){
         UserInfo userInfo = (UserInfo)session.getAttribute("userInfo");
         JsonModel jsonModel = new JsonModel();
@@ -134,7 +131,7 @@ public class LoginController extends  BaseController{
         *@Param [session, request, response]
         *@Return  java.lang.String
      **/
-    @RequestMapping("/htm/logout.htm")
+    @RequestMapping(value="/htm/logout.htm")
     public String logout(HttpSession session,HttpServletRequest request,HttpServletResponse response){
         session.removeAttribute("accountInfo");
         session.removeAttribute("userInfo");
@@ -154,8 +151,8 @@ public class LoginController extends  BaseController{
         *@Param [accountInfo, userInfo]
         *@Return  java.lang.String
      **/
-    @RequestMapping("/htm/register.htm")
-    public String registerAccount( AccountInfo accountInfo, UserInfo userInfo){
+    @RequestMapping(value="/htm/registerUser.htm")
+    public String registerAccount(AccountInfo accountInfo, UserInfo userInfo){
         boolean flag = false;
         JsonModel jsonModel = new JsonModel();
 

@@ -1,6 +1,8 @@
 package cn.zxf.self.entry;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 public class UserInfoExample {
@@ -194,6 +196,32 @@ public class UserInfoExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
+        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Date(value.getTime()), property);
+        }
+
+        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
+            if (values == null || values.size() == 0) {
+                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
+            }
+            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
+            Iterator<Date> iter = values.iterator();
+            while (iter.hasNext()) {
+                dateList.add(new java.sql.Date(iter.next().getTime()));
+            }
+            addCriterion(condition, dateList, property);
+        }
+
+        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
+            if (value1 == null || value2 == null) {
+                throw new RuntimeException("Between values for " + property + " cannot be null");
+            }
+            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
+        }
+
         public Criteria andUserIdIsNull() {
             addCriterion("user_id is null");
             return (Criteria) this;
@@ -324,63 +352,63 @@ public class UserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andUserAgeIsNull() {
-            addCriterion("user_age is null");
+        public Criteria andUserBirthdayIsNull() {
+            addCriterion("user_birthday is null");
             return (Criteria) this;
         }
 
-        public Criteria andUserAgeIsNotNull() {
-            addCriterion("user_age is not null");
+        public Criteria andUserBirthdayIsNotNull() {
+            addCriterion("user_birthday is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUserAgeEqualTo(Integer value) {
-            addCriterion("user_age =", value, "userAge");
+        public Criteria andUserBirthdayEqualTo(Date value) {
+            addCriterionForJDBCDate("user_birthday =", value, "userBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andUserAgeNotEqualTo(Integer value) {
-            addCriterion("user_age <>", value, "userAge");
+        public Criteria andUserBirthdayNotEqualTo(Date value) {
+            addCriterionForJDBCDate("user_birthday <>", value, "userBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andUserAgeGreaterThan(Integer value) {
-            addCriterion("user_age >", value, "userAge");
+        public Criteria andUserBirthdayGreaterThan(Date value) {
+            addCriterionForJDBCDate("user_birthday >", value, "userBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andUserAgeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("user_age >=", value, "userAge");
+        public Criteria andUserBirthdayGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("user_birthday >=", value, "userBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andUserAgeLessThan(Integer value) {
-            addCriterion("user_age <", value, "userAge");
+        public Criteria andUserBirthdayLessThan(Date value) {
+            addCriterionForJDBCDate("user_birthday <", value, "userBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andUserAgeLessThanOrEqualTo(Integer value) {
-            addCriterion("user_age <=", value, "userAge");
+        public Criteria andUserBirthdayLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("user_birthday <=", value, "userBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andUserAgeIn(List<Integer> values) {
-            addCriterion("user_age in", values, "userAge");
+        public Criteria andUserBirthdayIn(List<Date> values) {
+            addCriterionForJDBCDate("user_birthday in", values, "userBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andUserAgeNotIn(List<Integer> values) {
-            addCriterion("user_age not in", values, "userAge");
+        public Criteria andUserBirthdayNotIn(List<Date> values) {
+            addCriterionForJDBCDate("user_birthday not in", values, "userBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andUserAgeBetween(Integer value1, Integer value2) {
-            addCriterion("user_age between", value1, value2, "userAge");
+        public Criteria andUserBirthdayBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("user_birthday between", value1, value2, "userBirthday");
             return (Criteria) this;
         }
 
-        public Criteria andUserAgeNotBetween(Integer value1, Integer value2) {
-            addCriterion("user_age not between", value1, value2, "userAge");
+        public Criteria andUserBirthdayNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("user_birthday not between", value1, value2, "userBirthday");
             return (Criteria) this;
         }
 
