@@ -1,0 +1,15 @@
+body{
+	margin:4;
+	font-family:arial, 宋体;
+	font-size:14px;
+}
+
+.clear{ border:0px; clear:both; visibility: hidden; height:0px;}
+
+a{	
+	text-decoration: none;
+}
+
+a:hover{
+	text-decoration: underline;
+}

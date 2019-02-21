@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header">
+</head>
+
+<body style="margin:0px;">
+
+<table id="dg" class="easyui-datagrid" title="用户管理 -- 用户来源查询" singleSelect="true" fitColumns="true" nowrap="false" striped="true"
+       SelectOnCheck="true" CheckOnSelect="true" rownumbers="true" pagination="true" pageSize="50" pageList="[50, 100, 200]" toolbar="#tb">
+    <thead>
+    <tr>
+        <th field="userId" align="center" width="12%">用户ID</th>
+        <th field="origin" align="center" width="10%">来源</th>
+        <th field="platform" align="center" width="10%" formatter="showPlatform">来源平台</th>
+        <th field="channel" align="center" width="18%">渠道</th>
+        <th field="businessChannel" align="center" width="15%">业务渠道</th>
+        <th field="remark" align="center" width="15%">备注</th>
+        <th field="createTime" align="center" width="10%" formatter="timeStamp2DateTime">创建时间</th>
+        <th field="modifyTime" align="center" width="10%" formatter="timeStamp2DateTime">修改时间</th>
+    </tr>
+    </thead>
+</table>
+<div id="tb" style="padding:2px 5px;">
+    <form id="formSearch">
+        <input type="hidden" name="pageSize" id="pageSize" />
+        <div width="100%" style="margin:4px">
+            用户ID：<input type="text" id="searchUserId" name="searchUserId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+            手机号：<input type="text" id="searchMobile" name="searchMobile" class="easyui-textbox easyui-validatebox" data-options="validType:'length[11,11]'" maxlength="11" style="width:100px"/>&nbsp;&nbsp;
+            渠道：<select class="easyui-combobox" id="searchChannel" name="searchChannel" panelHeight="auto" editable="false" style="width:300px">
+            <option value="" selected>全部</option>
+            <option value="AIQIYI">AIQIYI</option>
+            <option value="appstore">appstore</option>
+            <option value="appstore_caifu">appstore_caifu</option>
+            <option value="appstore_fuli">appstore_fuli</option>
+            <option value="appstore_offical">appstore_offical</option>
+            <option value="appstore_pro">appstore_pro</option>
+            <option value="appstore_qiyeban">appstore_qiyeban</option>
+            <option value="appstore_zhounian">appstore_zhounian</option>
+            <option value="appstore_zunxiang">appstore_zunxiang</option>
+            <option value="BD">BD</option>
+            <option value="channel0081">channel0081</option>
+            <option value="channel0082">channel0082</option>
+            <option value="dafeiChannel">dafeiChannel</option>
+            <option value="dryrun">dryrun</option>
+            <option value="edm">edm</option>
+            <option value="edm_160107">edm_160107</option>
+            <option value="enterprise_guarantor">enterprise_guarantor</option>
+            <option value="enterprise_merchant">enterprise_merchant</option>
+            <option value="fanlitou">fanlitou</option>
+            <option value="frame_scan">frame_scan</option>
+            <option value="GENERALIZE">GENERALIZE</option>
+            <option value="hemeiChannel">hemeiChannel</option>
+            <option value="hicashChannel">hicashChannel</option>
+            <option value="HW">HW</option>
+            <option value="IOS">IOS</option>
+            <option value="jiejiejieChannel">jiejiejieChannel</option>
+            <option value="JIFENG">JIFENG</option>
+            <option value="JINGLI">JINGLI</option>
+            <option value="LENOVO">LENOVO</option>
+            <option value="LESHI">LESHI</option>
+            <option value="LIANTONG">LIANTONG</option>
+            <option value="MEIZU">MEIZU</option>
+            <option value="MI">MI</option>
+            <option value="OPPPO">OPPPO</option>
+            <option value="pc">pc</option>
+            <option value="platform">platform</option>
+            <option value="PP">PP</option>
+            <option value="PRO">PRO</option>
+            <option value="qianlongChannel">qianlongChannel</option>
+            <option value="QIHU">QIHU</option>
+            <option value="QQ">QQ</option>
+            <option value="SANGXING">SANGXING</option>
+            <option value="SOUGOU">SOUGOU</option>
+            <option value="test">test</option>
+            <option value="uft_guide">uft_guide</option>
+            <option value="uicreditChannel">uicreditChannel</option>
+            <option value="VIVO">VIVO</option>
+            <option value="wap">wap</option>
+            <option value="wap_promo_qbh">wap_promo_qbh</option>
+            <option value="wap_register_guide11">wap_register_guide11</option>
+            <option value="wap_register_guide13">wap_register_guide13</option>
+            <option value="wap_register_guide14">wap_register_guide14</option>
+            <option value="wap_register_guide16">wap_register_guide16</option>
+            <option value="wap_register_guide18">wap_register_guide18</option>
+            <option value="wap_register_guide19">wap_register_guide19</option>
+            <option value="wap_register_guide2">wap_register_guide2</option>
+            <option value="wap_register_guide20">wap_register_guide20</option>
+            <option value="wap_register_guide23">wap_register_guide23</option>
+            <option value="wap_register_guide24">wap_register_guide24</option>
+            <option value="wap_register_guide25">wap_register_guide25</option>
+            <option value="wap_register_guide26">wap_register_guide26</option>
+            <option value="wap_register_guide27">wap_register_guide27</option>
+            <option value="wap_register_guide29">wap_register_guide29</option>
+            <option value="wap_register_guide3">wap_register_guide3</option>
+            <option value="wap_register_guide31">wap_register_guide31</option>
+            <option value="wap_register_guide32">wap_register_guide32</option>
+            <option value="wap_register_guide33">wap_register_guide33</option>
+            <option value="wap_register_guide34">wap_register_guide34</option>
+            <option value="wap_register_guide35">wap_register_guide35</option>
+            <option value="wap_register_guide37">wap_register_guide37</option>
+            <option value="wap_register_guide4">wap_register_guide4</option>
+            <option value="wap_register_guide43">wap_register_guide43</option>
+            <option value="wap_register_guide45">wap_register_guide45</option>
+            <option value="wap_register_guide47">wap_register_guide47</option>
+            <option value="wap_register_guide48">wap_register_guide48</option>
+            <option value="wap_register_guide49">wap_register_guide49</option>
+            <option value="wap_register_guide5">wap_register_guide5</option>
+            <option value="wap_register_guide50">wap_register_guide50</option>
+            <option value="wap_register_guide6">wap_register_guide6</option>
+            <option value="wap_share">wap_share</option>
+            <option value="wap_union_guide">wap_union_guide</option>
+            <option value="wap_union_share">wap_union_share</option>
+            <option value="wap_union_share?referrer=0IG5tadN">wap_union_share?referrer=0IG5tadN</option>
+            <option value="wap_union_share?referrer=13UnHSWl">wap_union_share?referrer=13UnHSWl</option>
+            <option value="wap_union_share?referrer=1KRsKW9G">wap_union_share?referrer=1KRsKW9G</option>
+            <option value="wap_union_share?referrer=24ALduRN">wap_union_share?referrer=24ALduRN</option>
+            <option value="wap_union_share?referrer=33wKtOAL">wap_union_share?referrer=33wKtOAL</option>
+            <option value="wap_union_share?referrer=3eo6NDrc">wap_union_share?referrer=3eo6NDrc</option>
+            <option value="wap_union_share?referrer=3JmW0Z5r">wap_union_share?referrer=3JmW0Z5r</option>
+            <option value="wap_union_share?referrer=3puh25LC">wap_union_share?referrer=3puh25LC</option>
+            <option value="wap_union_share?referrer=5kDO43u6">wap_union_share?referrer=5kDO43u6</option>
+            <option value="wap_union_share?referrer=7NKC2TOg">wap_union_share?referrer=7NKC2TOg</option>
+            <option value="wap_union_share?referrer=975RfwQk">wap_union_share?referrer=975RfwQk</option>
+            <option value="wap_union_share?referrer=A6o1MxZ5">wap_union_share?referrer=A6o1MxZ5</option>
+            <option value="wap_union_share?referrer=AUxAOWuG">wap_union_share?referrer=AUxAOWuG</option>
+            <option value="wap_union_share?referrer=B1e7oYTq">wap_union_share?referrer=B1e7oYTq</option>
+            <option value="wap_union_share?referrer=B3Yn36PN">wap_union_share?referrer=B3Yn36PN</option>
+            <option value="wap_union_share?referrer=BHQ6gMEK">wap_union_share?referrer=BHQ6gMEK</option>
+            <option value="wap_union_share?referrer=Cn1Q82tT">wap_union_share?referrer=Cn1Q82tT</option>
+            <option value="wap_union_share?referrer=cNlDweTa">wap_union_share?referrer=cNlDweTa</option>
+            <option value="wap_union_share?referrer=CRpEaMl7">wap_union_share?referrer=CRpEaMl7</option>
+            <option value="wap_union_share?referrer=dB57sfyN">wap_union_share?referrer=dB57sfyN</option>
+            <option value="wap_union_share?referrer=e6BE4n5z">wap_union_share?referrer=e6BE4n5z</option>
+            <option value="wap_union_share?referrer=eDNDLEgc">wap_union_share?referrer=eDNDLEgc</option>
+            <option value="wap_union_share?referrer=EnoGBg7Q">wap_union_share?referrer=EnoGBg7Q</option>
+            <option value="wap_union_share?referrer=f5mUL5Nq">wap_union_share?referrer=f5mUL5Nq</option>
+            <option value="wap_union_share?referrer=F6aCvjTP">wap_union_share?referrer=F6aCvjTP</option>
+            <option value="wap_union_share?referrer=F9yeh6gm">wap_union_share?referrer=F9yeh6gm</option>
+            <option value="wap_union_share?referrer=G1ydkcPe">wap_union_share?referrer=G1ydkcPe</option>
+            <option value="wap_union_share?referrer=GeUnpZ4q">wap_union_share?referrer=GeUnpZ4q</option>
+            <option value="wap_union_share?referrer=GKKhQgKy">wap_union_share?referrer=GKKhQgKy</option>
+            <option value="wap_union_share?referrer=GmpXTUrx">wap_union_share?referrer=GmpXTUrx</option>
+            <option value="wap_union_share?referrer=gvuB08mu">wap_union_share?referrer=gvuB08mu</option>
+            <option value="wap_union_share?referrer=H3pt6WJX">wap_union_share?referrer=H3pt6WJX</option>
+            <option value="wap_union_share?referrer=H5cFrsl4">wap_union_share?referrer=H5cFrsl4</option>
+            <option value="wap_union_share?referrer=H6is3qba">wap_union_share?referrer=H6is3qba</option>
+            <option value="wap_union_share?referrer=hR5IO4o9">wap_union_share?referrer=hR5IO4o9</option>
+            <option value="wap_union_share?referrer=IPGmUleM">wap_union_share?referrer=IPGmUleM</option>
+            <option value="wap_union_share?referrer=J2KDLP2z">wap_union_share?referrer=J2KDLP2z</option>
+            <option value="wap_union_share?referrer=JwBJJsgC">wap_union_share?referrer=JwBJJsgC</option>
+            <option value="wap_union_share?referrer=LHV7j2i1">wap_union_share?referrer=LHV7j2i1</option>
+            <option value="wap_union_share?referrer=LQZ8WpSU">wap_union_share?referrer=LQZ8WpSU</option>
+            <option value="wap_union_share?referrer=lZQT1Gwt">wap_union_share?referrer=lZQT1Gwt</option>
+            <option value="wap_union_share?referrer=nFBmqmbt">wap_union_share?referrer=nFBmqmbt</option>
+            <option value="wap_union_share?referrer=NG2aDcv3">wap_union_share?referrer=NG2aDcv3</option>
+            <option value="wap_union_share?referrer=NHlTtpLf">wap_union_share?referrer=NHlTtpLf</option>
+            <option value="wap_union_share?referrer=NZihdolm">wap_union_share?referrer=NZihdolm</option>
+            <option value="wap_union_share?referrer=oYQD4cNn">wap_union_share?referrer=oYQD4cNn</option>
+            <option value="wap_union_share?referrer=P2Ie9kMM">wap_union_share?referrer=P2Ie9kMM</option>
+            <option value="wap_union_share?referrer=p4rFskTt">wap_union_share?referrer=p4rFskTt</option>
+            <option value="wap_union_share?referrer=P8ktdluO">wap_union_share?referrer=P8ktdluO</option>
+            <option value="wap_union_share?referrer=QnxbW1uH">wap_union_share?referrer=QnxbW1uH</option>
+            <option value="wap_union_share?referrer=qSQJbCSy">wap_union_share?referrer=qSQJbCSy</option>
+            <option value="wap_union_share?referrer=qYFdJhLM">wap_union_share?referrer=qYFdJhLM</option>
+            <option value="wap_union_share?referrer=R6PUqRqj">wap_union_share?referrer=R6PUqRqj</option>
+            <option value="wap_union_share?referrer=rMjexKnE">wap_union_share?referrer=rMjexKnE</option>
+            <option value="wap_union_share?referrer=sGptQQ5t">wap_union_share?referrer=sGptQQ5t</option>
+            <option value="wap_union_share?referrer=SUrwD91q">wap_union_share?referrer=SUrwD91q</option>
+            <option value="wap_union_share?referrer=svR52Bgr">wap_union_share?referrer=svR52Bgr</option>
+            <option value="wap_union_share?referrer=TkoBDHTW">wap_union_share?referrer=TkoBDHTW</option>
+            <option value="wap_union_share?referrer=TMSgkRgs">wap_union_share?referrer=TMSgkRgs</option>
+            <option value="wap_union_share?referrer=u1YDvxai">wap_union_share?referrer=u1YDvxai</option>
+            <option value="wap_union_share?referrer=vaIQkkGn">wap_union_share?referrer=vaIQkkGn</option>
+            <option value="wap_union_share?referrer=W6Ul2EID">wap_union_share?referrer=W6Ul2EID</option>
+            <option value="wap_union_share?referrer=Web0NRag">wap_union_share?referrer=Web0NRag</option>
+            <option value="wap_union_share?referrer=wEQizqV8">wap_union_share?referrer=wEQizqV8</option>
+            <option value="wap_union_share?referrer=wwSmZMrU">wap_union_share?referrer=wwSmZMrU</option>
+            <option value="wap_union_share?referrer=X5VrHewJ">wap_union_share?referrer=X5VrHewJ</option>
+            <option value="wap_union_share?referrer=xDcpxdZ4">wap_union_share?referrer=xDcpxdZ4</option>
+            <option value="wap_union_share?referrer=YgDUJaGR">wap_union_share?referrer=YgDUJaGR</option>
+            <option value="wap_union_share?referrer=yHt6vAOD">wap_union_share?referrer=yHt6vAOD</option>
+            <option value="wap_union_share?referrer=ZMfc7z5X">wap_union_share?referrer=ZMfc7z5X</option>
+            <option value="wap_union_share?referrer=zryORMvq">wap_union_share?referrer=zryORMvq</option>
+            <option value="wap_union_share?referrer=Zw7ZKp6l">wap_union_share?referrer=Zw7ZKp6l</option>
+            <option value="wap_weixin_gzh">wap_weixin_gzh</option>
+            <option value="WDJ">WDJ</option>
+            <option value="wecashChannel">wecashChannel</option>
+            <option value="weChat">weChat</option>
+            <option value="XIAZAI">XIAZAI</option>
+            <option value="YINGYONGHUI">YINGYONGHUI</option>
+            <option value="yuanbaoChannel">yuanbaoChannel</option>
+
+        </select>&nbsp;&nbsp;
+            来源：<select class="easyui-combobox" id="searchOrigin" name="searchOrigin" panelHeight="auto" editable="false" style="width:100px">
+            <option value="" selected>全部</option>
+            <option value="wap">wap</option>
+            <option value="Android">Android</option>
+            <option value="IOS">IOS</option>
+            <!--<option value="-1">其他</option>-->
+        </select>&nbsp;&nbsp;
+            注册时间：<input class="easyui-datebox" id="startDate" name="startDate" type="text" editable="false"> --
+            <input class="easyui-datebox" id="endDate" name="endDate" type="text" editable="false">&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="btnSearch()">搜索</a>
+        </div>
+    </form>
+</div>
+</body>
+<footer th:replace="footer :: footer"></footer>
+
+<script type="text/javascript">
+    (function ($) {
+
+        var dateboxButtons = $.extend([], $.fn.datebox.defaults.buttons);
+        dateboxButtons.splice(1, 0, {
+            text: function (target) {
+                return $(target).datebox("options").cleanText
+            },
+            handler: function (target) {
+                $(target).datebox("setValue", "");
+                $(target).datebox("hidePanel");
+            }
+        });
+        $.extend($.fn.datebox.defaults, {
+            buttons: dateboxButtons
+        });
+    })(jQuery);
+
+    $(function(){
+
+        $("#startReconDate").datebox("setValue", currNDate(0));// 时间默认当天
+        $("#endReconDate").datebox("setValue", currNDate(0));//时间默认当天
+
+
+        //翻页控件，已支持分页
+        $("#dg").datagrid().datagrid("getPager").pagination({
+            //改变pageSize会执行 onChangePageSize，onSelectPage
+            //点上一页或下一页只会执行 onSelectPage
+            //刷新会执行 onSelectPage，onRefresh。所以删掉了onRefresh
+            onChangePageSize: function(pageSize) {
+                $("#pageSize").val(pageSize);
+            },
+            onSelectPage: function(pageNumber, pageSize) {
+                $("#pageSize").val(pageSize);
+                $("#pageNumber").val(pageNumber);
+                datagridBind();
+            },
+            onClick:function () {
+                checkType();
+            },
+            beforePageText: '第',
+            afterPageText: '共{pages}页',
+            displayMsg: '显示{from}到{to}条记录,共{total}条记录&nbsp;&nbsp;&nbsp;&nbsp;'//已支持分页，重新调整显示文字
+        });
+    });
+
+    function datagridBind() {
+        $("#dg").datagrid("loading");
+        $('#dg').datagrid("loadData", { total: 0, rows: [] });
+        $.get("/htm/userMainOrigin.htm", $("#formSearch").serialize(), function(pager){
+            $("#dg").datagrid("loadData", {"total":pager.total, rows:pager.pageData});
+            $("#dg").datagrid("loaded");
+        });
+    }
+
+    function btnSearch() {
+        datagridBind();
+    }
+    function showPlatform(value) {
+        if (value == "wap") {
+            return "wap";
+        } else if (value == "mobile") {
+            return "手机";
+        } else {
+            return value;
+        }
+    }
+</script>

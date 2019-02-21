@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header">
+</head>
+
+<body class="easyui-layout">
+
+<div data-options="region:'north'" style="height:60px;padding:15px;font-size: 15px;background-color: #E0ECFF">
+    <table width="100%" border="0">
+        <tr>
+            <td width="40%" style="color: #2B2E37"><strong>哭脸餐饮后台管理系统</strong>
+            <td width="60%" align="right" style="color: #2B2E37">
+            <span th:utext=""></span>,欢迎您</span>
+            <a href="#" onclick="location='/htm/logoutManageUser.htm'" class='easyui-linkbutton</td>' data-options='plain:true' style="color: #2B2E37">安全退出</a></td>
+        </tr>
+    </table>
+</div>
+<div data-options="region:'west',split:true,title:'菜单'" style="width:180px">
+    <div id="mainmenu" class="easyui-accordion" fit="true" style="width: 100%;height: 100%">
+    </div>
+</div>
+<div data-options="region:'center'">
+    <div id="functabs" class="easyui-tabs" data-options="closable:false,fit:true">
+    </div>
+</div>
+
+
+</body>
+
+<footer th:replace="footer :: footer"></footer>
+
+<script type="text/javascript">
+    $(function(){
+        initMenu();
+    });
+
+    function initMenu() {
+
+        $.get("/htm/menu.htm", function(restModel) {
+            for (var i = 0; i < restModel.data.length; i++) {
+                var submenu = "";
+                if (restModel.data[i].hasOwnProperty('subMenu')) {
+                    for (var j = 0; j < restModel.data[i].subMenu.length; j++) {
+                        submenu = submenu + "<a href='#' onclick=\"addTab('" + restModel.data[i].subMenu[j].funcName + "', '" + restModel.data[i].subMenu[j].url + "')\" class='easyui-linkbutton' data-options='plain:true'>" + restModel.data[i].subMenu[j].funcName + "</a><br/>";
+                    }
+                }
+                submenu = "<div style='width: 100%' align='center'>" + submenu + "</div>";
+                $('#mainmenu').accordion('add',{
+                    title:restModel.data[i].funcName,
+                    content:submenu
+                });
+            }
+        }, "json");
+    }
+
+    function addTab(title, url) {
+        var tab = $('#functabs').tabs('getTab',title);
+        if (tab != null) {
+            $('#functabs').tabs('select', title);
+        } else {
+            $('#functabs').tabs('add', {
+                title: title,
+                closable: true,
+                content: '<iframe scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" src="' + url + '" style="width:100%;height:99%;"></iframe>'
+            });
+        }
+    }
+</script>
+
+</html>

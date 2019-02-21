@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header">
+</head>
+
+<body style="margin:0px;">
+<table id="dg" class="easyui-datagrid" title="账户管理 -- 用户信息对账管理" singleSelect="true" fitColumns="true" nowrap="false" striped="true"
+       SelectOnCheck="true" CheckOnSelect="true" rownumbers="true" pagination="true" pageSize="50" pageList="[50, 100, 200]" toolbar="#tb">
+    <thead>
+    <tr>
+        <th colspan="7" field="facebank" align="center" width="120" align="center">笑脸平台数据</th>
+        <th colspan="6" field="account" align="center" width="120" align="center">存管平台数据</th>
+        <th colspan="5" field="recon" align="center" width="120" align="center"></th>
+    </tr>
+    <tr>
+        <th field="select" align="center" checkbox="true">选择</th>
+        <th field="userAccountNo" align="center" width="13%" >用户编号</th>
+        <th field="userAccountType" align="center" width="5%" formatter="showAccountType">会员类型</th>
+        <th field="userAccountRole" align="center" width="5%" formatter="showAccountRole">会员角色</th>
+        <th field="userRealName" align="center" width="4%">开户名</th>
+        <th field="userIdType" align="center" width="4%" formatter="showUserIdType">证件类型</th>
+        <th field="userIdNo" align="center" width="9%" formatter="showUserIdNo">证件号码</th>
+
+        <th field="depositoryAccountNo" align="center" width="13%">用户编号</th>
+        <th field="depositoryAccountType" align="center" width="6%" formatter="showAccountType">会员类型</th>
+        <th field="depositoryAccountRole" align="center" width="6%" formatter="showAccountRole">会员角色</th>
+        <th field="depositoryRealName" align="center" width="6%">开户名</th>
+        <th field="depositoryIdType" align="center" width="6%" formatter="showUserIdType">证件类型</th>
+        <th field="depositoryIdNo" align="center" width="9%" formatter="showUserIdNo">证件号码</th>
+
+        <th field="reconDate" align="center" width="6%" formatter="showReconData">对账时间</th>
+        <th field="reconStatus" align="center" width="6%" formatter="showReconStatus">对账结果</th>
+        <th field="resultCode" align="center" width="6%" formatter="showResultCode">对账结果描述</th>
+        <th field="remark" align="center" width="6%">备注</th>
+        <th field="detail" align="center" width="6%">查看对账明细</th>
+    </tr>
+    </thead>
+</table>
+<div id="tb" style="padding:2px 5px;">
+    <form id="formSearch">
+        <input type="hidden" name="pageSize" id="pageSize" />
+        <input type="hidden" name="pageNumber" id="pageNumber" />
+        <input type="hidden" name="hiddenSelectedIds" id="hiddenSelectedIds" />
+
+        <div width="100%" style="margin:4px">
+            用户编号&nbsp;&nbsp;：<input type="text" id="accountNo" name="accountNo" class="easyui-textbox" maxlength="20" style="width:200px"/>&nbsp;&nbsp;&nbsp;
+            对账结果：<select class="easyui-combobox" id="reconStatus" name="reconStatus" panelHeight="auto" editable="false" style="width:200px">
+            <option value="" selected>全部</option>
+            <option value=200>对账通过</option>
+            <option value=300>对账失败</option>
+            <option value=400>差错已处理</option>
+        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+            对账日期：<input class="easyui-datebox" id="reconTimeStart" name="reconTimeStart" type="text" editable="false"> --
+            <input class="easyui-datebox" id="reconTimeEnd" name="reconTimeEnd" type="text" editable="false">&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="btnSearch()">查询</a>&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" iconCls="icon-print" onclick="exportQuery()">导出查询</a>
+        </div>
+        <a href="#" class="easyui-linkbutton" style="margin-bottom: 10px;margin-top: 10px;" iconCls="icon-edit" onclick="errHanding()">差错处理</a>&nbsp;&nbsp;
+    </form>
+</div>
+
+
+<!------------------------------------差错处理------------------------->
+<div id="dlgErrorDeal" class="easyui-dialog" title="差错账处理" width="460px" height="260px" closed="true" buttons="#errHanding-buttons" style="padding:10px" modal="true">
+    <form id="dgRedPackage" method="post">
+        <div>
+            <table align="center" width="90%" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td>
+                        <label style="color:red">*</label>处理说明:
+                        <input  class="easyui-textbox" type="text" id="dealDescribe" name="dealDescribe"  style="height:100px; width:300px "  data-options="required:true, missingMessage:'处理说明'"/>
+                    </td>
+                </tr>
+                <tr>
+                    <!--根据产品(樊华)的要求，一期工程不再显示 "更新笑脸用户信息"-->
+                  <!--  <td align="center">
+                        <input type="checkbox" id="isUpadteInfo"  name="isUpadteInfo">更新笑脸用户信息</input>
+                    </td>-->
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+<div id="errHanding-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnsave()" iconcls="icon-save">确定</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlgErrorDeal').dialog('close')" iconcls="icon-cancel">取消</a>
+</div>
+
+<!----查看对账明细--个人 ----->
+<div id="searchAccountDetail" class="easyui-dialog" title="个人对账结果" width="920px" height="320px" closed="true" buttons="#dlgAccountDeatilButtons" style="padding:10px" modal="true">
+    <table  id="AccountDetail"  class="easyui-datagrid" singleSelect="true" fitColumns="false" nowrap="false" striped="true" SelectOnCheck="true" CheckOnSelect="true" rownumbers="true" pagination="false" toolbar="#tblimit">
+        <thead>
+      <tr>
+          <th  field="modelName" align="center"></th>
+          <th  field="accountNo" align="center" width="12%">平台用户编号</th>
+          <th  field="accountType" align="center" width="6%" formatter="showAccountType">会员类型</th>
+          <th  field="accountRole" align="center" width="8%" formatter="showAccountRole">会员角色</th>
+          <th  field="realName" align="center" width="10%" >开户名</th>
+          <th  field="idType" align="center" width="10%" formatter="showUserIdType">证件类型</th>
+          <th  field="idNo" align="center" width="13%" formatter="showUserIdNo">证件号码</th>
+          <th  field="bankMobile" align="center" width="12%">银行预留手机号</th>
+          <th  field="bankCode" align="center" width="10%">银行编码</th>
+          <th  field="cardNo" align="center" width="10%">银行卡号</th>
+      </tr>
+        </thead>
+    </table>
+</div>
+<div id="dlgAccountDeatilButtons">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#searchAccountDetail').dialog('close')" style="margin-right:410px;width: 120px;height: 40px;" iconcls="icon-cancel">关闭</a>
+</div>
+
+<!----查看对账明细--企业 ----->
+<div id="searchCompanyAccountDetail" class="easyui-dialog" title="企业对账结果" width="1180px" height="360px" closed="true" buttons="#dlgCompanyAccountDeatilButtons" style="padding:10px" modal="true">
+    <table  id="CompanyAccountDetail"  class="easyui-datagrid" singleSelect="true" fitColumns="false" nowrap="false" striped="true" SelectOnCheck="true" CheckOnSelect="true" rownumbers="true" pagination="false" toolbar="#tblimit">
+        <thead>
+        <tr>
+            <th  field="modelName" align="center" width="8%"></th>
+            <th  field="accountNo" align="center" width="8%" >平台用户编号</th>
+            <th  field="accountType" align="center" width="6%" formatter="showAccountType">会员类型</th>
+            <th  field="accountRole" align="center"width="8%" formatter="showAccountRole">会员角色</th>
+            <th  field="realName" align="center" width="8%">开户名</th>
+            <th  field="idType" align="center" width="8%" formatter="showUserIdType">证件类型</th>
+            <th  field="idNo" align="center" width="10%" formatter="showUserIdNo">证件号码</th>
+            <th  field="bankMobile" align="center" width="8%">银行预留手机号</th>
+            <th  field="bankCode" align="center" width="8%">银行编码</th>
+            <th  field="cardNo" align="center" width="8%">银行卡号</th>
+            <th  field="corporationRealName" align="center" width="6%">法人姓名</th>
+            <th  field="bankLicense" align="center" width="8%">开户银行许可证</th>
+            <th  field="unifiedCode" align="center" width="10%">统一社会信用代码</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<div id="dlgCompanyAccountDeatilButtons">
+    <a href="javascript:void(0)" class="easyui-linkbutton" style="margin-right:590px;width: 120px;height: 40px;" onclick="javascript:$('#searchCompanyAccountDetail').dialog('close')" iconcls="icon-cancel">关闭</a>
+</div>
+
+
+</body>
+
+<footer th:replace="footer :: footer"></footer>
+
+<script type="text/javascript">
+    $(function() {
+        $("#reconTimeStart").datebox("setValue", currNDate(1));//产品最新要求：时间默认为前一天
+        $("#reconTimeEnd").datebox("setValue", currNDate(1));//产品最新要求:时间默认为前一天
+        //datagrid事件
+        $("#dg").datagrid({
+            onClickRow: function (index, row) {
+            },
+            onCheck: function (index, row) {
+                pushSelectedIds();
+            },
+            onUncheck: function (index, row) {
+                pushSelectedIds();
+            },
+            onSelect: function (index, row) {
+                pushSelectedIds();
+            },
+            onUnselect: function (index, row) {
+                pushSelectedIds();
+            },
+            onSelectAll: function (rows) {
+                pushSelectedIds();
+            },
+            onUnselectAll: function (rows) {
+                pushSelectedIds();
+            }
+        });
+
+        $("#dg").datagrid().datagrid("getPager").pagination({
+            //改变pageSize会执行 onChangePageSize，onSelectPage
+            //点上一页或下一页只会执行 onSelectPage
+            //刷新会执行 onSelectPage，onRefresh
+            onChangePageSize: function(pageSize) {
+                $("#pageSize").val(pageSize);
+            },
+            onSelectPage: function(pageNumber, pageSize) {
+                $("#pageSize").val(pageSize);
+                $("#pageNumber").val(pageNumber);
+                datagridBind();
+            },
+            beforePageText: '第',
+            afterPageText: '共{pages}页',
+            displayMsg: '显示{from}到{to}条记录，共{total}条记录&nbsp;&nbsp;&nbsp;&nbsp;'
+        });
+    });
+    function setinput(this_) {
+        var select = $("#searchBusinessType");
+        select.html("");
+        for (i = 0; i < TempArr.length; i++) {
+            var businessTypeComboboxData = TempArr[i];
+            if (businessTypeComboboxData.bussinessTypeName.substring(0, this_.value.length).indexOf(this_.value) == 0) {
+                var option = $("<option></option>").text(businessTypeComboboxData);
+                select.append(option);
+            }
+        }
+    }
+
+    //将选中的id放入selectedIds
+    function pushSelectedIds() {
+        var ids = [];
+        var selectedRows = $('#dg').datagrid('getSelections');
+        for (var i = 0; i < selectedRows.length; i++) {
+            ids.push(selectedRows[i].id);
+        }
+        $("#hiddenSelectedIds").val(ids);
+    }
+
+    //加载列表
+    function datagridBind() {
+        $("#hiddenSelectedIds").val("");
+        $("#dg").datagrid("loading");
+        $.post("/htm/userInfoAccountCheck.htm", $("#formSearch").serialize(), function (pager) {
+            $("#dg").datagrid("loadData", {"total":pager.total, rows:pager.pageData});
+            $("#dg").datagrid("loaded");
+            if(pager.code == null) {
+                var data = pager.pageData;
+                for (var i = 0; i < data.length; i++) {
+                    var accountReconId = data[i].accountReconId.toString();
+                    var userAccountType = data[i].userAccountType;
+                    if (userAccountType == null) {
+                        //如果我们没有数据，则取存管的数据
+                        userAccountType = data[i].depositoryAccountType;
+                    }
+                    if(userAccountType == 200){
+                        data[i].detail = "<a href='javascript:void(0)' onclick='openUserAccountDetail(" + accountReconId + ")'>对账明细</a>"
+                    }
+                    if(userAccountType == 300){
+                        data[i].detail = "<a href='javascript:void(0)' onclick='openCompanyAccountDetail(" +accountReconId+ ")'>对账明细</a>"
+                    }
+                }
+                $("#dg").datagrid("loadData", {"total": pager.total, rows: pager.pageData});
+                $("#dg").datagrid("loaded");
+            }
+        });
+    }
+
+        //点上一页或下一页只会执行的加载列表功能
+        function datagridBindOnSelectPage() {
+            $("#hiddenSelectedIds").val("");
+            $("#dg").datagrid("loading");
+            $.post("/htm/userInfoAccountCheck.htm", $("#formSearch").serialize(), function (pager) {
+                $("#dg").datagrid("loadData", {"total": pager.total, rows: pager.pageData});
+                $("#dg").datagrid("loaded");
+                if (pager.total > 0) {
+                    $("#sumRow").text(pager.pageData[0].sumRow);
+                    $("#sumAmount").text(decimalFormat(pager.pageData[0].sumAmount));
+                }
+            });
+        }
+
+
+        //点击查询按钮
+        function btnSearch() {
+            //校验用户编号
+            if($('#reconTimeStart').datebox('getValue') > $('#reconTimeEnd').datebox('getValue')){
+                $.messager.alert("信息","开始对账日期不能大于结束对账日期！","info");
+                return ;
+            }
+            var searchAccountAdjustId = $("#searchAccountAdjustId").val();
+            datagridBind();
+        }
+
+        //校验只能输入数字和逗号，且数字开头
+        function validUserId(userId) {
+            if (userId == null || userId == "") {
+                return true;
+            }
+            var patrn = /^[0-9]+[0-9\,]*$/;
+            if (!patrn.test(userId)) {
+                return false;
+            }
+            return true;
+        }
+
+        //校验不能连续输入逗号
+        function validUserIdComma(userId) {
+            if (userId == null || userId == "") {
+                return true;
+            }
+            var patrn = /[,]{2,}/;
+            if (patrn.test(userId)) {
+                return false;
+            }
+            return true;
+        }
+        //获取n天前 yyyy-MM-dd
+        function currNDate(n) {
+            var date = new Date();//获取当前时间
+            date.setDate(date.getDate() - n);//设置n天前
+            var currTime = dateTimeFormat(date);
+            return currTime.substring(0, 10);
+        }
+
+
+        //差错处理操作
+        function errHanding() {
+            var row = $('#dg').datagrid("getSelected");
+            if (row != null){
+                var accountReconId = row.accountReconId;
+                var remark = row.remark;
+                $("#dealDescribe").textbox("setValue", "");
+                var reconStatus = row.reconStatus;
+                if(reconStatus == 300){
+                    $('#dlgErrorDeal').dialog('open');
+                }else{
+                    $.messager.alert("信息", "选中的记录不是对账失败的记录，请重新选择", "info");
+                }
+            } else {
+                $.messager.alert("信息", "请选择需要操作的项目", "info");
+            }
+
+        }
+
+        //差错处理
+        function btnsave() {
+            var row = $('#dg').datagrid('getSelected');
+            var accountReconId = row.accountReconId;
+            var remark = row.remark;
+            var reconStatus = row.reconStatus;
+            var remark = $("#dealDescribe").textbox('getValue');
+          /*  var checkBox = $("#isUpadteInfo").prop("checked"); */ //checkbox是否被选中 true/false
+            if(row.reconStatus != 300){
+                $.messager.alert("信息", "请选择对账结果为“对账失败”的记录", "info");
+                return ;
+            }
+            if(remark == null || remark == ""){
+                $.messager.alert("信息", "请填写处理说明", "info");
+                return ;
+            }
+            //如果不勾选更新笑脸用户信息的情况
+            if(accountReconId >0){
+                $.messager.confirm("确认", "操作后将会更新对账记录对账结果为差错已处理状态，请确定是否操作？", function (r) {
+                    if (r) {
+                        $.post("handleUserAccountCheckError.htm", {accountReconId : accountReconId, remark : remark}, function (data) {
+                            if (data.status) {
+                                var message = data.message;
+                                $.messager.alert("信息", message, "info");
+                                $('#dlgErrorDeal').dialog('close');
+                                $("#dealDescribe").textbox('setValue', "");
+                                datagridBind();
+                            } else {
+                                var message = data.message;
+                                $.messager.alert("信息", message, "error");
+                                $('#dlgErrorDeal').dialog('close');
+                                $("#dealDescribe").textbox('setValue', "");
+                                datagridBind();
+                            }
+                        }, "json");
+                    }
+                });
+            }else{
+                $.messager.alert("信息", "差错处理失败！", "info");
+            }
+        }
+
+
+        //查看个人的对账明细
+        function openUserAccountDetail(accountReconId) {
+            $('#searchAccountDetail').dialog("open").window("center");
+            $.post("getUserAccountCheckDetail.htm", {accountReconId: accountReconId}, function (data) {
+                if(data.pageData !=null){
+                    var array = [];
+                    if(data.pageData!=null){
+                        $.each(data.pageData,function (i,item) {
+                            var model = JSON.parse(item);
+                            var object = model.valueOf();
+                            array.push(model)
+                        });
+                    }
+                    $("#AccountDetail").datagrid("loadData", { total: array.length, rows: array});
+                    $("#AccountDetail").datagrid("loaded");
+                }
+            }, "json");
+        }
+
+        //查看企业的对账明细
+        function openCompanyAccountDetail(accountReconId){
+            $('#searchCompanyAccountDetail').dialog("open").window("center");
+            $.post("getUserAccountCheckDetail.htm", {accountReconId: accountReconId}, function (data) {
+                if(data.pageData !=null){
+                    var array = [];
+                    if(data.pageData!=null){
+                        $.each(data.pageData,function (i,item) {
+                            var model = JSON.parse(item);
+                            array.push(model)
+                        });
+                    }
+
+                    $("#CompanyAccountDetail").datagrid("loadData", { total: array.length, rows: array});
+                    $("#CompanyAccountDetail").datagrid("loaded");
+                }
+            }, "json");
+        }
+
+
+
+    //导出查询
+    function exportQuery() {
+        var accountNo = $("#accountNo").val().trim();
+        var reconStatus = $("#reconStatus").combobox('getValue').trim();
+        var reconTimeStart = $("#reconTimeStart").datebox('getValue').trim();
+        var reconTimeEnd = $("#reconTimeEnd").datebox('getValue').trim();
+        if(parseInt(reconStatus) != "300"){
+            $.messager.alert("信息", "只能导出对账失败的数据！！", "info");
+            return ;
+        }
+        $.messager.progress({
+            title: "导出中",
+            msg: "正在导出，请稍候..."
+        });
+        $.post("exportUserAccountCheck.htm", {
+            accountNo:accountNo,
+            reconStatus:reconStatus,
+            reconTimeStart:reconTimeStart,
+            reconTimeEnd:reconTimeEnd
+        }, function(data){
+            $.messager.progress('close');
+            if (data.status) {
+                if (data.result != null) {
+                    $.messager.alert("信息", "导出成功，请于 2分钟内 点击 <a href='" + data.result + "'>下载</a> 对账失败记录。", "info");
+                } else {
+                    $.messager.alert("信息", "没有对账失败的记录", "info");
+                }
+            } else {
+                var message = "导出失败！";
+                if (data.message != null) {
+                    message = data.message;
+                }
+                $.messager.alert("信息", message, "error");
+            }
+        }, "json");
+    }
+
+
+
+
+    //对账结果说明
+        function showResultCode(value){
+            if (value == 10000000) {
+                return "成功";
+            } else if (value == 20000000){
+                return "系统有账户存管没有";
+            } else if(value ==20000100){
+                return "存管有账户系统没有";
+            }else if(value == 20000200){
+                return "个人信息不一致 ";
+            }else if(value ==20000300){
+                return "企业信息不一致";
+            }else if(value ==20000400){
+                return "个人银行卡不一致";
+            }else if(value ==20000500){
+                return "企业银行不一致";
+            }else if(value == 0){
+                return "";
+            }else{
+                return value;
+            }
+        }
+
+
+
+        //显示证件类型
+        function showUserIdType(value) {
+            if (value == "0") {
+                return "身份证";
+            } else if (value == "1") {
+                return "护照";
+            } else if (value == "2") {
+                return "军官证";
+            } else if (value == "3") {
+                return "士兵证";
+            } else if (value == "4") {
+                return "回乡证";
+            } else if (value == "5") {
+                return "户口本";
+            } else if (value == "6") {
+                return "外国护照";
+            } else if (value == "7") {
+                return "台胞证";
+            } else if (value == "8") {
+                return "其他";
+            } else {
+                return value;
+            }
+        }
+
+        //用户类型
+        function showAccountType(value) {
+            if (value == 100) {
+                return "平台用户";
+            }else if (value == 200){
+                return "个人用户";
+            } else if(value ==300){
+                return "企业用户";
+            }else{
+                return value;
+            }
+        }
+        function showAccountRole(value) {
+            if (value == 100) {
+                return "平台账户";
+            } else if (value == 200) {
+                return "投资人";
+            } else if (value == 300) {
+                return "借款人";
+            } else if(value ==400) {
+                return "担保人/机构";
+            }else if(value ==500) {
+                return "企业商户";
+            }else{
+                return value;
+            }
+        }
+        //对账结果描述
+        function showResultCode(value) {
+            if (value == 10000000) {
+                return "成功";
+            } else if (value == 20000000){
+                return "系统有账户存管没有";
+            } else if(value ==20000100){
+                return "存管有账户系统没有";
+            }else if(value == 20000200){
+                return "个人信息不一致";
+            }else if(value ==20000300){
+                return "企业信息不一致";
+            }else if(value == 20000400){
+                return "个人银行卡不一致";
+            }else if(value == 20000500){
+                return "企业银行不一致";
+            }else {
+                return value;
+            }
+        }
+        //对账时间
+        function showReconData(value){
+            var reconData1 = value.toString().substring(0,4);
+            var reconData2 = value.toString().substring(4,6);
+            var reconData3 = value.toString().substring(6,8);
+            return value = reconData1+"-"+reconData2+"-"+reconData3;
+
+        }
+
+        function showUserIdNo(value) {
+            if(value !=null && value.length==18){
+                var userId1 = value.toString().substring(0,6);
+                var userId2 = value.toString().substring(6,14);
+                var userId3 = value.toString().substring(14,18);
+                userId2 = "****";
+                var val = userId1 +userId2 +userId3;
+                return val;
+
+            }else{
+                return value;
+            }
+        }
+
+        //显示对账结果
+        function showReconStatus(value) {
+            if (value == 100) {
+                return "未对账";
+            } else if (value == 200) {
+                return "对账通过";
+            } else if (value == 300) {
+                return "对账失败";
+            } else if(value == 400){
+                return "差错已处理";
+            }else{
+                return value;
+            }
+        }
+
+</script>

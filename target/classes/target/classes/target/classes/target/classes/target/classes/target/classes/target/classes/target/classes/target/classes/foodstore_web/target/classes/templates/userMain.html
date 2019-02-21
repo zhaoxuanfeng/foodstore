@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header">
+</head>
+
+<body style="margin:0px;">
+
+<table id="dg" class="easyui-datagrid" title="用户管理 -- 用户登录信息" singleSelect="true" fitColumns="true" nowrap="false" striped="true"
+       SelectOnCheck="true" CheckOnSelect="true" rownumbers="true" pagination="true" pageSize="25" pageList="[25, 50, 150]" toolbar="#tb" fit="true">
+    <thead>
+    <tr>
+        <th field="select" align="center" checkbox="true">选择</th>
+        <th field="userId" align="center" width="8%">用户ID</th>
+        <th field="mainId" align="center" width="8%">主体信息ID</th>
+        <th field="nickName" align="center" width="10%">昵称</th>
+        <th field="mobile" align="center" width="10%">手机号</th>
+        <th field="wechatOpenid" align="center" width="8%">微信openid</th>
+        <th field="email" align="center" width="8%">邮箱</th>
+        <th field="userType" align="center" width="8%" formatter="showUserType">用户类型</th>
+        <th field="userStatus" align="center" width="10%" formatter="showUserStatus">用户状态</th>
+        <th field="createTime" align="center" width="9%" formatter="timeStamp2DateTime">注册时间</th>
+        <th field="modifyTime" align="center" width="9%" formatter="timeStamp2DateTime">修改时间</th>
+        <th field="remark" align="center" width="8%">备注</th>
+    </tr>
+    </thead>
+</table>
+<div id="tb" style="padding:2px 5px;">
+    <form id="formSearch">
+        <input type="hidden" name="pageSize" id="pageSize" />
+        <input type="hidden" name="pageNumber" id="pageNumber" />
+        <!--查询条件: userId和手机号-->
+        <div width="100%" style="margin:4px">
+            用户ID：<input type="text" id="searchUserId" name="searchUserId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+            手机号：<input type="text" id="searchMobile" name="searchMobile" class="easyui-textbox easyui-validatebox" data-options="validType:'length[11,11]'" maxlength="11" style="width:100px"/>&nbsp;&nbsp;
+            账户ID：<input type="text" id="searchAccountId" name="searchAccountId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+            账户编号：<input type="text" id="searchAccountNo" name="searchAccountNo" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;<br/><br/>
+            注册时间：<input class="easyui-datebox" id="startDate" name="startDate" type="text" editable = "false"> --
+            <input class="easyui-datebox" id="endDate" name="endDate" type="text" editable = "false">&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="btnSearch()">搜索</a>
+        </div>
+        <div width="100%" style="margin:4px">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="btnModifyUserStatus()">修改用户状态</a>&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="btnRefreshUserCache()">刷新用户缓存</a>&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="resetPassword()">重置登录密码</a>&nbsp;&nbsp;
+        </div>
+    </form>
+</div>
+<div id="dlgModifyUserStatus" class="easyui-dialog" title="修改用户状态" width="400px" height="150px" closed="true" buttons="#dlgModifyUserStatus-buttons" style="padding:10px" modal="true">
+    <form id="formModifyUserStatus" method="post">
+        <input type="hidden" name="userId" id="userId" />
+        <input type="hidden" name="userStatusOld" id="userStatusOld" />
+        <table align="center" width="90%" cellpadding="2" cellspacing="2">
+            <tr>
+                <td>
+                    将用户状态修改为：<select class="easyui-combobox" id="userStatusNew" name="userStatusNew" panelHeight="auto" editable="false" style="width:100px">
+                    <option value="100">正常</option>
+                    <option value="200">冻结</option>
+                    <option value="300">停用</option>
+                </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="dlgModifyUserStatus-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="modifyUserStatusSave()" iconcls="icon-save">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlgModifyUserStatus').dialog('close')" iconcls="icon-cancel">取消</a>
+</div>
+
+<!--点击刷新用户缓存后，显示的弹框-->
+<div id="dlgRefreshUserCache" class="easyui-dialog" title="刷新用户缓存" width="400px" height="150px" closed="true" buttons="#dlgRefreshUserCache-buttons" style="padding:10px" modal="true">
+    <form id="formRefreshUserCache" method="post">
+        <table align="center" width="90%" cellpadding="2" cellspacing="2">
+            <tr>
+                <td>
+                    需要刷新缓存的用户Id：<input type="text" id="refreshUserId" name="refreshUserId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="dlgRefreshUserCache-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="refreshUserCache()" iconcls="icon-save">刷新</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlgRefreshUserCache').dialog('close')" iconcls="icon-cancel">取消</a>
+</div>
+</body>
+<footer th:replace="footer :: footer"></footer>
+
+<script type="text/javascript">
+    (function ($) {
+        $("#divdg").height($(window).height() - $("#panelMainMenu").height() - 1 - $("#blankStrip").height());
+
+        var dateboxButtons = $.extend([], $.fn.datebox.defaults.buttons);
+        dateboxButtons.splice(1, 0, {
+            text: function (target) {
+                return $(target).datebox("options").cleanText
+            },
+            handler: function (target) {
+                $(target).datebox("setValue", "");
+                $(target).datebox("hidePanel");
+            }
+        });
+        $.extend($.fn.datebox.defaults, {
+            buttons: dateboxButtons
+        });
+    })(jQuery);
+
+
+    $(function(){
+
+        $("#startReconDate").datebox("setValue", currNDate(0));// 时间默认当天
+        $("#endReconDate").datebox("setValue", currNDate(0));//时间默认当天
+
+
+        //翻页控件，已支持分页
+        $("#dg").datagrid().datagrid("getPager").pagination({
+            //改变pageSize会执行 onChangePageSize，onSelectPage
+            //点上一页或下一页只会执行 onSelectPage
+            //刷新会执行 onSelectPage，onRefresh。所以删掉了onRefresh
+            onChangePageSize: function(pageSize) {
+                $("#pageSize").val(pageSize);
+            },
+            onSelectPage: function(pageNumber, pageSize) {
+                $("#pageSize").val(pageSize);
+                $("#pageNumber").val(pageNumber);
+                datagridBind();
+            },
+            onClick:function () {
+                checkType();
+            },
+            beforePageText: '第',
+            afterPageText: '共{pages}页',
+            displayMsg: '显示{from}到{to}条记录,共{total}条记录&nbsp;&nbsp;&nbsp;&nbsp;'//已支持分页，重新调整显示文字
+        });
+    });
+
+
+
+  /*  $(function(){
+        $("#dg").datagrid({
+            onClickRow: function (index, row) {
+                $("#userId").val(row.userId);
+                $("#refreshUserId").val(row.userId);
+                $("#userStatusOld").val(row.userStatus);
+                $("input[name$='userStatusNew']").val(row.userStatus);
+            },
+            onCheck: function (index, row) {
+                $("#userId").val(row.userId);
+                $("#refreshUserId").val(row.userId);
+                $("#userStatusOld").val(row.userStatus);
+                $("input[name$='userStatusNew']").val(row.userStatus);
+            }
+        });
+
+        $("#dg").datagrid().datagrid("getPager").pagination({
+            onChangePageSize: function(pageSize) {
+                $("#pageSize").val(pageSize);
+            },
+            onRefresh: function(pageNumber, pageSize) {
+                datagridBind();
+            }
+        });
+
+        // datagridBind();
+    });*/
+
+    function datagridBind() {
+        if (($("#searchUserId").value == "" ||$("#searchUserId").value <= 0)
+            &&($("#searchMobile").value == "" ||$("#searchMobile").value <= 0)
+            && ($("#searchAccountId").value == "" ||$("#searchAccountId").value <= 0)
+            && ($("#searchAccountNo").value == "" ||$("#searchAccountNo").value <= 0)){
+            $.messager.alert("信息", "请输入查询条件", "error");
+        }
+        $("#dg").datagrid("loading");
+        $('#dg').datagrid("loadData", { total: 0, rows: [] });
+        $.get("userMainList.htm", $("#formSearch").serialize(), function(pager) {
+            $("#dg").datagrid("loadData", {"total":pager.total, rows:pager.pageData});
+            $("#dg").datagrid("loaded");
+        });
+    }
+
+    function btnSearch() {
+        datagridBind();
+    }
+
+    function showUserType(value) {
+        if (value == 100) {
+            return "平台用户";
+        } else if (value == 200) {
+            return "投资人";
+        } else if (value == 300) {
+            return "企业借款人";
+        } else if (value == 400) {
+            return "个人借款人";
+        } else if (value == 500) {
+            return "企业担保人";
+        } else if (value == 600) {
+            return "个人担保人";
+        } else if (value == 700) {
+            return "企业商户";
+        } else {
+            return value;
+        }
+    }
+
+    function showUserStatus(value) {
+        if (value == 100) {
+            return "正常";
+        } else if (value == 200) {
+            return "冻结";
+        } else if (value == 300) {
+            return "停用";
+        }
+    }
+
+    function showGesturePwdStatus(value) {
+        if (value == 0) {
+            return "未启用";
+        } else if (value == 1) {
+            return "已启用";
+        }
+    }
+
+    function btnModifyUserStatus() {
+        var userId = $("#userId").val();
+        if (userId > 0) {
+            $("#userId").val(userId);
+            $('#dlgModifyUserStatus').dialog("open").window("center");
+        } else {
+            $.messager.alert("信息", "请先选择用户", "info");
+        }
+    }
+
+    function modifyUserStatusSave() {
+        var userId = $("#userId").val();
+        var userStatusOld = $("#userStatusOld").val();
+        var userStatusNew = $("input[name$='userStatusNew']").val();
+        if (userStatusOld == userStatusNew) {
+            $.messager.alert("信息", "用户状态没有改变", "info");
+        } else {
+            $.messager.confirm("确认", "确认将用户状态从“" + showUserStatus(userStatusOld) + "”修改为“" + showUserStatus(userStatusNew) + "”吗？", function (r) {
+                if (r) {
+                    $.post("modifyUserStatus.htm", {userId: userId, userStatusOld: userStatusOld, userStatusNew: userStatusNew}, function (data) {
+                        if (data.status) {
+                            $.messager.alert("信息", "用户状态修改成功！", "info", function () {
+                                $('#dlgModifyUserStatus').dialog("close");
+                                datagridBind();
+                            });
+                        } else {
+                            var message = "用户状态修改失败！";
+                            if (data.message != null) {
+                                message = data.message;
+                            }
+                            $.messager.alert("信息", message, "error");
+                        }
+                    }, "json");
+                }
+            });
+        }
+    }
+
+    function btnRefreshUserCache() {
+        $('#dlgRefreshUserCache').dialog("open").window("center");
+        $("#refreshUserId").textbox("setValue", "");
+    }
+
+    function refreshUserCache() {
+        var refreshUserId = $("#refreshUserId").val();
+        if (refreshUserId > 0) {
+            $.messager.confirm("确认", "确认刷新用户id:" + refreshUserId + "的缓存信息吗？", function (r) {
+                if (r) {
+                    $.post("refreshUserCache.htm", {refreshUserId: refreshUserId}, function (data) {
+                        if (data.status) {
+                            $.messager.alert("信息", "刷新用户缓存成功！", "info", function () {
+                                $('#dlgRefreshUserCache').dialog("close");
+                            });
+                        } else {
+                            var message = "刷新用户缓存失败！";
+                            if (data.message != null) {
+                                message = data.message;
+                            }
+                            $.messager.alert("信息", message, "error");
+                        }
+                    }, "json");
+                }
+            });
+        } else {
+            $.messager.alert("信息", "请输入用户id", "info");
+        }
+    }
+
+    function resetPassword() {
+        var row = $('#dg').datagrid('getSelected');
+        if(row != null){
+            updatePassword(row);
+        }else{
+            $.messager.alert("信息", "请选择所要重置密码的用户", "info");
+            return false;
+        }
+    }
+
+    function updatePassword(row) {
+        var userId = row.userId;
+        if(userId == ""){
+            $.messager.alert("信息", "该用户无法重置密码，请重新选择", "info");
+            return false;
+        }
+
+        $.post("getUserByUserId.htm", {userId:userId}, function (data) {
+            if (data.mobile != null && data.mobile != "") {
+                $.messager.confirm("确认", "您确认"+data.mobile+"用户的四要素信息已核对无误,并重置该用户的登录密码吗？", function (r) {
+                    if (r) {
+                        $.post("resetLoginPassword.htm", {userId:userId}, function (data) {
+                            if (data.status) {
+                                var message = "重置密码成功";
+                                if(data.message != null && data.message != ""){
+                                    message = data.message;
+                                }
+                                $.messager.alert("信息", message, "info");
+                            } else {
+                                $.messager.alert("信息", "重置密码失败，请重试", "error");
+                            }
+                        }, "json");
+                    }
+                });
+            } else {
+                $.messager.alert("信息", "重置密码失败,没有找到该用户", "error");
+            }
+        }, "json");
+    }
+
+</script>

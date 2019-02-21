@@ -10,25 +10,25 @@
 					<tr>
 						<td width="100px">帐号：</td>
 						<td>
-							<input type="text"  name="" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入帐号" validateOnCreate="false" validateOnBlur="true" />
+							<input type="text"  name="accountName" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入帐号" validateOnCreate="false" validateOnBlur="true" />
 						</td>
 					</tr>
 					<tr>
 						<td >密码：</td>
 						<td>
-							<input type="text"  name="" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入密码" validateOnCreate="false" validateOnBlur="true" />
+							<input type="text"  name="accountPassword" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入密码" validateOnCreate="false" validateOnBlur="true" />
 						</td>
 					</tr>
 					<tr>
 						<td >用户名：</td>
 						<td>
-							<input type="text"  name="" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入用户名" validateOnCreate="false" validateOnBlur="true" />
+							<input type="text"  name="name" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[2,16]" iconWidth="28" required="true" missingMessage="请输入用户名" validateOnCreate="false" validateOnBlur="true" />
 						</td>
 					</tr>
 					<tr>
-						<td >用户名：</td>
+						<td >真实姓名：</td>
 						<td>
-							<input type="text"  name="user_name" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入管理员名" validateOnCreate="false" validateOnBlur="true" />
+							<input type="text"  name="realname" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[2,16]" iconWidth="28" required="true" missingMessage="请输入真实姓名" validateOnCreate="false" validateOnBlur="true" />
 						</td>
 					</tr>
 					<tr>
@@ -36,9 +36,9 @@
 							<p>出生日期：</p>
 						</td>
 						<td id="container">
-							<!--<input type="checkbox"  name="age" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[0,3]" iconWidth="28" required="false" missingMessage="请输入年龄" validateOnCreate="false" validateOnBlur="true" />-->
-							<input class="easyui-datetimebox combo-f textbox-f datatimebox-f" id="starttime" name="starttime" style="width:150px" textboxname="starttime" comboname="starttime"/>
-							<input type="hidden" class="textbox-value" name="starttime" value="2017-12-26 13:45:40" />
+							<!--<input class="easyui-datetimebox combo-f textbox-f datatimebox-f" id="birthday" name="birthday" style="width:150px"  comboname="birthday" textboxname="birthday" />-->
+							<!--<input type="hidden" class="textbox-value" name="birthday" value="2017-12-26" />-->
+							<input class="easyui-datebox" type="date" name="birthday" data-options="required:true"  value="" style="width:150px"/>
 						</td>
 					</tr>
 					<tr>
@@ -55,7 +55,7 @@
 					<tr>
 						<td >地址：</td>
 						<td>
-							<input type="text" name="" id="address" value="" class="easyui-textbox easyui-validatebox" validType="length[4,50]" iconWidth="28" required="false" missingMessage="请输入地址" validateOnCreate="false" validateOnBlur="true" />
+							<input type="text" name="address" id="address" value="" class="easyui-textbox easyui-validatebox" validType="length[4,50]" iconWidth="28" required="false" missingMessage="请输入地址" validateOnCreate="false" validateOnBlur="true" />
 						</td>
 					</tr>
 					<tr>
@@ -65,11 +65,10 @@
 						</td>
 					</tr>
 					<tr>
-						<td >
-							<input type="button" name="" id="submit_button" value="提交" class="" onclick="" />
-							
+						<td>
+							<input type="button" value="提交"  onclick="register()" />
 						</td>
-						<td><input type="reset" name="" id="reset" value="重置"  /></td>
+						<td><input type="reset"  id="reset" value="重置"  /></td>
 					</tr>
 				</table>
 			</form>
@@ -80,26 +79,22 @@
 	<footer th:replace="footer :: footer"></footer>
 
 	<script type="text/javascript">
-		$(function() {
-            #container.append('开始时间<input class="easyui-datetimebox" id="starttime" name="starttime" style="width:150px" />');
-            #container.append('结束时间<input class="easyui-datetimebox" id="endtime" name="endtime" style="width:150px" />');
-            $.parser.parse(#container);
-		});
 
-		function submitForm() {
-            if ($("#register_form").form("validate")) {
+
+        function register(){
+            if($("#register_form").form("validate")) {
                 $.messager.progress({
-                    title: "信息检测",
+                    title: "注册中",
                     msg: "正在注册，请稍候..."
                 });
 
-                $.post("/htm/registerc.htm", $("register_form").serialize(), function (data) {
-                    if (data.status == true && data.message == "成功") {
-                        window.location.href = "/htm/main.htm";
-                    } else if (data.status == false) {
+                $.post("/htm/registerUser.htm", $("#register_form").serialize(), function (data) {
+                    if(data.status == true && data.message=="成功" ) {
+                        window.location.href = "/htm/login.htm";
+                    } else if(data.status == false){
                         $.messager.progress("close");
 
-                        var message = "注册失败，请检查注册信息！";
+                        var message = "注册失败，请检查用户信息是否重复！";
                         if (data.message != null) {
                             message = data.message;
                         }
@@ -108,5 +103,14 @@
                 }, "json");
             }
         }
+
+
+
+
+        $(function() {
+            // #container.append('开始时间<input class="easyui-datetimebox" id="starttime" name="starttime" style="width:150px" />');
+            // #container.append('结束时间<input class="easyui-datetimebox" id="endtime" name="endtime" style="width:150px" />');
+            // $.parser.parse(#container);
+        });
 	</script>
 </html>
