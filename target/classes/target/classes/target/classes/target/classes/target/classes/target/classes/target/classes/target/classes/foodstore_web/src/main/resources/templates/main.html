@@ -10,8 +10,8 @@
         <tr>
             <td width="40%" style="color: #2B2E37"><strong>哭脸餐饮后台管理系统</strong>
             <td width="60%" align="right" style="color: #2B2E37">
-            <span th:utext=""></span>,欢迎您</span>
-            <a href="#" onclick="location='/htm/logoutManageUser.htm'" class='easyui-linkbutton</td>' data-options='plain:true' style="color: #2B2E37">安全退出</a></td>
+            <span th:utext="${session.userInfo.userName}"></span>,欢迎您</span>
+            <a href="#" onclick="location='/htm/logout.htm'" class='easyui-linkbutton</td>' data-options='plain:true' style="color: #2B2E37">安全退出</a></td>
         </tr>
     </table>
 </div>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header">
+</head>
+
+<body style="margin:0px;">
+<table width="100%" style="padding: 2px">
+    <tr>
+        <td width="30%" valign="top">
+            <table id="dgRole" class="easyui-datagrid" title="系统管理 -- 角色" singleSelect="true" fitColumns="true" nowrap="false" striped="true"
+                   SelectOnCheck="true" CheckOnSelect="true" rownumbers="true" pagination="false" toolbar="#tb">
+                <thead>
+                <tr>
+                    <th field="select" align="center" width="2%" checkbox="true">选择</th>
+                    <th field="manageRoleId" align="center" width="25%">角色ID</th>
+                    <th field="roleCode" align="center" width="35%">角色代码</th>
+                    <th field="roleName" align="center" width="38%">角色名称</th>
+                </tr>
+                </thead>
+            </table>
+        </td>
+        <td width="50%" valign="top">
+            <ul id="treeFunc" class="easyui-tree" animate="true" lines="true" checkbox="true" style="width: 100%;height: auto">
+            </ul>
+        </td>
+        <td width="20%" valign="top">
+            <div id="dlUser" class="easyui-datalist" title="拥有用户" lines="true" singleSelect="true" valueField="manageUserId" textField="userName"></div>
+        </td>
+    </tr>
+</table>
+<div id="tb" style="padding:2px 5px;">
+    <form id="formAddModify">
+        <div width="100%" style="margin:4px">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="btnAdd()">新增</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="btnModify()">修改</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-remove" onclick="btnDel()">删除</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="btnAddFeature()">新增功能</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="btnBind()">绑定功能</a>
+        </div>
+    </form>
+</div>
+
+<div id="dlgAddMod" class="easyui-dialog" title="新增修改角色" width="500px" height="200px" closed="true" buttons="#dlgAddModButtons" style="padding:10px" modal="true">
+    <form id="formSave" method="post">
+        <input type="hidden" name="manageRoleId" id="manageRoleId" />
+        <input type="hidden" name="manageFuncIds" id="manageFuncIds" />
+        <input type="hidden" name="addmodify" id="addmodify" />
+        <table align="center" width="90%" cellpadding="2" cellspacing="2">
+            <tr>
+                <td width="50%">角色代码（ROLE_开头全部大写）：</td>
+                <td width="50%"><input id="roleCode" name="roleCode" type="text" value="ROLE_" class="easyui-textbox easyui-validatebox" required="true" validType="length[1,64]" missingMessage="请输入角色代码" validateOnCreate="false" validateOnBlur="true"/></td>
+            </tr>
+            <tr>
+                <td width="35%">角色名称：</td>
+                <td width="65%"><input id="roleName" name="roleName" type="text" class="easyui-textbox easyui-validatebox" required="true" validType="length[1,64]" missingMessage="请输入角色名称" validateOnCreate="false" validateOnBlur="true"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="dlgAddModButtons">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="btnSave()" iconcls="icon-save">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlgAddMod').dialog('close')" iconcls="icon-cancel">取消</a>
+</div>
+
+<div id="dlgAddFeature" class="easyui-dialog" title="新增功能" width="1000px" height="500px" closed="true" buttons="#dlgAddFeature-buttons" style="padding:10px" modal="true">
+    <script>
+        var html = '<form id="formAddFeature" method="post">';
+        html += '<table id="t1" align="center" width="800px" height="100%" cellpadding="0" cellspacing="0" border="1" >';
+        html += '<div width="100%" style="margin:4px"><ul>';
+        html += '<tr align="center">';
+        html += '<td style="background:#c9ddff" width="16%" >功能ID</td>';
+        html += '<td style="background:#c9ddff" width="16%" >系统ID</td>';
+        html += '<td style="background:#c9ddff" width="16%" >父节点ID';
+        html += '<td style="background:#c9ddff" width="16%" >功能名称';
+        html += '<td style="background:#c9ddff" width="20%" >URL';
+        html += '<td style="background:#c9ddff" width="8%" >显示顺序';
+        html += '<td style="background:#c9ddff" width="8%" >功能类型';
+        html += '</tr>';
+        for (var i=1; i<=20; i++) {
+            if (i == 1) {
+                html += '<tr align="center">';
+                html += '<td>';
+                html += '<input id="manageFuncId_' +i+ '" name="manageFuncId_' +i+ '" type="text" class="easyui-numberbox" style="width:128px;" required="true" data-options="validType:[\'integer\',\'length[12,12]\']" missingMessage="请输入manage_func_id(下同)" invalidMessage="请输入manage_func_id（12位数字）" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '<td>';
+                html += '<input id="manageSystemId_' +i+ '" name="manageSystemId_' +i+ '" type="text" class="easyui-numberbox" style="width:128px;" required="true" data-options="validType:[\'integer\',\'length[12,12]\']" missingMessage="请输入系统Id(下同)" invalidMessage="请输入数字系统Id（12位数字）" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '<td>';
+                html += '<input id="parentId_' +i+ '" name="parentId_' +i+ '" type="text" class="easyui-numberbox" style="width:128px;" required="true" data-options="validType:[\'integer\',\'length[12,12]\']" missingMessage="请输入父Id(下同)" invalidMessage="请输入父Id（12位数字）" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '<td>';
+                html += '<input id="funcName_' +i+ '" name="funcName_' +i+ '" type="text" class="easyui-textbox" style="width:128px;" required="true" data-options="validType:\'length[1,64]\'" missingMessage="请输入功能名称(下同)" invalidMessage="请输入功能名称" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '<td>';
+                html += '<input id="url_' +i+ '" name="url_' +i+ '" type="text" class="easyui-textbox" style="width:260px;" required="true" data-options="multiline:true,validType:\'length[1,250]\'" missingMessage="请输入URL(下同)" invalidMessage="请输入URL（以“/htm/”开头,以“.htm”结尾）" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '<td>';
+                html += '<input id="showOrder_' +i+ '" name="showOrder_' +i+ '" type="text" class="easyui-numberbox" style="width:64px;" required="true" data-options="validType:[\'integer\',\'length[1,3]\']" missingMessage="请输入显示顺序(下同)" invalidMessage="请输显示顺序（1到3位数字）" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '<td>';
+                html += '<input id="funcType_' +i+ '" name="funcType_' +i+ '" type="text" class="easyui-numberbox" style="width:64px;" required="true" data-options="validType:[\'integer\',\'length[1,3]\']" missingMessage="请输入功能类型(下同)" invalidMessage="请输入功能类型（1到3位数字）" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '</tr>';
+            } else if (i > 1) {
+                html += '<tr align="center">';
+                html += '<td>';
+                html += '<input id="manageFuncId_' +i+ '" name="manageFuncId_' +i+ '" type="text" class="easyui-numberbox" style="width:128px;" data-options="validType:[\'integer\',\'length[12,12]\']" invalidMessage="请输入manage_func_id（12位数字）" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '<td>';
+                html += '<input id="manageSystemId_' +i+ '" name="manageSystemId_' +i+ '" type="text" class="easyui-numberbox" style="width:128px;" data-options="validType:[\'integer\',\'length[12,12]\']" invalidMessage="请输入系统Id（12位数字）" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '<td>';
+                html += '<input id="parentId_' +i+ '" name="parentId_' +i+ '" type="text" class="easyui-numberbox" style="width:128px;" data-options="validType:[\'integer\',\'length[12,12]\']" invalidMessage="请输入父Id（12位数字）" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '<td>';
+                html += '<input id="funcName_' +i+ '" name="funcName_' +i+ '" type="text" class="easyui-textbox" style="width:128px;" data-options="validType:\'length[1,64]\'" invalidMessage="请输入功能名称" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '<td>';
+                html += '<input id="url_' +i+ '" name="url_' +i+ '" type="text" class="easyui-textbox" style="width:260px;" data-options="multiline:true,validType:\'length[1,64]\'" invalidMessage="请输入URL（以“/htm/”开头,以“.htm”结尾）" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '<td>';
+                html += '<input id="showOrder_' +i+ '" name="showOrder_' +i+ '" type="text" class="easyui-numberbox" style="width:64px;" data-options="validType:[\'integer\',\'length[1,3]\']" invalidMessage="请输入显示顺序（1到3位数字）" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '<td>';
+                html += '<input id="funcType_' +i+ '" name="funcType_' +i+ '" type="text" class="easyui-numberbox" style="width:64px;" data-options="validType:[\'integer\',\'length[1,3]\']" invalidMessage="请输入功能类型（1到3位数字）" validateOnCreate="false" validateOnBlur="true"/>';
+                html += '</td>';
+                html += '</tr>';
+            }
+        }
+        html += '</table></form>';
+        document.getElementById('dlgAddFeature').innerHTML = html;
+    </script>
+</div>
+<div id="dlgAddFeature-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="dlgBtnSaveAddFeature()" iconcls="icon-edit">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="dlgBtnCancelAddCredit()" iconcls="icon-cancel">取消</a>
+</div>
+
+</body>
+<footer th:replace="footer :: footer"></footer>
+
+<script type="text/javascript">
+    $(function(){
+        roleBind();
+        funcBind();
+
+        $("#dgRole").datagrid({
+            onClickRow: function (index, row) {
+                $("#manageRoleId").val(row.manageRoleId);
+                roleFuncBind(row.manageRoleId);
+                userBind(row.manageRoleId);
+            },
+            onCheck: function (index, row) {
+                $("#manageRoleId").val(row.manageRoleId);
+            }
+        });
+    });
+
+    //绑定在了body上，也可以绑定在其他可用元素行，但是不是所有元素都支持copy和past事件。
+    $(document.body).bind({
+       paste: function(e) {//paste事件
+            var eve = e.originalEvent
+            var cp = eve.clipboardData;
+            var data = null;
+            var m = 0;
+            var clipboardData = window.clipboardData; // IE
+            if (!clipboardData) { //chrome
+                clipboardData = e.originalEvent.clipboardData
+            }
+            data = clipboardData.getData('Text');
+            //得到粘贴板内容
+            var rowArr = (data.indexOf(String.fromCharCode(10)) > -1) ?
+                data.split(String.fromCharCode(10)) :
+                data.split(String.fromCharCode(13)),
+                //根据\t解析单元格
+                cellArr = rowArr.filter(function(item) { //兼容Excel行末\n，防止粘贴出多余空行
+                    return (item !== "")
+                }).map(function(item) {
+                    return item. split(/\s+/);
+                });
+            for(var i = 0; i < cellArr.length; i++){
+                var temp = cellArr[i];
+                for(var j =0; j < temp.length; j++){
+                    if(temp[j] == ""){
+                        temp.splice(j, 1);
+                        j = j -1;
+                    }
+                    cellArr[i] = temp;
+                }
+            }
+            //输出至网页表格
+            var tab = $(e.target).parents('table')[0],  //表格
+                td = $(e.target).parents('td'),    //当前单元格
+                startRow = td.parents('tr')[0].rowIndex, //当前单元格行数
+                startCell = td[0].cellIndex, //当前单元格列数
+                rows = tab.rows.length;  //总行数
+            var count = 0;
+            for (var i = startRow-1; m < cellArr.length && startRow + m < rows; i++) {
+                var cells = tab.rows[startRow + i].cells.length;  //该行总列数
+                var count = cellArr[m].length;
+                if(count > 7){
+                    count = count - 3;
+                }
+                var q = 0;
+                for(var j = startCell; (cells - j) > 0 && (startCell + count) <= cells; j++) {
+                        if(j == 0){
+                            $('#manageFuncId_'+(i+1)).textbox('setValue',cellArr[m][q]);
+                        }else if(j == 1){
+                            $('#manageSystemId_'+(i+1)).textbox('setValue',cellArr[m][q]);
+                        }else if(j == 2){
+                            $('#parentId_'+(i+1)).textbox('setValue',cellArr[m][q]);
+                        }else if(j == 3){
+                            $('#funcName_'+(i+1)).textbox('setValue', cellArr[m][q]);
+                        }else if(j == 4){
+                            $('#url_'+(i+1)).textbox('setValue', cellArr[m][q]);
+                        }else if(j == 5){
+                            $("#showOrder_"+(i+1)).textbox('setValue',cellArr[m][q]);
+                        }else if(j == 6){
+                            $("#funcType_"+(i+1)).textbox('setValue',cellArr[m][q]);
+                        }else{
+                            break;
+                        }
+                        q = q + 1;
+                }
+                m = m + 1;
+            }
+           e.preventDefault(); //消除默认粘贴
+        }
+    });
+
+    function roleBind() {
+        $.get("manageRoleList.htm", function(restModel){
+            $("#dgRole").datagrid("loadData", restModel.data);
+        }, "json");
+    }
+
+    var Node = function() {
+        this.id = "";
+        this.parentid = "";
+        this.text = "0";
+        this.children = [];
+    }
+
+    var root = new Node();
+    root.id = 0;
+    root.text = "功能树";
+    root.children = [];
+    function funcBind() {
+        $.get("manageFuncList.htm", function(restModel) {
+            root.children = buildTree(restModel.data, 0);
+            $("#treeFunc").tree("loadData", JSON.parse("[" + JSON.stringify(root) + "]"));
+        }, "json");
+    }
+
+    function buildTree(data, parentId) {
+        var childrens = [], childNode;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].parentId == parentId) {
+                var node = new Node();
+                node.id = data[i].manageFuncId;
+                node.parentid = data[i].parentId;
+                node.text = data[i].funcName;
+                if (data[i].url != "") {
+                    node.text = node.text + "（" + data[i].url + "）";
+                }
+                node.children = [];
+                childNode = buildTree(data, data[i].manageFuncId);
+                if (childNode.length > 0 ) {
+                    node.children = childNode;
+                    if ((data[i].parentId != 0) && (data[i].isMenu == 1)) {
+                        node.state = "closed";
+                    }
+                }
+                childrens.push(node);
+            }
+        }
+        return childrens;
+    }
+
+    function roleFuncBind(manageRoleId) {
+        var root = $("#treeFunc").tree("getRoot");
+        $('#treeFunc').tree('check', root.target);
+        $('#treeFunc').tree('uncheck', root.target);
+
+        $("#treeFunc").tree({cascadeCheck:false});
+        $.get("manageRoleFuncList.htm", {manageRoleId:manageRoleId}, function(restModel){
+            for (var i = 0; i < restModel.data.length; i++) {
+                var node = $('#treeFunc').tree('find',restModel.data[i].manageFuncId);
+                $('#treeFunc').tree('check', node.target);
+            }
+            $("#treeFunc").tree({cascadeCheck:true});
+        }, "json");
+    }
+
+    function userBind(manageRoleId) {
+        $.get("manageRoleUsers.htm", {manageRoleId:manageRoleId}, function(restModel) {
+            $("#dlUser").datalist("loadData", restModel.data);
+        }, "json");
+    }
+
+    function btnAdd() {
+        $("#addmodify").val("add");
+        $("#manageRoleId").val(0);
+        $('#dlgAddMod').dialog("open").dialog("setTitle", "新增角色");
+    }
+
+    function btnDel() {
+        var manageRoleId = $("#manageRoleId").val();
+        if (manageRoleId > 0) {
+            $.messager.confirm("确认", "确认删除此角色吗？请确认此角色没有管理员在使用", function (r) {
+                if (r) {
+                    $.post("manageRoleDel.htm", {manageRoleId: manageRoleId}, function (data) {
+                        if (data.code == "200") {
+                            roleBind();
+                        } else {
+                            var message = "删除角色失败！";
+                            if (data.message != null) {
+                                message = data.message;
+                            }
+                            $.messager.alert("信息", message, "error");
+                        }
+                    }, "json");
+                }
+            });
+        } else {
+            $.messager.alert("信息", "请先选择角色", "info");
+        }
+    }
+
+    function btnModify() {
+        $("#addmodify").val("modify");
+        var manageRoleId = $("#manageRoleId").val();
+        if (manageRoleId > 0) {
+            $("#manageRoleId").val(manageRoleId);
+            var select = $("#dgRole").datagrid("getSelected");
+            $("#roleCode").textbox("setValue", select.roleCode);
+            $("#roleName").textbox("setValue", select.roleName);
+            $('#dlgAddMod').dialog("open").dialog("setTitle", "修改角色");
+        } else {
+            $.messager.alert("信息", "请先选择角色", "info");
+        }
+    }
+
+    function btnSave() {
+        if ($("#formSave").form("validate")) {
+            $.post("manageRoleAddMod.htm", $("#formSave").serialize(), function (data) {
+                if (data.code == "200") {
+                    $('#dlgAddMod').dialog("close");
+                    roleBind();
+                } else {
+                    var message = "新增/修改角色信息失败！";
+                    if (data.message != null) {
+                        message = data.message;
+                    }
+                    $.messager.alert("信息", message, "error");
+                }
+            }, "json");
+        }
+    }
+
+    function btnBind() {
+        var manageRoleId = $("#manageRoleId").val();
+        if (manageRoleId > 0) {
+            $.messager.confirm("确认", "确认修改角色对应的功能？", function (r) {
+                if (r) {
+                    var funcIds = new Array();
+                    var nodes = $("#treeFunc").tree("getChecked", ['checked','indeterminate']);
+                    for (var i = 0; i < nodes.length; i++) {
+                        if (nodes[i].id > 0) {
+                            funcIds.push(nodes[i].id);
+                        }
+                    }
+
+                    var noRepeatFuncIds = noRepeatArray(funcIds);
+                    $("#manageFuncIds").val(noRepeatFuncIds.join(","));
+                    $.post("manageRoleFunc.htm", $("#formSave").serialize(), function (data) {
+                        if (data.code == "200") {
+                            $.messager.alert("信息", "修改角色功能成功", "info");
+                        } else {
+                            var message = "修改角色功能信息失败！";
+                            if (data.message != null) {
+                                message = data.message;
+                            }
+                            $.messager.alert("信息", message, "error");
+                        }
+                    }, "json");
+                }
+            });
+        } else {
+            $.messager.alert("信息", "请先选择角色", "info");
+        }
+    }
+
+    function btnAddFeature() {
+        $("#projectName").combobox().combobox('setValue',"");
+        $("#modelName").combobox().combobox('setValue',"");
+        $("#channelNum").combobox().combobox('setValue',"");
+        $("#channelProduct").combobox().combobox('setValue',"");
+
+        //打开弹框
+        $('#dlgAddFeature').dialog("open").window("center");
+        //清空所要添加的功能信息
+        for (var i=1; i<=20; i++) {
+            $("#manageFuncId_" +i).textbox("setValue", "");
+            $("#manageSystemId_" +i).textbox("setValue", "");
+            $("#parentId_" +i).textbox("setValue", "");
+            $("#funcName_" +i).textbox("setValue", "");
+            $("#url_" +i).textbox("setValue", "");
+            $("#showOrder_" +i).textbox("setValue", "");
+            $("#funcType_" +i).textbox("setValue", "");
+        }
+    }
+
+    function dlgBtnCancelAddCredit () {
+        $('#dlgAddFeature').dialog('close');
+    }
+
+    function dlgBtnSaveAddFeature() {
+        var manageFuncId_1 = $("#manageFuncId_1").val();
+        var manageSystemId_1_= $("#manageSystemId_1").val();
+        var parentId_1 = $("#parentId_1").val();
+        var funcName_1 = $("#funcName_1").val();
+        var url_1 = $("#url_1").val();
+        var showOrder_1 = $("#showOrder_1").val();
+        var funcType_1 = $("#funcType_1").val();
+        if(manageFuncId_1 == "" || manageSystemId_1_ == "" || parentId_1 == "" || funcName_1 == "" || url_1 == "" || showOrder_1 == "" || funcType_1 == ""){
+            $.messager.alert("信息", "第一行必须输入", "error");
+            return ;
+        }
+
+        $.messager.confirm("确认", "确认增加这信息吗？", function (r) {
+            if (r) {
+                $.post("manageFuncAdd.htm", $("#formAddFeature").serialize(), function (data) {
+                    if (data.code == "200") {
+                        $.messager.alert("信息", "增加功能信息成功", "info");
+                        $('#dlgAddFeature').dialog('close');
+                        location.reload();
+                    } else {
+                        var message = "增加功能信息失败！";
+                        if (data.message != null) {
+                            message = data.message;
+                        }
+                        $.messager.alert("信息", message, "error");
+                    }
+                }, "json");
+            }
+        });
+    }
+
+    function btnLoadCache() {
+        $.post("manageRoleFuncLoadCache.htm", function (data) {
+            if (data.code == "200") {
+                $.messager.alert("信息", "加载到缓存成功", "info");
+            } else {
+                var message = "加载到缓存失败！";
+                if (data.message != null) {
+                    message = data.message;
+                }
+                $.messager.alert("信息", message, "error");
+            }
+        }, "json");
+    }
+</script>
+
+</html>
