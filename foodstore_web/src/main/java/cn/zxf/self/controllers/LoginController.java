@@ -1,8 +1,8 @@
 package cn.zxf.self.controllers;
 
-import cn.zxf.self.bussiness.AccountInfoBussiness;
+import cn.zxf.self.bussiness.ManageFunBusiness;
 import cn.zxf.self.bussiness.UserInfoBussiness;
-import cn.zxf.self.entry.AccountInfo;
+import cn.zxf.self.entry.ManageFunc;
 import cn.zxf.self.entry.UserInfo;
 import cn.zxf.self.entry.dto.StateInfo;
 import cn.zxf.self.entry.vo.RegisterUser;
@@ -25,9 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @ClassName LoginController
@@ -41,11 +41,10 @@ public class LoginController extends  BaseController{
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
-    private AccountInfoBussiness accountInfoBussiness;
-
-    @Autowired
     private UserInfoBussiness userInfoBussiness;
 
+    @Autowired
+    private ManageFunBusiness manageFunBusiness;
     /***
         *@Description  //TODO  跳转至登录页面
         *@Param [session, request, response]
@@ -87,17 +86,15 @@ public class LoginController extends  BaseController{
         try {
             String password = MD5Untils.getMD5Str(accountPassword);
 
-            AccountInfo accountInfo = accountInfoBussiness.getAccountInfoByAccountName(accountName,password);
+            UserInfo userInfo = userInfoBussiness.getUserInfoByAccountName(accountName,password);
     //        String searchClientId = request.getParameter("searchClientId");
-            if(accountInfo != null){
-                session.setAttribute("accountInfo",accountInfo);
-    //            session.setAttribute("searchClientId",searchClientId);
-                UserInfo userInfo = userInfoBussiness.getUserInfoByAccountInfo(accountInfo.getAccountId());
-                logger.info("登录用户："+userInfo.getUserName()+",账户："+accountInfo.getAccountName());
+            if(userInfo != null){
                 session.setAttribute("userInfo",userInfo);
+    //            session.setAttribute("searchClientId",searchClientId);
+                logger.info("登录用户："+userInfo.getUserName()+",账户："+userInfo.getAccountName());
                 jsonModel.setStatus(true);
                 jsonModel.setMessage("成功");
-                jsonModel.setResult(accountInfo);
+                jsonModel.setResult(userInfo);
             }else{
                 jsonModel.setStatus(false);
                 jsonModel.setMessage("账号密码错误！");
@@ -119,7 +116,7 @@ public class LoginController extends  BaseController{
     public String userMain(HttpServletRequest request){
         return  "main";
     }
-/**
+
     //动态加载
     @RequestMapping(value="/htm/menu.htm", method=RequestMethod.GET)
     @ResponseBody
@@ -127,8 +124,8 @@ public class LoginController extends  BaseController{
     {
         UserInfo user = (UserInfo)session.getAttribute("userInfo");
 
-        String clientId = request.getParameter("clientId");
-        Long manageSystemId = Long.valueOf("100000000000");  //100000000000  105000000000
+//        String clientId = request.getParameter("clientId");
+        Long manageSystemId = Long.valueOf("100100");//100100
 
         // 生成菜单
         JSONArray menu = new JSONArray();
@@ -158,9 +155,10 @@ public class LoginController extends  BaseController{
                 }
             }
         }
+        session.setAttribute("rolefunc",listFunc);
         return new RestModel(menu);
     }
-    **/
+
     /***
         *@Description  //TODO  跳转个人页面
         *@Param [session]
@@ -192,7 +190,6 @@ public class LoginController extends  BaseController{
      **/
     @RequestMapping(value="/htm/logout.htm")
     public String logout(HttpSession session,HttpServletRequest request,HttpServletResponse response){
-        session.removeAttribute("accountInfo");
         session.removeAttribute("userInfo");
         session.invalidate();
         Cookie[] cookies = request.getCookies();
@@ -215,50 +212,55 @@ public class LoginController extends  BaseController{
     public JsonModel registerAccount(RegisterUser registerUser){
         StateInfo stateInfo = new StateInfo();
         JsonModel jsonModel = new JsonModel();
-        AccountInfo accountInfo = new AccountInfo();
-        UserInfo userInfo = new UserInfo();
 
-        accountInfo.setAccountName(registerUser.getAccountName());
-        userInfo.setUserName(registerUser.getName());
-        userInfo.setUserAddress(registerUser.getAddress());
-        userInfo.setUserBirthday(registerUser.getBirthday());
-        userInfo.setUserPhone(registerUser.getPhone());
-        userInfo.setUserRealname(registerUser.getRealname());
-        userInfo.setUserSex(registerUser.getSex());
 
 
         try {
-            Date  date = new Date();
-            String accountid = UUID.randomUUID().toString()+MD5Untils.getMD5Str(accountInfo.getAccountName());
-            String userid = UUID.randomUUID().toString()+MD5Untils.getMD5Str(date.toString());
-            accountInfo.setUserId(userid);
-            userInfo.setUserId(userid);
-            accountInfo.setAccountId(accountid);
-            userInfo.setUserAccount(accountid);
-            accountInfo.setUseFlag(0);
-            accountInfo.setAccountPassword(MD5Untils.getMD5Str(registerUser.getAccountPassword()));
+            String password = MD5Untils.getMD5Str(registerUser.getAccountPassword());
+            registerUser.setAccountPassword(password);
 //            userInfo.setUserAccount(accountInfo.getAccountId().toString());
-            userInfo.setUserFlag(1);
-            stateInfo = accountInfoBussiness.setAccountInfoAndUserInfo(accountInfo,userInfo);
+            UserInfo userInfo = userInfoBussiness.getUserInfoByAccountInfo(registerUser.getAccountName(),
+                    registerUser.getAccountPassword());
+            if(!ObjectUtils.allNotNull(userInfo)) {
+                Date create_time = new Date("yyyy-MM-dd");
+                userInfo = new UserInfo();
+                userInfo.setUserFlag(0);
+                userInfo.setUserName(registerUser.getName());
+                userInfo.setUserAddress(registerUser.getAddress());
+                userInfo.setUserBirthday(registerUser.getBirthday());
+                userInfo.setUserPhone(registerUser.getPhone());
+                userInfo.setUserRealname(registerUser.getRealname());
+                userInfo.setUserSex(registerUser.getSex());
+                userInfo.setUserEmail(registerUser.getEmail());
+                userInfo.setCreateTime(create_time);
+
+                userInfo.setAccountName(registerUser.getAccountName());
+                userInfo.setAccountPassword(password);
+                stateInfo = userInfoBussiness.setUserInfo(userInfo);
+            }else{
+                jsonModel.setStatus(false);
+                jsonModel.setMessage("用户已注册");
+
+            }
+
+            if(stateInfo.isState()){
+                jsonModel.setStatus(true);
+                jsonModel.setMessage("注册账户"+registerUser.getAccountName()+"成功");
+                logger.info("注册："+registerUser.getAccountName());
+                jsonModel.setResult(registerUser);
+
+            }else {
+                jsonModel.setStatus(false);
+                jsonModel.setMessage("注册账户"+registerUser.getAccountName()+"失败");
+                logger.info("注册失败："+registerUser.getAccountName());
+                jsonModel.setResult(registerUser);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if(stateInfo.isState()){
-            jsonModel.setStatus(true);
-            jsonModel.setMessage("注册账户"+accountInfo.getAccountName()+"成功");
-            logger.info("注册："+accountInfo.getAccountName());
-            jsonModel.setResult(accountInfo);
-            return jsonModel;
-        }else {
-            jsonModel.setStatus(false);
-            jsonModel.setMessage("注册账户"+accountInfo.getAccountName()+"失败");
-            logger.info("注册失败："+accountInfo.getAccountName());
-            jsonModel.setResult(accountInfo);
-            return jsonModel;
-
-        }
-
+        return jsonModel;
 
     }
 

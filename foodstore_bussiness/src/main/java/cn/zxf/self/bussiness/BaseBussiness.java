@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class BaseBussiness {
 
-    @Autowired
-    protected AccountInfoMapper accountInfoMapper;
 
     @Autowired
     protected ManageGroupMapper manageGroupMapper;
@@ -36,5 +34,8 @@ public class BaseBussiness {
 
     @Autowired
     protected UserInfoMapper userInfoMapper;
+
+    @Autowired
+    protected ManageFuncMapper manageFuncMapper;
 
 }

@@ -6,21 +6,24 @@
 <body style="margin:0px;">
 
 <table id="dg" class="easyui-datagrid" title="用户管理 -- 用户登录信息" singleSelect="true" fitColumns="true" nowrap="false" striped="true"
-       SelectOnCheck="true" CheckOnSelect="true" rownumbers="true" pagination="true" pageSize="25" pageList="[25, 50, 150]" toolbar="#tb" fit="true">
+       SelectOnCheck="true" CheckOnSelect="true" rownumbers="true" pagination="true" pageSize="25" pageList="[25, 50, 150]" toolbar="#tb" fit="true"
+       >
     <thead>
     <tr>
         <th field="select" align="center" checkbox="true">选择</th>
         <th field="userId" align="center" width="8%">用户ID</th>
-        <th field="mainId" align="center" width="8%">主体信息ID</th>
-        <th field="nickName" align="center" width="10%">昵称</th>
-        <th field="mobile" align="center" width="10%">手机号</th>
-        <th field="wechatOpenid" align="center" width="8%">微信openid</th>
+        <th field="accountName" align="center" width="8%">账号</th>
+        <th field="userName" align="center" width="10%">昵称</th>
+        <th field="userRealname" align="center" width="10%">姓名</th>
+        <th field="userPhone" align="center" width="8%">手机号</th>
         <th field="email" align="center" width="8%">邮箱</th>
-        <th field="userType" align="center" width="8%" formatter="showUserType">用户类型</th>
-        <th field="userStatus" align="center" width="10%" formatter="showUserStatus">用户状态</th>
-        <th field="createTime" align="center" width="9%" formatter="timeStamp2DateTime">注册时间</th>
+        <th field="userSex" align="center" width="8%" formatter="showUserType">性别</th>
+        <th field="userFlag" align="center" width="10%" formatter="showUserStatus">用户状态</th>
+        <th field="userBirthday" align="center" width="9%" formatter="timeStamp2DateTime">生日</th>
+        <th field="userAddress" align="center" width="8%">用户地址</th>
+        <th field="createTime" align="center" width="9%" formatter="timeStamp2DateTime">创建时间</th>
         <th field="modifyTime" align="center" width="9%" formatter="timeStamp2DateTime">修改时间</th>
-        <th field="remark" align="center" width="8%">备注</th>
+
     </tr>
     </thead>
 </table>
@@ -30,12 +33,12 @@
         <input type="hidden" name="pageNumber" id="pageNumber" />
         <!--查询条件: userId和手机号-->
         <div width="100%" style="margin:4px">
-            用户ID：<input type="text" id="searchUserId" name="searchUserId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
-            手机号：<input type="text" id="searchMobile" name="searchMobile" class="easyui-textbox easyui-validatebox" data-options="validType:'length[11,11]'" maxlength="11" style="width:100px"/>&nbsp;&nbsp;
-            账户ID：<input type="text" id="searchAccountId" name="searchAccountId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
-            账户编号：<input type="text" id="searchAccountNo" name="searchAccountNo" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;<br/><br/>
-            注册时间：<input class="easyui-datebox" id="startDate" name="startDate" type="text" editable = "false"> --
-            <input class="easyui-datebox" id="endDate" name="endDate" type="text" editable = "false">&nbsp;&nbsp;&nbsp;&nbsp;
+            用户ID：<input type="text" id="searchUserId" name="id" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+            手机号：<input type="text" id="searchMobile" name="phone" class="easyui-textbox easyui-validatebox" data-options="validType:'length[11,11]'" maxlength="11" style="width:100px"/>&nbsp;&nbsp;
+            账户：<input type="text" id="searchAccountId" name="account" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+            姓名：<input type="text" id="searchAccountNo" name="realname" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;<br/><br/>
+            注册时间：<input class="easyui-datebox" id="startDate" name="create_startTime" type="text" editable = "false"> --
+            <input class="easyui-datebox" id="endDate" name="create_endTime" type="text" editable = "false">&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="btnSearch()">搜索</a>
         </div>
         <div width="100%" style="margin:4px">
@@ -89,7 +92,6 @@
 <script type="text/javascript">
     (function ($) {
         $("#divdg").height($(window).height() - $("#panelMainMenu").height() - 1 - $("#blankStrip").height());
-
         var dateboxButtons = $.extend([], $.fn.datebox.defaults.buttons);
         dateboxButtons.splice(1, 0, {
             text: function (target) {
@@ -104,14 +106,9 @@
             buttons: dateboxButtons
         });
     })(jQuery);
-
-
     $(function(){
-
         $("#startReconDate").datebox("setValue", currNDate(0));// 时间默认当天
         $("#endReconDate").datebox("setValue", currNDate(0));//时间默认当天
-
-
         //翻页控件，已支持分页
         $("#dg").datagrid().datagrid("getPager").pagination({
             //改变pageSize会执行 onChangePageSize，onSelectPage
@@ -134,36 +131,6 @@
         });
     });
 
-
-
-  /*  $(function(){
-        $("#dg").datagrid({
-            onClickRow: function (index, row) {
-                $("#userId").val(row.userId);
-                $("#refreshUserId").val(row.userId);
-                $("#userStatusOld").val(row.userStatus);
-                $("input[name$='userStatusNew']").val(row.userStatus);
-            },
-            onCheck: function (index, row) {
-                $("#userId").val(row.userId);
-                $("#refreshUserId").val(row.userId);
-                $("#userStatusOld").val(row.userStatus);
-                $("input[name$='userStatusNew']").val(row.userStatus);
-            }
-        });
-
-        $("#dg").datagrid().datagrid("getPager").pagination({
-            onChangePageSize: function(pageSize) {
-                $("#pageSize").val(pageSize);
-            },
-            onRefresh: function(pageNumber, pageSize) {
-                datagridBind();
-            }
-        });
-
-        // datagridBind();
-    });*/
-
     function datagridBind() {
         if (($("#searchUserId").value == "" ||$("#searchUserId").value <= 0)
             &&($("#searchMobile").value == "" ||$("#searchMobile").value <= 0)
@@ -178,9 +145,17 @@
             $("#dg").datagrid("loaded");
         });
     }
-
     function btnSearch() {
         datagridBind();
+    }
+    function showUserStatus(value) {
+        if (value == 100) {
+            return "正常";
+        } else if (value == 200) {
+            return "冻结";
+        } else if (value == 300) {
+            return "停用";
+        }
     }
 
     function showUserType(value) {
@@ -202,25 +177,6 @@
             return value;
         }
     }
-
-    function showUserStatus(value) {
-        if (value == 100) {
-            return "正常";
-        } else if (value == 200) {
-            return "冻结";
-        } else if (value == 300) {
-            return "停用";
-        }
-    }
-
-    function showGesturePwdStatus(value) {
-        if (value == 0) {
-            return "未启用";
-        } else if (value == 1) {
-            return "已启用";
-        }
-    }
-
     function btnModifyUserStatus() {
         var userId = $("#userId").val();
         if (userId > 0) {
@@ -230,7 +186,6 @@
             $.messager.alert("信息", "请先选择用户", "info");
         }
     }
-
     function modifyUserStatusSave() {
         var userId = $("#userId").val();
         var userStatusOld = $("#userStatusOld").val();
@@ -258,12 +213,10 @@
             });
         }
     }
-
     function btnRefreshUserCache() {
         $('#dlgRefreshUserCache').dialog("open").window("center");
         $("#refreshUserId").textbox("setValue", "");
     }
-
     function refreshUserCache() {
         var refreshUserId = $("#refreshUserId").val();
         if (refreshUserId > 0) {
@@ -288,7 +241,6 @@
             $.messager.alert("信息", "请输入用户id", "info");
         }
     }
-
     function resetPassword() {
         var row = $('#dg').datagrid('getSelected');
         if(row != null){
@@ -298,14 +250,12 @@
             return false;
         }
     }
-
     function updatePassword(row) {
         var userId = row.userId;
         if(userId == ""){
             $.messager.alert("信息", "该用户无法重置密码，请重新选择", "info");
             return false;
         }
-
         $.post("getUserByUserId.htm", {userId:userId}, function (data) {
             if (data.mobile != null && data.mobile != "") {
                 $.messager.confirm("确认", "您确认"+data.mobile+"用户的四要素信息已核对无误,并重置该用户的登录密码吗？", function (r) {
@@ -328,5 +278,4 @@
             }
         }, "json");
     }
-
 </script>

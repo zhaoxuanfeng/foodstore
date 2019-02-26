@@ -15,7 +15,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="foodstore" target="1.8" />
-      <module name="foodstore_bussiness" target="1.7" />
+      <module name="foodstore_bussiness" target="8" />
       <module name="foodstore_controller" target="1.7" />
       <module name="foodstore_mapper" target="1.7" />
       <module name="foodstore_model" target="1.7" />

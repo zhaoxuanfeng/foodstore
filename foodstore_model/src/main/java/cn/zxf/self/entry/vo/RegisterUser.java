@@ -16,9 +16,12 @@ public class RegisterUser {
 
     private String accountPassword;
 
+    private String email;
     private String name;
 
     private String realname;
+
+
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date birthday;
@@ -29,6 +32,13 @@ public class RegisterUser {
 
     private String address;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getAccountName() {
         return accountName;

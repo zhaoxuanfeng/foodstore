@@ -19,6 +19,12 @@
 							<input type="text"  name="accountPassword" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入密码" validateOnCreate="false" validateOnBlur="true" />
 						</td>
 					</tr>
+                    <tr>
+                        <td >邮箱：</td>
+                        <td>
+                            <input type="text"  name="email" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[2,60]" iconWidth="28" required="true" missingMessage="请输入邮箱" validateOnCreate="false" validateOnBlur="true" />
+                        </td>
+                    </tr>
 					<tr>
 						<td >用户名：</td>
 						<td>
@@ -38,7 +44,7 @@
 						<td id="container">
 							<!--<input class="easyui-datetimebox combo-f textbox-f datatimebox-f" id="birthday" name="birthday" style="width:150px"  comboname="birthday" textboxname="birthday" />-->
 							<!--<input type="hidden" class="textbox-value" name="birthday" value="2017-12-26" />-->
-							<input class="easyui-datebox" type="date" name="birthday" data-options="required:true"  value="" style="width:150px"/>
+							<input class="easyui-datebox" type="date" name="birthday" data-options="required:false"  value="" style="width:150px"/>
 						</td>
 					</tr>
 					<tr>

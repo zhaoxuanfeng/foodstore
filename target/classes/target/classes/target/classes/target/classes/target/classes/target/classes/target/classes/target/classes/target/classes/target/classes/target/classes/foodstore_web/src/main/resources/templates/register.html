@@ -19,6 +19,12 @@
 							<input type="text"  name="accountPassword" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[8,16]" iconWidth="28" required="true" missingMessage="请输入密码" validateOnCreate="false" validateOnBlur="true" />
 						</td>
 					</tr>
+                    <tr>
+                        <td >邮箱：</td>
+                        <td>
+                            <input type="text"  name="email" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[2,60]" iconWidth="28" required="true" missingMessage="请输入邮箱" validateOnCreate="false" validateOnBlur="true" />
+                        </td>
+                    </tr>
 					<tr>
 						<td >用户名：</td>
 						<td>
@@ -36,9 +42,9 @@
 							<p>出生日期：</p>
 						</td>
 						<td id="container">
-							<!--<input type="checkbox"  name="age" value="" prompt="" class="easyui-textbox easyui-validatebox" validType="length[0,3]" iconWidth="28" required="false" missingMessage="请输入年龄" validateOnCreate="false" validateOnBlur="true" />-->
-							<input class="easyui-datetimebox combo-f textbox-f datatimebox-f" id="starttime" name="starttime" style="width:150px" textboxname="starttime" comboname="starttime"/>
-							<input type="hidden" class="textbox-value" name="starttime" value="2017-12-26 13:45:40" />
+							<!--<input class="easyui-datetimebox combo-f textbox-f datatimebox-f" id="birthday" name="birthday" style="width:150px"  comboname="birthday" textboxname="birthday" />-->
+							<!--<input type="hidden" class="textbox-value" name="birthday" value="2017-12-26" />-->
+							<input class="easyui-datebox" type="date" name="birthday" data-options="required:false"  value="" style="width:150px"/>
 						</td>
 					</tr>
 					<tr>
@@ -55,7 +61,7 @@
 					<tr>
 						<td >地址：</td>
 						<td>
-							<input type="text" name="" id="address" value="" class="easyui-textbox easyui-validatebox" validType="length[4,50]" iconWidth="28" required="false" missingMessage="请输入地址" validateOnCreate="false" validateOnBlur="true" />
+							<input type="text" name="address" id="address" value="" class="easyui-textbox easyui-validatebox" validType="length[4,50]" iconWidth="28" required="false" missingMessage="请输入地址" validateOnCreate="false" validateOnBlur="true" />
 						</td>
 					</tr>
 					<tr>
