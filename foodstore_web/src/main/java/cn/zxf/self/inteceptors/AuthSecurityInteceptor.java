@@ -2,7 +2,7 @@ package cn.zxf.self.inteceptors;
 
 import cn.zxf.self.entry.ManageFunc;
 import cn.zxf.self.security.PrivilegeManager;
-import cn.zxf.self.utils.JsonModel;
+import cn.zxf.self.entry.dto.JsonModel;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 

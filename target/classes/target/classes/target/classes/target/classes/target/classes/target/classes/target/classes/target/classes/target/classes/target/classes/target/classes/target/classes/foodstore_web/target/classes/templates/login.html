@@ -38,7 +38,7 @@
 	});
 
 	function refreshImg() {
-		$("#imgVerifyCode").attr("src", "/htm/verifyCode.htm?v=" + Math.random());
+		$("#imgVerifyCode").attr("src", "/htm/verifyCode.htm?v=" +  Math.random() );
 	}
 
 	function login()
@@ -48,21 +48,22 @@
 				title: "登录中",
 				msg: "正在登录，请稍候..."
 			});
+			console.log($("#imgVerifyCode").val());
 
-			$.post("/htm/loginManagerAccount.htm", $("#formLogin").serialize(), function (data) {
-				if (data.status == true && data.message=="成功" ) {
-					window.location.href = "/htm/main.htm";
-				} else if(data.status == false){
-					$.messager.progress("close");
+				$.post("/htm/loginManagerAccount.htm", $("#formLogin").serialize(), function (data) {
+					if (data.status == true && data.message=="成功" ) {
+						window.location.href = "/htm/main.htm";
+					} else if(data.status == false){
+						$.messager.progress("close");
 
-					var message = "登录失败，请检查用户名或密码和验证码！";
-                    if (data.message != null) {
-                        message = data.message;
-                    }
-					$.messager.alert("信息", message, "error");
-					$("#imgVerifyCode").attr("src", "verifyCode.htm?v=" + Math.random());
-				}
-			}, "json");
+						var message = "登录失败，请检查用户名或密码和验证码！";
+						if (data.message != null) {
+							message = data.message;
+						}
+						$.messager.alert("信息", message, "error");
+					}
+				}, "json");
+
 		}
 	}
 </script>

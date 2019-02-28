@@ -1,5 +1,7 @@
 package cn.zxf.self.entry.vo;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /**
@@ -21,13 +23,26 @@ public class UserCondition {
     private String address;
     private Integer flag;
     private Integer page_size;
-    private Integer page_number;
+    private Integer page_number = 1;
+    private Integer totalCount;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date create_startTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date create_endTime;
-
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modify_startTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date modify_endTime;
     private String email;
+
+
+    public Integer getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(Integer totalCount) {
+        this.totalCount = totalCount;
+    }
 
     public Date getCreate_startTime() {
         return create_startTime;

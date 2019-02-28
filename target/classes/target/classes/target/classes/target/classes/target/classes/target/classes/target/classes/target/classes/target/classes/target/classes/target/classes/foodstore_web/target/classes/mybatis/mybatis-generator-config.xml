@@ -52,7 +52,9 @@
                enableUpdateByExample="true"/>
         <table tableName="manage_func" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="true"/>-->
-        <table tableName="user_info" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+        <!--<table tableName="user_info" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true"/>-->
+        <table tableName="recipes" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="true"/>
         <!--<table tableName="manage_user" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="true"/>

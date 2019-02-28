@@ -9,7 +9,7 @@ import java.security.MessageDigest;
  * @Author zxf
  * @DATE 2019/2/14
  */
-public class MD5Untils {
+public class MD5Utils {
 
     public static String getMD5Str(String str) throws Exception {
         try {

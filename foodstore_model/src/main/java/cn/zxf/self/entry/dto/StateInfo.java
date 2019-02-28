@@ -18,7 +18,7 @@ public class StateInfo  implements Serializable {
 
     private Object data;
 
-    private  String code;
+    private String code;
 
 
 

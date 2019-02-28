@@ -7,9 +7,9 @@ import cn.zxf.self.entry.UserInfo;
 import cn.zxf.self.entry.dto.StateInfo;
 import cn.zxf.self.entry.vo.RegisterUser;
 import cn.zxf.self.security.VerifyCode;
-import cn.zxf.self.utils.JsonModel;
-import cn.zxf.self.utils.MD5Untils;
-import cn.zxf.self.utils.RestModel;
+import cn.zxf.self.entry.dto.JsonModel;
+import cn.zxf.self.utils.MD5Utils;
+import cn.zxf.self.entry.dto.RestModel;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.ObjectUtils;
@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -73,37 +72,44 @@ public class LoginController extends  BaseController{
     /***
         *@Description  //TODO  账号登录信息
         *@Param [request, session]
-        *@Return  cn.zxf.self.utils.JsonModel
+        *@Return  cn.zxf.self.entry.dto.JsonModel
      **/
     @RequestMapping(value="/htm/loginManagerAccount.htm")
     @ResponseBody
     public JsonModel loginManagerAccount(HttpServletRequest request ,HttpSession session,HttpServletResponse response){
         JsonModel jsonModel = new JsonModel();
+        String verifyCode = request.getParameter("verifyCode");
+        if(null !=  verifyCode && verifyCode.equals((String)session.getAttribute("verifyCode")) ){
 
-        String accountName = request.getParameter("accountName");
-        String accountPassword = request.getParameter("accountPassword");
 
-        try {
-            String password = MD5Untils.getMD5Str(accountPassword);
+            String accountName = request.getParameter("accountName");
+            String accountPassword = request.getParameter("accountPassword");
 
-            UserInfo userInfo = userInfoBussiness.getUserInfoByAccountName(accountName,password);
-    //        String searchClientId = request.getParameter("searchClientId");
-            if(userInfo != null){
-                session.setAttribute("userInfo",userInfo);
-    //            session.setAttribute("searchClientId",searchClientId);
-                logger.info("登录用户："+userInfo.getUserName()+",账户："+userInfo.getAccountName());
-                jsonModel.setStatus(true);
-                jsonModel.setMessage("成功");
-                jsonModel.setResult(userInfo);
-            }else{
-                jsonModel.setStatus(false);
-                jsonModel.setMessage("账号密码错误！");
+            try {
+                String password = MD5Utils.getMD5Str(accountPassword);
+
+                UserInfo userInfo = userInfoBussiness.getUserInfoByAccountInfo(accountName, password);
+                //        String searchClientId = request.getParameter("searchClientId");
+                if (userInfo != null) {
+                    session.setAttribute("userInfo", userInfo);
+                    //            session.setAttribute("searchClientId",searchClientId);
+                    logger.info("登录用户：" + userInfo.getUserName() + ",账户：" + userInfo.getAccountName());
+                    jsonModel.setStatus(true);
+                    jsonModel.setMessage("成功");
+                    jsonModel.setResult(userInfo);
+                } else {
+                    jsonModel.setStatus(false);
+                    jsonModel.setMessage("账号密码错误！");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        }else{
+            jsonModel.setStatus(false);
+            jsonModel.setMessage("验证码错误！");
         }
-
         return jsonModel;
     }
     
@@ -213,16 +219,13 @@ public class LoginController extends  BaseController{
         StateInfo stateInfo = new StateInfo();
         JsonModel jsonModel = new JsonModel();
 
-
-
         try {
-            String password = MD5Untils.getMD5Str(registerUser.getAccountPassword());
-            registerUser.setAccountPassword(password);
-//            userInfo.setUserAccount(accountInfo.getAccountId().toString());
-            UserInfo userInfo = userInfoBussiness.getUserInfoByAccountInfo(registerUser.getAccountName(),
-                    registerUser.getAccountPassword());
+            UserInfo userInfo = userInfoBussiness.getUserInfoByAccountName(registerUser.getAccountName());
             if(!ObjectUtils.allNotNull(userInfo)) {
-                Date create_time = new Date("yyyy-MM-dd");
+                String password = MD5Utils.getMD5Str(registerUser.getAccountPassword());
+                registerUser.setAccountPassword(password);
+                long time=-1800;
+                Date create_time = new Date(time);
                 userInfo = new UserInfo();
                 userInfo.setUserFlag(0);
                 userInfo.setUserName(registerUser.getName());
@@ -233,7 +236,6 @@ public class LoginController extends  BaseController{
                 userInfo.setUserSex(registerUser.getSex());
                 userInfo.setUserEmail(registerUser.getEmail());
                 userInfo.setCreateTime(create_time);
-
                 userInfo.setAccountName(registerUser.getAccountName());
                 userInfo.setAccountPassword(password);
                 stateInfo = userInfoBussiness.setUserInfo(userInfo);

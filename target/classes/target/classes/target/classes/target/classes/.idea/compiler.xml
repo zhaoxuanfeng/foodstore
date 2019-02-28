@@ -20,7 +20,7 @@
       <module name="foodstore_mapper" target="1.7" />
       <module name="foodstore_model" target="1.7" />
       <module name="foodstore_service" target="1.7" />
-      <module name="foodstore_web" target="1.7" />
+      <module name="foodstore_web" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

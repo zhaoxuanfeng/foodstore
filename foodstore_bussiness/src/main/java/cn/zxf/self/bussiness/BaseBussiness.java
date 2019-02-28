@@ -38,4 +38,7 @@ public class BaseBussiness {
     @Autowired
     protected ManageFuncMapper manageFuncMapper;
 
+    @Autowired
+    protected  RecipesMapper recipesMapper;
+
 }

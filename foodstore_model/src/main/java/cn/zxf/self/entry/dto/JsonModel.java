@@ -1,4 +1,4 @@
-package cn.zxf.self.utils;
+package cn.zxf.self.entry.dto;
 
 public class JsonModel {
     private boolean status;

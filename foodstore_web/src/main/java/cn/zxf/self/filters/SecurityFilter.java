@@ -2,7 +2,7 @@ package cn.zxf.self.filters;
 
 import cn.zxf.self.entry.ManageFunc;
 import cn.zxf.self.security.PrivilegeManager;
-import cn.zxf.self.utils.JsonModel;
+import cn.zxf.self.entry.dto.JsonModel;
 
 import javax.servlet.*;
 import java.io.IOException;

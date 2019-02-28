@@ -12,6 +12,7 @@ public class PagerModel<T> implements Serializable {
     private static final long serialVersionUID =  154848123456L;
 
     private Integer pageSize;
+    private Integer pageNumber;
     private Long total;
     private T pageData;
 
@@ -36,5 +37,21 @@ public class PagerModel<T> implements Serializable {
 
     public void setPageData(T pageData) {
         this.pageData = pageData;
+    }
+
+    public Integer getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(Integer pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
     }
 }

@@ -42,7 +42,6 @@
                 if (restModel.data[i].hasOwnProperty('subMenu')) {
                     for (var j = 0; j < restModel.data[i].subMenu.length; j++) {
                         submenu = submenu + "<a href='#' onclick=\"addTab('" + restModel.data[i].subMenu[j].funcName + "', '" + restModel.data[i].subMenu[j].url + "')\" class='easyui-linkbutton' data-options='plain:true'>" + restModel.data[i].subMenu[j].funcName + "</a><br/>";
-                        console.log(submenu);
                     }
                 }
                 submenu = "<div style='width: 100%' align='center'>" + submenu + "</div>";
