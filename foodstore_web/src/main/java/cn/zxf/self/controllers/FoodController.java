@@ -29,7 +29,7 @@ public class FoodController  extends  BaseController{
 
     @RequestMapping("/htm/foodInfo.htm")
     public String foodMain(HttpServletRequest request){
-        return "foodMain";
+        return "foodMain_2";
     }
 
     @RequestMapping("/htm/foodInfoData.htm")
@@ -71,6 +71,16 @@ public class FoodController  extends  BaseController{
             map.put("foodKey",foodKey);
         }
 
+        Integer lowPrice = Integer.parseInt(new java.text.DecimalFormat("0").format(request.getAttribute("lowPrice")));
+
+        if(null != lowPrice ){
+            map.put("lowPrice",lowPrice);
+        }
+
+        Integer highPrice = Integer.parseInt( new java.text.DecimalFormat("0").format( request.getAttribute("highPrice")));
+        if(null != highPrice ){
+            map.put("highPrice",highPrice);
+        }
         return map;
     }
 

@@ -35,6 +35,11 @@ public class UserController extends BaseController {
         return "userMain";
     }
 
+    @RequestMapping("/htm/roleMain.htm")
+    public String  roleMain(){
+        return "roleMain";
+    }
+
     @RequestMapping(value = "/htm/userinfo_data.htm")
     @ResponseBody
     public PageMsg userInfoData(HttpServletRequest request, UserCondition userCondition){

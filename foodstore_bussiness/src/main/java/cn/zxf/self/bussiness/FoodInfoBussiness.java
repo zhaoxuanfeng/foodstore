@@ -34,6 +34,15 @@ public class FoodInfoBussiness extends BaseBussiness {
         if(null != map.get("foodKey")){
             criteria.andFoodNameLike((String) map.get("foodKey"));
         }
+        if(null != map.get("lowPrice")){
+            criteria.andFoodPriceGreaterThanOrEqualTo((Integer) map.get("lowPrice"));
+        }
+        if(null != map.get("highPrice")){
+            criteria.andFoodPriceLessThanOrEqualTo((Integer) map.get("highPrice"));
+        }
+
+
+
         List<Recipes>  recipesList =  recipesMapper.selectByExample(recipesExample);
 
         if(null != recipesList && !recipesList.isEmpty()){

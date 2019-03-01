@@ -9,7 +9,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="food_name" property="foodName" jdbcType="VARCHAR" />
     <result column="food_type" property="foodType" jdbcType="INTEGER" />
-    <result column="food_price" property="foodPrice" jdbcType="VARCHAR" />
+    <result column="food_price" property="foodPrice" jdbcType="INTEGER" />
     <result column="food_status" property="foodStatus" jdbcType="INTEGER" />
     <result column="food_cuisine" property="foodCuisine" jdbcType="VARCHAR" />
     <result column="food_key" property="foodKey" jdbcType="VARCHAR" />
@@ -143,7 +143,7 @@
       food_price, food_status, food_cuisine, 
       food_key, food_introduce)
     values (#{id,jdbcType=INTEGER}, #{foodName,jdbcType=VARCHAR}, #{foodType,jdbcType=INTEGER}, 
-      #{foodPrice,jdbcType=VARCHAR}, #{foodStatus,jdbcType=INTEGER}, #{foodCuisine,jdbcType=VARCHAR}, 
+      #{foodPrice,jdbcType=INTEGER}, #{foodStatus,jdbcType=INTEGER}, #{foodCuisine,jdbcType=VARCHAR}, 
       #{foodKey,jdbcType=VARCHAR}, #{foodIntroduce,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.zxf.self.entry.Recipes" >
@@ -189,7 +189,7 @@
         #{foodType,jdbcType=INTEGER},
       </if>
       <if test="foodPrice != null" >
-        #{foodPrice,jdbcType=VARCHAR},
+        #{foodPrice,jdbcType=INTEGER},
       </if>
       <if test="foodStatus != null" >
         #{foodStatus,jdbcType=INTEGER},
@@ -232,7 +232,7 @@
         food_type = #{record.foodType,jdbcType=INTEGER},
       </if>
       <if test="record.foodPrice != null" >
-        food_price = #{record.foodPrice,jdbcType=VARCHAR},
+        food_price = #{record.foodPrice,jdbcType=INTEGER},
       </if>
       <if test="record.foodStatus != null" >
         food_status = #{record.foodStatus,jdbcType=INTEGER},
@@ -260,7 +260,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       food_name = #{record.foodName,jdbcType=VARCHAR},
       food_type = #{record.foodType,jdbcType=INTEGER},
-      food_price = #{record.foodPrice,jdbcType=VARCHAR},
+      food_price = #{record.foodPrice,jdbcType=INTEGER},
       food_status = #{record.foodStatus,jdbcType=INTEGER},
       food_cuisine = #{record.foodCuisine,jdbcType=VARCHAR},
       food_key = #{record.foodKey,jdbcType=VARCHAR},
@@ -283,7 +283,7 @@
         food_type = #{foodType,jdbcType=INTEGER},
       </if>
       <if test="foodPrice != null" >
-        food_price = #{foodPrice,jdbcType=VARCHAR},
+        food_price = #{foodPrice,jdbcType=INTEGER},
       </if>
       <if test="foodStatus != null" >
         food_status = #{foodStatus,jdbcType=INTEGER},
@@ -308,7 +308,7 @@
     update recipes
     set food_name = #{foodName,jdbcType=VARCHAR},
       food_type = #{foodType,jdbcType=INTEGER},
-      food_price = #{foodPrice,jdbcType=VARCHAR},
+      food_price = #{foodPrice,jdbcType=INTEGER},
       food_status = #{foodStatus,jdbcType=INTEGER},
       food_cuisine = #{foodCuisine,jdbcType=VARCHAR},
       food_key = #{foodKey,jdbcType=VARCHAR},
