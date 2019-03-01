@@ -8,50 +8,38 @@ import java.io.Serializable;
  * @Author zxf
  * @DATE 2019/2/26
  */
-public class PagerModel<T> implements Serializable {
+public class PagerModel implements Serializable {
     private static final long serialVersionUID =  154848123456L;
 
-    private Integer pageSize;
-    private Integer pageNumber;
-    private Long total;
-    private T pageData;
+    private String message ;
 
-    public PagerModel() {
+    private boolean status;
+
+    private Object Data;
+
+
+
+    public String getMessage() {
+        return message;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public Integer getPageSize() {
-        return pageSize;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
-    public T getPageData() {
-        return pageData;
+    public Object getData() {
+        return Data;
     }
 
-    public void setPageData(T pageData) {
-        this.pageData = pageData;
-    }
-
-    public Integer getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(Integer pageNumber) {
-        this.pageNumber = pageNumber;
-    }
-
-    public Long getTotal() {
-        return total;
-    }
-
-    public void setTotal(Long total) {
-        this.total = total;
+    public void setData(Object data) {
+        Data = data;
     }
 }

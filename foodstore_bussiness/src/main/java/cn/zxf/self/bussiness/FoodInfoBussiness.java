@@ -4,6 +4,7 @@ import cn.zxf.self.entry.Recipes;
 import cn.zxf.self.entry.RecipesExample;
 import cn.zxf.self.entry.dto.StateInfo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -54,6 +55,20 @@ public class FoodInfoBussiness extends BaseBussiness {
             stateInfo.setState(false);
         }
 
+        return stateInfo;
+    }
+
+    @Transactional
+    public StateInfo addFoodInfo(Recipes recipes) {
+
+        int count = recipesMapper.insertSelective(recipes);
+        if(count == 0){
+            stateInfo.setState(false);
+            stateInfo.setMessage("插入失败");
+        }else{
+            stateInfo.setState(true);
+            stateInfo.setMessage("插入成功");
+        }
         return stateInfo;
     }
 }

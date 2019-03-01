@@ -37,15 +37,15 @@ public class InteceptorsConfiguration implements WebMvcConfigurer {
         List<String> urlList = new ArrayList<>();
         urlList.add("/htm/login.htm");
         urlList.add("/htm/register.htm");
-        urlList.add("/htm/main.htm");
         urlList.add("/htm/error.htm");
         urlList.add("/htm/verifyCode.htm");
-        urlList.add("/htm/menu.htm");
         urlList.add("/htm/loginManagerAccount.htm");
-        urlList.add("/htm/self.htm");
         urlList.add("/htm/logout.htm");
 //        urlList.add("classpath:/static/**");
         registry.addInterceptor(loginInteceptor).addPathPatterns("/**").excludePathPatterns(urlList);
+        urlList.add("/htm/menu.htm");
+        urlList.add("/htm/main.htm");
+        urlList.add("/htm/self.htm");
         registry.addInterceptor(authSecurityInteceptor).addPathPatterns("/**").excludePathPatterns(urlList);
     }
 
