@@ -71,4 +71,18 @@ public class FoodInfoBussiness extends BaseBussiness {
         }
         return stateInfo;
     }
+
+    @Transactional
+    public StateInfo modifyFoodInfo(Recipes recipes) {
+        RecipesExample recipesExample = new RecipesExample();
+        recipesExample.createCriteria().andIdEqualTo(recipes.getId());
+        int count = recipesMapper.updateByExampleSelective(recipes,recipesExample);
+        stateInfo.setData(count);
+        if (count==0){
+            stateInfo.setState(false);
+        }else {
+            stateInfo.setState(true);
+        }
+        return stateInfo;
+    }
 }

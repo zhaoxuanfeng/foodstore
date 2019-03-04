@@ -6,6 +6,7 @@ import cn.zxf.self.entry.dto.StateInfo;
 import cn.zxf.self.entry.vo.PageMsg;
 import cn.zxf.self.entry.vo.PagerModel;
 import com.github.pagehelper.Page;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,29 @@ public class FoodController  extends  BaseController{
 
     private StateInfo stateInfo = new StateInfo();
 
-    @RequestMapping("/htm/addFoodInfo.htm")
+    @RequestMapping(value = "/htm/modifyFood.htm")
+    @ResponseBody
+    public PagerModel modifyFoodInfo(HttpServletRequest request,Recipes recipes){
+
+        pageModel.setStatus(false);
+
+        if(null == recipes || !ObjectUtils.allNotNull(recipes)){
+            pageModel.setMessage("提交数据为空！");
+            return pageModel;
+        }
+        stateInfo = foodInfoBussiness.modifyFoodInfo(recipes);
+        if(stateInfo.isState()){
+            pageModel.setMessage("更新数据成功");
+            pageModel.setStatus(true);
+            pageModel.setData(recipes);
+        }else {
+            pageModel.setMessage("更新数据失败");
+        }
+        return pageModel;
+    }
+
+
+    @RequestMapping(value="/htm/addFoodInfo.htm")
     @ResponseBody
     public PagerModel addFoodInfo(HttpServletRequest request, Recipes recipes){
         if(null == recipes){
