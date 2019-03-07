@@ -8,6 +8,8 @@ import cn.zxf.self.entry.UserInfo;
 import cn.zxf.self.entry.dto.RestModel;
 import cn.zxf.self.entry.dto.StateInfo;
 import cn.zxf.self.entry.vo.PagerModel;
+import cn.zxf.self.entry.vo.RoleFuncModel;
+import cn.zxf.self.utils.DateUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.management.relation.Role;
 import javax.servlet.http.HttpServletRequest;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,10 +58,57 @@ public class RoleController extends BaseController{
 
     @RequestMapping(value="/htm/manageRoleAddMod.htm")
     @ResponseBody
-    public RestModel manageRoleAdd(ManageRole addRole,HttpServletRequest request){
-        logger.info("url:"+request.getRequestURI());
+    public RestModel manageRoleAdd(RoleFuncModel addRole, HttpServletRequest request){
 
+        logger.info("url:"+request.getRequestURI());
+        logger.info("params:"+addRole.toString());
+        if(!ObjectUtils.allNotNull(addRole)){
+            restModel.setMessage("传入参数错误！");
+            restModel.setCode("400");
+            return  restModel;
+        }
+
+        ManageRole manageRole = new ManageRole();
+        manageRole.setIsDelete(0);
+        manageRole.setRoleCode(addRole.getRoleCode());
+        manageRole.setRoleName(addRole.getRoleName());
+        Long currTime = DateUtils.getCurrMilli();
+        manageRole.setModifyTime(currTime);
+
+
+        if("add".equals(addRole.getAddmodify())) {
+           /* LocalDateTime date = LocalDateTime.now();
+            ZoneId zone = ZoneId.systemDefault();
+            Instant instant = date.atZone(zone).toInstant();
+            manageRole.setCreateTime(instant.toEpochMilli());*/
+
+            manageRole.setCreateTime(currTime);
+            stateInfo = roleBussiness.addRole(manageRole,addRole.getManageFuncIds());
+        }else{
+            stateInfo = roleBussiness.modifyRole(manageRole,addRole.getManageFuncIds());
+
+        }
+        logger.info("message:"+stateInfo.getMessage());
+        logger.info("return :"+stateInfo.isState());
+        if(null == stateInfo || !stateInfo.isState()){
+            restModel.setMessage("插入失败！");
+            restModel.setCode("404");
+            return  restModel;
+        }
+        restModel.setData(stateInfo.getData());
+        restModel.setCode("200");
+        restModel.setMessage(stateInfo.getMessage());
         return restModel;
+    }
+
+    @RequestMapping("/htm/manageRoleFunc.htm")
+    @ResponseBody
+    public PagerModel manageRoleFunc(HttpServletRequest request,RoleFuncModel roleFuncModel){
+        logger.info("url:"+request.getRequestURI());
+        logger.info("params:"+roleFuncModel.toString());
+
+        //待完成
+        return pagerModel;
     }
 
 
@@ -66,13 +119,14 @@ public class RoleController extends BaseController{
         logger.info("params:"+manageRoleId);
 
         stateInfo = roleBussiness.findFuncByRoleId(manageRoleId);
-        if(null != stateInfo && ObjectUtils.allNotNull(stateInfo.getData())){
+        if(null != stateInfo && stateInfo.isState()){
             restModel.setData(stateInfo.getData());
             restModel.setCode("200");
             restModel.setMessage("加载成功");
         }else {
             restModel.setMessage(stateInfo.getMessage());
         }
+
         logger.info("return :" +stateInfo.isState());
         return restModel;
     }

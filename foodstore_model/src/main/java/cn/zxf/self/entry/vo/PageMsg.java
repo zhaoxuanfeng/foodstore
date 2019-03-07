@@ -58,4 +58,16 @@ public class PageMsg {
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }
+
+
+    @Override
+    public String toString() {
+        return "PageMsg{" +
+                "total=" + total +
+                ", rows=" + rows +
+                ", footer=" + footer +
+                ", pageNumber=" + pageNumber +
+                ", pageSize=" + pageSize +
+                '}';
+    }
 }

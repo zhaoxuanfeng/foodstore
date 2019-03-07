@@ -152,6 +152,8 @@
             },
             onCheck: function (index, row) {
                 $("#manageRoleId").val(row.manageRoleId);
+                roleFuncBind(row.manageRoleId);
+                userBind(row.manageRoleId);
             }
         });
     });
@@ -284,7 +286,7 @@
 
         $("#treeFunc").tree({cascadeCheck:false});
         $.get("/htm/manageRoleFuncList.htm", {manageRoleId:manageRoleId}, function(restModel){
-            if(restModel.data.length>0){
+            if(restModel.data != null  && restModel.data.length>0){
                 for (var i = 0; i < restModel.data.length; i++) {
                     var node = $('#treeFunc').tree('find',restModel.data[i].manageFuncId);
                     $('#treeFunc').tree('check', node.target);
@@ -376,8 +378,11 @@
                         }
                     }
 
+
                     var noRepeatFuncIds = noRepeatArray(funcIds);
                     $("#manageFuncIds").val(noRepeatFuncIds.join(","));
+                    console.log($("#manageFuncIds").val());
+                    console.log($("#formSave").serialize());
                     $.post("/htm/manageRoleFunc.htm", $("#formSave").serialize(), function (data) {
                         if (data.code == "200") {
                             $.messager.alert("信息", "修改角色功能成功", "info");
@@ -435,7 +440,8 @@
 
         $.messager.confirm("确认", "确认增加这信息吗？", function (r) {
             if (r) {
-                $.post("manageFuncAdd.htm", $("#formAddFeature").serialize(), function (data) {
+                console.log($("#formAddFeature").serialize());
+                $.post("/htm/manageFuncAdd.htm", $("#formAddFeature").serialize(), function (data) {
                     if (data.code == "200") {
                         $.messager.alert("信息", "增加功能信息成功", "info");
                         $('#dlgAddFeature').dialog('close');

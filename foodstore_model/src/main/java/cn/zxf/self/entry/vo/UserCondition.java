@@ -179,4 +179,28 @@ public class UserCondition {
     public void setFlag(Integer flag) {
         this.flag = flag;
     }
+
+    @Override
+    public String toString() {
+        return "UserCondition{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", account='" + account + '\'' +
+                ", realname='" + realname + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", sex='" + sex + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", flag=" + flag +
+                ", page_size=" + page_size +
+                ", page_number=" + page_number +
+                ", totalCount=" + totalCount +
+                ", create_startTime=" + create_startTime +
+                ", create_endTime=" + create_endTime +
+                ", modify_startTime=" + modify_startTime +
+                ", modify_endTime=" + modify_endTime +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

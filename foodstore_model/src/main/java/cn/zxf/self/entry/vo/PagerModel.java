@@ -17,8 +17,6 @@ public class PagerModel implements Serializable {
 
     private Object Data;
 
-
-
     public String getMessage() {
         return message;
     }
@@ -41,5 +39,14 @@ public class PagerModel implements Serializable {
 
     public void setData(Object data) {
         Data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "PagerModel{" +
+                "message='" + message + '\'' +
+                ", status=" + status +
+                ", Data=" + Data +
+                '}';
     }
 }
