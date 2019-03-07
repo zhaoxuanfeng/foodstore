@@ -41,7 +41,8 @@ public class FoodController  extends  BaseController{
     @RequestMapping(value = "/htm/modifyFood.htm")
     @ResponseBody
     public PagerModel modifyFoodInfo(HttpServletRequest request,Recipes recipes){
-
+        logger.info("url:"+request.getRequestURI());
+        logger.info("请求参数为："+recipes.toString());
         pageModel.setStatus(false);
 
         if(null == recipes || !ObjectUtils.allNotNull(recipes)){
@@ -56,6 +57,7 @@ public class FoodController  extends  BaseController{
         }else {
             pageModel.setMessage("更新数据失败");
         }
+        logger.info("访问情况："+pageModel.toString());
         return pageModel;
     }
 
@@ -63,6 +65,8 @@ public class FoodController  extends  BaseController{
     @RequestMapping(value="/htm/addFoodInfo.htm")
     @ResponseBody
     public PagerModel addFoodInfo(HttpServletRequest request, Recipes recipes){
+        logger.info("url:"+request.getRequestURI());
+        logger.info("请求参数为："+recipes.toString());
         if(null == recipes){
             pageModel.setMessage("添加菜品信息读取失败！");
             pageModel.setStatus(false);
@@ -85,9 +89,11 @@ public class FoodController  extends  BaseController{
     @RequestMapping("/htm/foodInfoData.htm")
     @ResponseBody
     public PageMsg foodAllInfo(HttpServletRequest request){
+        logger.info("url:"+request.getRequestURI());
+
         PageMsg pageMsg = new PageMsg();
         Map<String,Object>  params = resolveParams(request);
-
+        logger.info(params.toString());
         pageMsg.setPageSize((Integer) request.getAttribute("pageSize"));
         pageMsg.setPageNumber((Integer) request.getAttribute("pageNumber"));
 
@@ -98,10 +104,12 @@ public class FoodController  extends  BaseController{
         }else {
             pageMsg.setTotal(0L);
         }
+        logger.info("访问状态："+pageMsg.toString());
         return  pageMsg;
     }
 
     private Map<String,Object> resolveParams(HttpServletRequest request) {
+        logger.info("解析参数--resolveParams");
         Map<String,Object> map = new HashMap<>();
         String foodName = request.getParameter("foodName");
         if(null != foodName && StringUtils.isNotBlank(foodName)){

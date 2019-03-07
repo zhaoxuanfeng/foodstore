@@ -38,7 +38,7 @@ import java.util.List;
 public class LoginController extends  BaseController{
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
-
+    private static  JsonModel jsonModel = new JsonModel();
     @Autowired
     private UserInfoBussiness userInfoBussiness;
 
@@ -77,8 +77,9 @@ public class LoginController extends  BaseController{
     @RequestMapping(value="/htm/loginManagerAccount.htm")
     @ResponseBody
     public JsonModel loginManagerAccount(HttpServletRequest request ,HttpSession session,HttpServletResponse response){
-        JsonModel jsonModel = new JsonModel();
         String verifyCode = request.getParameter("verifyCode");
+        logger.info("url:/htm/loginManagerAccount.htm");
+        logger.info("验证码："+verifyCode);
         if(null !=  verifyCode && verifyCode.equals((String)session.getAttribute("verifyCode")) ){
 
 
@@ -110,6 +111,7 @@ public class LoginController extends  BaseController{
             jsonModel.setStatus(false);
             jsonModel.setMessage("验证码错误！");
         }
+        logger.info("返回信息:"+jsonModel.toString());
         return jsonModel;
     }
     
@@ -172,8 +174,8 @@ public class LoginController extends  BaseController{
      **/
     @RequestMapping(value="/htm/self.htm")
     public String userSelf(HttpSession session){
+        logger.info("url:/htm/self.htm");
         UserInfo userInfo = (UserInfo)session.getAttribute("userInfo");
-        JsonModel jsonModel = new JsonModel();
 
         if(ObjectUtils.allNotNull(userInfo)){
             jsonModel.setStatus(true);
@@ -183,6 +185,7 @@ public class LoginController extends  BaseController{
         }else{
             jsonModel.setStatus(false);
             jsonModel.setMessage("未找到个人信息");
+            logger.info("返回信息："+jsonModel.toString());
             return "main";
         }
 
@@ -196,6 +199,8 @@ public class LoginController extends  BaseController{
      **/
     @RequestMapping(value="/htm/logout.htm")
     public String logout(HttpSession session,HttpServletRequest request,HttpServletResponse response){
+        logger.info("url:"+request.getRequestURI());
+        logger.info("登出用户："+session.getAttribute("userInfo").toString());
         session.removeAttribute("userInfo");
         session.invalidate();
         Cookie[] cookies = request.getCookies();
@@ -215,9 +220,9 @@ public class LoginController extends  BaseController{
      **/
     @RequestMapping(value="/htm/registerUser.htm")
     @ResponseBody
-    public JsonModel registerAccount(RegisterUser registerUser){
+    public JsonModel registerAccount(RegisterUser registerUser,HttpServletRequest request){
+        logger.info("url:"+request.getRequestURI());
         StateInfo stateInfo = new StateInfo();
-        JsonModel jsonModel = new JsonModel();
 
         try {
             UserInfo userInfo = userInfoBussiness.getUserInfoByAccountName(registerUser.getAccountName());

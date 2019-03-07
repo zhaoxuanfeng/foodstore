@@ -24,7 +24,7 @@
             </ul>
         </td>
         <td width="20%" valign="top">
-            <div id="dlUser" class="easyui-datalist" title="拥有用户" lines="true" singleSelect="true" valueField="manageUserId" textField="userName"></div>
+            <div id="dlUser" class="easyui-datalist" title="拥有用户" lines="true" singleSelect="true" valueField="userId" textField="userName"></div>
         </td>
     </tr>
 </table>
@@ -229,7 +229,7 @@
     });
 
     function roleBind() {
-        $.get("manageRoleList.htm", function(restModel){
+        $.get("/htm/manageRoleList.htm", function(restModel){
             $("#dgRole").datagrid("loadData", restModel.data);
         }, "json");
     }
@@ -246,7 +246,7 @@
     root.text = "功能树";
     root.children = [];
     function funcBind() {
-        $.get("manageFuncList.htm", function(restModel) {
+        $.get("/htm/manageFuncList.htm", function(restModel) {
             root.children = buildTree(restModel.data, 0);
             $("#treeFunc").tree("loadData", JSON.parse("[" + JSON.stringify(root) + "]"));
         }, "json");
@@ -283,17 +283,22 @@
         $('#treeFunc').tree('uncheck', root.target);
 
         $("#treeFunc").tree({cascadeCheck:false});
-        $.get("manageRoleFuncList.htm", {manageRoleId:manageRoleId}, function(restModel){
-            for (var i = 0; i < restModel.data.length; i++) {
-                var node = $('#treeFunc').tree('find',restModel.data[i].manageFuncId);
-                $('#treeFunc').tree('check', node.target);
+        $.get("/htm/manageRoleFuncList.htm", {manageRoleId:manageRoleId}, function(restModel){
+            if(restModel.data.length>0){
+                for (var i = 0; i < restModel.data.length; i++) {
+                    var node = $('#treeFunc').tree('find',restModel.data[i].manageFuncId);
+                    $('#treeFunc').tree('check', node.target);
+                }
+                $("#treeFunc").tree({cascadeCheck:true});
+
             }
-            $("#treeFunc").tree({cascadeCheck:true});
+
         }, "json");
     }
 
     function userBind(manageRoleId) {
-        $.get("manageRoleUsers.htm", {manageRoleId:manageRoleId}, function(restModel) {
+        $.get("/htm/manageRoleUsers.htm", {manageRoleId:manageRoleId}, function(restModel) {
+            console.log(restModel.data);
             $("#dlUser").datalist("loadData", restModel.data);
         }, "json");
     }
@@ -343,7 +348,7 @@
 
     function btnSave() {
         if ($("#formSave").form("validate")) {
-            $.post("manageRoleAddMod.htm", $("#formSave").serialize(), function (data) {
+            $.post("/htm/manageRoleAddMod.htm", $("#formSave").serialize(), function (data) {
                 if (data.code == "200") {
                     $('#dlgAddMod').dialog("close");
                     roleBind();
@@ -373,7 +378,7 @@
 
                     var noRepeatFuncIds = noRepeatArray(funcIds);
                     $("#manageFuncIds").val(noRepeatFuncIds.join(","));
-                    $.post("manageRoleFunc.htm", $("#formSave").serialize(), function (data) {
+                    $.post("/htm/manageRoleFunc.htm", $("#formSave").serialize(), function (data) {
                         if (data.code == "200") {
                             $.messager.alert("信息", "修改角色功能成功", "info");
                         } else {

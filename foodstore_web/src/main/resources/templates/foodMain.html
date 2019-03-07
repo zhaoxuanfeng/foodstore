@@ -176,7 +176,7 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" iconcls="icon-cancel">取消</a>
     </div>
 
-    <div id="modifyWindow" class="easyui-dialog" closed="true" buttons="#dlgRefreshUserCache-buttons" style="width:490px;height:320px;padding:0px;background: #fafafa;display: none;">
+    <div id="modifyWindow" class="easyui-dialog" closed="true" buttons="#update_buttons" style="width:490px;height:320px;padding:0px;background: #fafafa;display: none;">
         <form id="modifuMenu" method="post">
 
             <table align="center" width="90%" cellpadding="2" cellspacing="2">
@@ -257,8 +257,16 @@
                 </tr>
 
             </table>
+
         </form>
     </div>
+    <div id="update_buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitUpdateInfo()"  iconcls="icon-save">更新菜品</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" iconcls="icon-cancel">取消</a>
+    </div>
+    <!--<div id="changeStatusWindow" class="easyui-dialog" title="是否改变状态">-->
+
+    <!--</div>-->
 </body>
 <footer th:replace="footer :: footer"></footer>
 
@@ -313,12 +321,8 @@
             onSubmit:function () {
             },
             success:function (data) {
-                console.log(data);
 
-                // var str = $(data).find("body").text();
                  var json = $.parseJSON(data);
-                console.log(json.status);
-                // console.log(json);
                 if( json.status == true){
                     alert(json.message);
                     $('#addMenu').dialog("close");
@@ -330,14 +334,12 @@
     function cancel(){
         $("#addMenu").dialog("close");
         $("#modifyWindow").dialog("close");
+       console.log( $("#modifyWindow").parent().is(":hidden"));
     }
 
     function batchSelection(flag) {
         var rows = $('#food_table').datagrid('getChecked');
-
-        console.log(rows);
         var items = [];
-
         if(rows){
 
             $.each(rows,function (index,item) {
@@ -375,38 +377,30 @@
                     foodKey:foodKey
                 });
                 $('#modify_id').attr('readonly',true);
-                // $("#modify_id").textbox("disable"); .textbox('textbox')
-                /* $("#modify_foodName").textbox("disable");
-               $("#modify_foodIntroduce").textbox("disable");
-               $("#modify_foodPrice").textbox("disable");
-               $("#modify_foodKey").textbox("disable");
-
-                              $("#modifyWindow").show();
-                              $("#modifyWindow").dialog({
-                                  title: "添加",
-                                  modal:true,//遮幕
-                                  onload:function (row) {
-                                    // var  row = ids.pop;
-
-                                  }
-                              });
-                             $("#modify_id").textbox("setValue",row.id) ;
-                              $("#modify_id").hide();
-                              console.log(row.foodName);
-                              $("#modify_foodName").textbox('setValue',row.foodName);
-
-                              $("#modify_foodIntroduce").textbox('setValue',row.foodIntroduce);
-                              $("#modify_foodPrice").textbox('setValue',row.foodPrice);*/
-
                 $("#modifyWindow").dialog("open").window("center");
 
             }else{
-                $.ajax("/htm/modifyFood.htm",function (row) {
 
-                });
             }
 
         }
+    }
+    
+    function submitUpdateInfo() {
+        $("#modifuMenu").form("submit",{
+            url:'/htm/modifyFood.htm',
+            onsubmit:function (param) {
+                
+            },
+            success:function (data) {
+                var response_data = $.parseJSON(data);
+                alert(response_data.message);
+                if(response_data.status == true){
+                    $('#modifyWindow').dialog("close");
+                }
+            }
+
+        });
     }
 
 </script>

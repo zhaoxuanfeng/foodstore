@@ -1,13 +1,19 @@
 package cn.zxf.self.bussiness;
 
+import cn.zxf.self.entry.ManageUserRoleRel;
+import cn.zxf.self.entry.ManageUserRoleRelExample;
 import cn.zxf.self.entry.UserInfo;
 import cn.zxf.self.entry.UserInfoExample;
 import cn.zxf.self.entry.dto.StateInfo;
 import cn.zxf.self.entry.vo.UserCondition;
+import cn.zxf.self.mapper.ManageUserRoleRelMapper;
 import cn.zxf.self.utils.DataUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -144,5 +150,27 @@ public class UserInfoBussiness extends BaseBussiness {
 
         return  stateInfo;
 
+    }
+
+    @Transactional
+    public List<UserInfo> findUserInfoListByRoleId(Long mangeRoleId) {
+        ManageUserRoleRelExample manageUserRoleRelExample = new ManageUserRoleRelExample();
+        manageUserRoleRelExample.createCriteria().andManageRoleIdEqualTo(mangeRoleId);
+        List<ManageUserRoleRel> manageUserRoleRelList = manageUserRoleRelMapper.selectByExample(manageUserRoleRelExample);
+        List<Long> userIdList = new  ArrayList<>();
+        for (ManageUserRoleRel manageUserRoleRel:manageUserRoleRelList    ) {
+            userIdList.add(manageUserRoleRel.getManageUserId());
+        }
+        List<UserInfo> userInfoList = new ArrayList<>();
+        if(ObjectUtils.allNotNull(userIdList)  &&  userIdList.size() != 0){
+            UserInfoExample userInfoExample = new UserInfoExample();
+            userInfoExample.createCriteria().andUserIdIn(userIdList);
+            userInfoList = userInfoMapper.selectByExample(userInfoExample);
+        }else{
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUserName("无");
+            userInfoList.add(userInfo);
+        }
+        return userInfoList;
     }
 }
