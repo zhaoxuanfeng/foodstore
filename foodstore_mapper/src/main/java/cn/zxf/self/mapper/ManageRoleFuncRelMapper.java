@@ -3,10 +3,9 @@ package cn.zxf.self.mapper;
 import java.util.List;
 
 import cn.zxf.self.entry.ManageRoleFuncRel;
-import cn.zxf.self.entry.ManageRoleFuncRelExample;
+import cn.zxf.self.example.ManageRoleFuncRelExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Service;
 
 @Mapper
 public interface ManageRoleFuncRelMapper {

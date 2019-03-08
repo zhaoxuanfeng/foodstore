@@ -3,7 +3,7 @@ package cn.zxf.self.mapper;
 import java.util.List;
 
 import cn.zxf.self.entry.ManageGroup;
-import cn.zxf.self.entry.ManageGroupExample;
+import cn.zxf.self.example.ManageGroupExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

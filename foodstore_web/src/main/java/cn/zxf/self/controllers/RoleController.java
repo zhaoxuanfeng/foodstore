@@ -17,13 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.management.relation.Role;
 import javax.servlet.http.HttpServletRequest;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,19 +37,26 @@ public class RoleController extends BaseController{
     @Autowired
     private FuncBussiness funcBussiness;
 
-    private PagerModel pagerModel = new PagerModel();
-
     private RestModel restModel = new RestModel();
 
     private StateInfo stateInfo = new StateInfo();
 
-
+    /***
+        *@Description  //TODO  跳转权限管理页面
+        *@Param [request]
+        *@Return  java.lang.String
+     **/
     @RequestMapping(value = "/htm/roleMain.htm")
     public  String roleMain(HttpServletRequest request){
         logger.info("url:"+request.getRequestURI());
         return "manageRole";
     }
-
+    
+    /***
+        *@Description  //TODO  管理或添加角色及其相关功能
+        *@Param [addRole, request]
+        *@Return  cn.zxf.self.entry.dto.RestModel
+     **/
     @RequestMapping(value="/htm/manageRoleAddMod.htm")
     @ResponseBody
     public RestModel manageRoleAdd(RoleFuncModel addRole, HttpServletRequest request){
@@ -77,15 +78,10 @@ public class RoleController extends BaseController{
 
 
         if("add".equals(addRole.getAddmodify())) {
-           /* LocalDateTime date = LocalDateTime.now();
-            ZoneId zone = ZoneId.systemDefault();
-            Instant instant = date.atZone(zone).toInstant();
-            manageRole.setCreateTime(instant.toEpochMilli());*/
-
             manageRole.setCreateTime(currTime);
             stateInfo = roleBussiness.addRole(manageRole,addRole.getManageFuncIds());
         }else{
-            stateInfo = roleBussiness.modifyRole(manageRole,addRole.getManageFuncIds());
+            stateInfo = roleBussiness.modifyRole(manageRole,addRole.getManageFuncIds(),1);
 
         }
         logger.info("message:"+stateInfo.getMessage());
@@ -101,17 +97,55 @@ public class RoleController extends BaseController{
         return restModel;
     }
 
+    /***
+        *@Description  //TODO  添加角色功能列表
+        *@Param [request, roleFuncModel]
+        *@Return  cn.zxf.self.entry.dto.RestModel
+     **/
     @RequestMapping("/htm/manageRoleFunc.htm")
     @ResponseBody
-    public PagerModel manageRoleFunc(HttpServletRequest request,RoleFuncModel roleFuncModel){
+    public RestModel manageRoleFunc(HttpServletRequest request,RoleFuncModel roleFuncModel){
         logger.info("url:"+request.getRequestURI());
         logger.info("params:"+roleFuncModel.toString());
 
-        //待完成
-        return pagerModel;
+        ManageRole manageRole = new ManageRole();
+        manageRole.setManageRoleId(roleFuncModel.getManageRoleId());
+        stateInfo =  roleBussiness.modifyRole(manageRole,roleFuncModel.getManageFuncIds(),0);
+
+        restModel.setMessage(stateInfo.getMessage());
+        if(stateInfo.isState()){
+            restModel.setCode("200");
+        }else {
+            restModel.setCode("400");
+        }
+        logger.info("return status:"+stateInfo.isState());
+        return restModel;
     }
 
-
+    /***
+        *@Description  //TODO  删除角色
+        *@Param [request, roleId]
+        *@Return  cn.zxf.self.entry.dto.RestModel
+     **/
+    @RequestMapping("/htm/manageRoleDel.htm")
+    @ResponseBody
+    public RestModel  manageRoleDel(HttpServletRequest  request,Long  roleId){
+        logger.info("url:"+ request.getRequestURI());
+        logger.info("删除角色：id="+roleId);
+        stateInfo = roleBussiness.removeRole(roleId);
+        restModel.setCode(stateInfo.getCode());
+        restModel.setMessage(stateInfo.getMessage());
+        logger.info("删除角色：id"+roleId+",status:"+stateInfo.isState()+",return coude :" + stateInfo.getCode());
+        logger.info("return"+stateInfo.isState());
+        return  restModel;
+    }
+    
+    
+    /***
+        *@Description  //TODO  获取角色所属功能列表
+        *@Param [request, manageRoleId]
+        *@Return  cn.zxf.self.entry.dto.RestModel
+     **/
     @RequestMapping("/htm/manageRoleFuncList.htm")
     @ResponseBody
     public RestModel getRoleFuncList(HttpServletRequest request,Long manageRoleId){
@@ -131,6 +165,11 @@ public class RoleController extends BaseController{
         return restModel;
     }
 
+    /***
+        *@Description  //TODO  获取所有角色列表
+        *@Param [request]
+        *@Return  cn.zxf.self.entry.dto.RestModel
+     **/
     @RequestMapping(value = "/htm/manageRoleList.htm")
     @ResponseBody
     public RestModel manageRoleList(HttpServletRequest request){
@@ -143,7 +182,12 @@ public class RoleController extends BaseController{
         }
         return restModel;
     }
-
+    
+    /***
+        *@Description  //TODO  获取所有功能列表
+        *@Param [request]
+        *@Return  cn.zxf.self.entry.dto.RestModel
+     **/
     @RequestMapping("/htm/manageFuncList.htm")
     @ResponseBody
     public RestModel manageFuncList(HttpServletRequest request){

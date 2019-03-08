@@ -1,7 +1,7 @@
 package cn.zxf.self.mapper;
 
 import cn.zxf.self.entry.ManageFunc;
-import cn.zxf.self.entry.ManageFuncExample;
+import cn.zxf.self.example.ManageFuncExample;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;

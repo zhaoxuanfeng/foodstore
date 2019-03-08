@@ -35,7 +35,11 @@ public class UserController extends BaseController {
     @Autowired
     private UserInfoBussiness  userInfoBussiness;
 
-
+    /***
+        *@Description  //TODO  获取角色所属用户
+        *@Param [request, manageRoleId]
+        *@Return  cn.zxf.self.entry.dto.RestModel
+     **/
     @RequestMapping("/htm/manageRoleUsers.htm")
     @ResponseBody
     public RestModel userAllInfo(HttpServletRequest request, Long  manageRoleId){
@@ -52,13 +56,21 @@ public class UserController extends BaseController {
         return restModel;
     }
 
-
+    /***
+        *@Description  //TODO  跳转用户页面
+        *@Param [request, response, session]
+        *@Return  java.lang.String
+     **/
     @RequestMapping("/htm/userinfo.htm")
     public String  userInfo(HttpServletRequest request, HttpServletResponse response, HttpSession session){
         return "userMain";
     }
 
-
+    /***
+        *@Description  //TODO  条件查询用户信息
+        *@Param [request, userCondition]
+        *@Return  cn.zxf.self.entry.vo.PageMsg
+     **/
     @RequestMapping(value = "/htm/userinfo_data.htm")
     @ResponseBody
     public PageMsg userInfoData(HttpServletRequest request, UserCondition userCondition){
@@ -79,12 +91,11 @@ public class UserController extends BaseController {
         return pageMsg;
     }
 
-
-
-
-
-
-
+    /***
+        *@Description  //TODO  修改用户信息
+        *@Param [request, requestUserInfo]
+        *@Return  java.lang.String
+     **/
     @RequestMapping("/htm/modifyUserinfo.htm")
     public  String  modifyUserInfo(HttpServletRequest request,UserInfo  requestUserInfo){
         logger.info("url:"+request.getRequestURI());

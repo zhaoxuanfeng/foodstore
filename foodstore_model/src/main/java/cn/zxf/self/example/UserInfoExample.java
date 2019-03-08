@@ -1,4 +1,4 @@
-package cn.zxf.self.entry;
+package cn.zxf.self.example;
 
 import java.util.ArrayList;
 import java.util.Date;

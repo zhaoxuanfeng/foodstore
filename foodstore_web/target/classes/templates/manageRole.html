@@ -316,7 +316,7 @@
         if (manageRoleId > 0) {
             $.messager.confirm("确认", "确认删除此角色吗？请确认此角色没有管理员在使用", function (r) {
                 if (r) {
-                    $.post("manageRoleDel.htm", {manageRoleId: manageRoleId}, function (data) {
+                    $.post("/htm/manageRoleDel.htm", {manageRoleId: manageRoleId}, function (data) {
                         if (data.code == "200") {
                             roleBind();
                         } else {

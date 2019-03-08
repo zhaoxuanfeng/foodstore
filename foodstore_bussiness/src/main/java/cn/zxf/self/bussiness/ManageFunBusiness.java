@@ -2,8 +2,9 @@ package cn.zxf.self.bussiness;
 
 import cn.zxf.self.entry.*;
 import cn.zxf.self.enums.ManageMenuEnums;
-import cn.zxf.self.mapper.ManageFuncMapper;
-import cn.zxf.self.mapper.ManageUserRoleRelMapper;
+import cn.zxf.self.example.ManageFuncExample;
+import cn.zxf.self.example.ManageRoleFuncRelExample;
+import cn.zxf.self.example.ManageUserRoleRelExample;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

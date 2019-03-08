@@ -38,6 +38,11 @@ public class FoodController  extends  BaseController{
 
     private StateInfo stateInfo = new StateInfo();
 
+    /***
+        *@Description  //TODO  修改食物信息
+        *@Param [request, recipes]
+        *@Return  cn.zxf.self.entry.vo.PagerModel
+     **/
     @RequestMapping(value = "/htm/modifyFood.htm")
     @ResponseBody
     public PagerModel modifyFoodInfo(HttpServletRequest request,Recipes recipes){
@@ -61,7 +66,11 @@ public class FoodController  extends  BaseController{
         return pageModel;
     }
 
-
+    /***
+        *@Description  //TODO  添加食物信息
+        *@Param [request, recipes]
+        *@Return  cn.zxf.self.entry.vo.PagerModel
+     **/
     @RequestMapping(value="/htm/addFoodInfo.htm")
     @ResponseBody
     public PagerModel addFoodInfo(HttpServletRequest request, Recipes recipes){
@@ -81,11 +90,23 @@ public class FoodController  extends  BaseController{
         }
         return  pageModel;
     }
+
+
+   /***
+       *@Description  //TODO  跳转食物页面
+       *@Param [request]
+       *@Return  java.lang.String
+    **/
     @RequestMapping("/htm/foodInfo.htm")
     public String foodMain(HttpServletRequest request){
         return "foodMain";
     }
 
+    /***
+        *@Description  //TODO  根据条件获取所有食物信息
+        *@Param [request]
+        *@Return  cn.zxf.self.entry.vo.PageMsg
+     **/
     @RequestMapping("/htm/foodInfoData.htm")
     @ResponseBody
     public PageMsg foodAllInfo(HttpServletRequest request){
@@ -108,6 +129,7 @@ public class FoodController  extends  BaseController{
         return  pageMsg;
     }
 
+    //解析参数
     private Map<String,Object> resolveParams(HttpServletRequest request) {
         logger.info("解析参数--resolveParams");
         Map<String,Object> map = new HashMap<>();

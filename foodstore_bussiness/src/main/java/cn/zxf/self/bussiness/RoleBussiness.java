@@ -2,10 +2,14 @@ package cn.zxf.self.bussiness;
 
 import cn.zxf.self.entry.*;
 import cn.zxf.self.entry.dto.StateInfo;
-import cn.zxf.self.entry.vo.RoleFuncModel;
+import cn.zxf.self.example.ManageFuncExample;
+import cn.zxf.self.example.ManageRoleExample;
+import cn.zxf.self.example.ManageRoleFuncRelExample;
+import cn.zxf.self.example.ManageUserRoleRelExample;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +49,7 @@ public class RoleBussiness extends BaseBussiness {
         for(ManageRoleFuncRel manageRoleFuncRel :roleFuncRelList){
             funcIdList.add(manageRoleFuncRel.getManageFuncId());
         }
-        ManageFuncExample  manageFuncExample = new ManageFuncExample();
+        ManageFuncExample manageFuncExample = new ManageFuncExample();
         manageFuncExample.createCriteria()
                                  .andIsDeleteEqualTo(0)
                                  .andManageFuncIdIn(funcIdList);
@@ -76,17 +80,21 @@ public class RoleBussiness extends BaseBussiness {
     }
 
     @Transactional
-    public StateInfo modifyRole(final ManageRole manageRole,final  List<Long> funcIdsList) {
-        List<Long> funcList = new ArrayList<>();
+    public StateInfo modifyRole(final ManageRole manageRole,final  List<Long> funcIdsList,final int  modifyRoleFlag) {
         ManageRoleExample manageRoleExample = new ManageRoleExample();
         ManageRoleFuncRelExample selectExample = new ManageRoleFuncRelExample();
 
-
-
-        manageRoleExample.createCriteria()
-                          .andManageRoleIdEqualTo(manageRole.getManageRoleId());
-
-        int count = manageRoleMapper.updateByExampleSelective(manageRole,manageRoleExample);
+        if(1 == modifyRoleFlag){
+            manageRoleExample.createCriteria()
+                    .andManageRoleIdEqualTo(manageRole.getManageRoleId());
+            int count = manageRoleMapper.updateByExampleSelective(manageRole,manageRoleExample);
+            if(count == 0){
+                stateInfo.setCode("403");
+                stateInfo.setMessage("更新角色信息失败");
+                stateInfo.setState(false);
+                return stateInfo;
+            }
+        }
 
         //是否有功能属于角色
         if(null != funcIdsList && funcIdsList.size()>0){
@@ -135,7 +143,6 @@ public class RoleBussiness extends BaseBussiness {
                 }
             }else{
                 //没有角色，重新插入角色
-
                 for(Long id :funcIdsList){
                     newRoleFuncRel.setManageFuncId(id);
                     newRoleFuncRel.setManageRoleId(manageRole.getManageRoleId());
@@ -146,12 +153,40 @@ public class RoleBussiness extends BaseBussiness {
                         stateInfo.setCode("404");
                         return stateInfo;
                     }
-
                 }
             }
         }
         stateInfo.setMessage("更新角色信息成功！");
         stateInfo.setState(true);
+        return stateInfo;
+    }
+
+    @Transactional
+    public StateInfo removeRole(Long roleId) {
+        ManageUserRoleRelExample manageUserRoleRelExample = new ManageUserRoleRelExample();
+        manageUserRoleRelExample.createCriteria()
+                                .andManageRoleIdEqualTo(roleId)
+                                .andIsDeleteEqualTo(0);
+        List<ManageUserRoleRel>  manageUserRoleRelList =   manageUserRoleRelMapper.selectByExample(manageUserRoleRelExample);
+
+        if(null != manageUserRoleRelList && manageUserRoleRelList.size() > 0){
+            stateInfo.setState(false);
+            stateInfo.setMessage("有用户关联该角色！");
+            stateInfo.setCode("400");
+        }
+
+
+        ManageRole manageRole = manageRoleMapper.selectByPrimaryKey(roleId);
+        manageRole.setIsDelete(1);
+        int count = manageRoleMapper.updateByPrimaryKeySelective(manageRole);
+        if(count == 0){
+            stateInfo.setCode("400");
+            stateInfo.setMessage("删除角色失败");
+            stateInfo.setState(false);
+        }
+        stateInfo.setState(true);
+        stateInfo.setMessage("删除角色成功");
+        stateInfo.setCode("200");
         return stateInfo;
     }
 }

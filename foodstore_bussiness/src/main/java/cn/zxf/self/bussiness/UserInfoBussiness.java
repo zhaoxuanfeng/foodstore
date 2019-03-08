@@ -1,12 +1,11 @@
 package cn.zxf.self.bussiness;
 
 import cn.zxf.self.entry.ManageUserRoleRel;
-import cn.zxf.self.entry.ManageUserRoleRelExample;
+import cn.zxf.self.example.ManageUserRoleRelExample;
 import cn.zxf.self.entry.UserInfo;
-import cn.zxf.self.entry.UserInfoExample;
+import cn.zxf.self.example.UserInfoExample;
 import cn.zxf.self.entry.dto.StateInfo;
 import cn.zxf.self.entry.vo.UserCondition;
-import cn.zxf.self.mapper.ManageUserRoleRelMapper;
 import cn.zxf.self.utils.DataUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @ClassName UserInfoBussiness

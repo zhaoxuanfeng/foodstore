@@ -3,10 +3,9 @@ package cn.zxf.self.mapper;
 import java.util.List;
 
 import cn.zxf.self.entry.ManageSystem;
-import cn.zxf.self.entry.ManageSystemExample;
+import cn.zxf.self.example.ManageSystemExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Service;
 
 @Mapper
 public interface ManageSystemMapper {

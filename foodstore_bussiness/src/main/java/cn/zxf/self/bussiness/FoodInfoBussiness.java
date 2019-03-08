@@ -1,11 +1,10 @@
 package cn.zxf.self.bussiness;
 
 import cn.zxf.self.entry.Recipes;
-import cn.zxf.self.entry.RecipesExample;
 import cn.zxf.self.entry.dto.StateInfo;
+import cn.zxf.self.example.RecipesExample;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Map;
 

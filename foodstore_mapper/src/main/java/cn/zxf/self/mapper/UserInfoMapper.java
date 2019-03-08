@@ -3,7 +3,7 @@ package cn.zxf.self.mapper;
 import java.util.List;
 
 import cn.zxf.self.entry.UserInfo;
-import cn.zxf.self.entry.UserInfoExample;
+import cn.zxf.self.example.UserInfoExample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

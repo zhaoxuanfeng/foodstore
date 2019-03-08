@@ -17,6 +17,7 @@
             <th field="foodCuisine" align="center" width="8%"></th>
             <th field="foodKey" align="center" width="8%"></th>
             <th field="foodIntroduce" align="center" width="8%"></th>
+            <th field="foodImgUrl" align="center" width="8%"></th>
         </tr>
 
         </thead>
@@ -247,6 +248,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>菜品图片：</td>
+                    <td>
+                        <input type="text" id="modify_foodImgUrl"  name="foodImgUrl" class="easyui-textbox"  style="width:150px"/>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
                     <td>是否开售：</td>
                     <td>
                             <span class="radioSpan" id="modify_foodStatus" >
@@ -291,6 +298,7 @@
             {field:'foodCuisine',title:'菜系',width:'10%',align:'right'},
             {field:'foodKey',title:'菜品关键字',width:'10%',align:'right'},
             {field:'foodIntroduce',title:'菜品介绍',width:'10%',align:'right'}
+            {field:'foodImgUrl',title:'菜品图片路径',width:'10%',align:'right'}
         ]],
         onBeforeLoad:function(param){
             console.log(param);
@@ -365,6 +373,7 @@
                 var foodType = row.foodType;
                 var foodStatus = row.foodStatus;
                 var foodKey = row.foodKey;
+                var foodImgUrl = row.foodImgUrl;
 
                 $("#modifuMenu").form('load',{
                     id:id,
@@ -374,7 +383,8 @@
                     foodIntroduce:foodIntroduce,
                     foodType:foodType,
                     foodStatus:foodStatus,
-                    foodKey:foodKey
+                    foodKey:foodKey,
+                    foodImgUrl:foodImgUrl
                 });
                 $('#modify_id').attr('readonly',true);
                 $("#modifyWindow").dialog("open").window("center");
