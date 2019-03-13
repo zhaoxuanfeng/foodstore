@@ -4,8 +4,8 @@ import cn.zxf.self.entry.ManageUserRoleRel;
 import cn.zxf.self.example.ManageUserRoleRelExample;
 import cn.zxf.self.entry.UserInfo;
 import cn.zxf.self.example.UserInfoExample;
-import cn.zxf.self.entry.dto.StateInfo;
-import cn.zxf.self.entry.vo.UserCondition;
+import cn.zxf.self.dto.StateInfo;
+import cn.zxf.self.vo.UserCondition;
 import cn.zxf.self.utils.DataUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -53,7 +53,7 @@ public class UserInfoBussiness extends BaseBussiness {
         }
     }
 
-    public StateInfo setUserInfo(UserInfo userInfo) {
+    public StateInfo setUserInfo(final  UserInfo userInfo) {
         int count = userInfoMapper.insertSelective(userInfo);
         if(count == 1){
             stateInfo.setState(true);
@@ -66,7 +66,7 @@ public class UserInfoBussiness extends BaseBussiness {
         return stateInfo;
     }
 
-    public StateInfo getUserInfoByCondition(UserCondition userCondition) {
+    public StateInfo getUserInfoByCondition(final UserCondition userCondition) {
 
         UserInfoExample userInfoExample = new UserInfoExample();
         UserInfoExample.Criteria criteria = userInfoExample.createCriteria();
@@ -133,10 +133,10 @@ public class UserInfoBussiness extends BaseBussiness {
 
     public StateInfo modifyUser(final UserInfo requestUserInfo) {
 
-        UserInfoExample userInfoExample = new UserInfoExample();
+      /*  UserInfoExample userInfoExample = new UserInfoExample();
         userInfoExample.createCriteria().andUserIdEqualTo(requestUserInfo.getUserId());
-        int count = userInfoMapper.updateByExampleSelective(requestUserInfo,userInfoExample);
-
+        int count = userInfoMapper.updateByExampleSelective(requestUserInfo,userInfoExample);*/
+        int count = userInfoMapper.updateByPrimaryKeySelective(requestUserInfo);
         if(count == 0){
             stateInfo.setState(false);
             stateInfo.setMessage("失败");
@@ -151,7 +151,7 @@ public class UserInfoBussiness extends BaseBussiness {
     }
 
     @Transactional
-    public List<UserInfo> findUserInfoListByRoleId(Long mangeRoleId) {
+    public List<UserInfo> findUserInfoListByRoleId(final Long mangeRoleId) {
         ManageUserRoleRelExample manageUserRoleRelExample = new ManageUserRoleRelExample();
         manageUserRoleRelExample.createCriteria().andManageRoleIdEqualTo(mangeRoleId);
         List<ManageUserRoleRel> manageUserRoleRelList = manageUserRoleRelMapper.selectByExample(manageUserRoleRelExample);
@@ -170,5 +170,26 @@ public class UserInfoBussiness extends BaseBussiness {
             userInfoList.add(userInfo);
         }
         return userInfoList;
+    }
+
+    @Transactional
+    public StateInfo initUserPassword(final List<Long> userIdList,final  String initPassword) {
+
+        UserInfo  userInfo = new UserInfo();
+        userInfo.setAccountPassword(initPassword);
+        UserInfoExample userInfoExample = new UserInfoExample();
+        userInfoExample.createCriteria()
+                       .andUserIdIn(userIdList);
+        int count  = userInfoMapper.updateByExampleSelective(userInfo,userInfoExample);
+        if( 0 ==  count){
+            stateInfo.setCode("400");
+            stateInfo.setState(false);
+            stateInfo.setMessage("修改密码失败！");
+        }else {
+            stateInfo.setState(true);
+            stateInfo.setMessage("修改密码成功");
+            stateInfo.setCode("200");
+        }
+        return stateInfo;
     }
 }

@@ -418,4 +418,24 @@ public class UserInfo {
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
     }
+
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", accountPassword='" + accountPassword + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                ", userRealname='" + userRealname + '\'' +
+                ", userBirthday=" + userBirthday +
+                ", userSex='" + userSex + '\'' +
+                ", userPhone='" + userPhone + '\'' +
+                ", userAddress='" + userAddress + '\'' +
+                ", userFlag=" + userFlag +
+                ", createTime=" + createTime +
+                ", modifyTime=" + modifyTime +
+                '}';
+    }
 }

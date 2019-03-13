@@ -54,13 +54,15 @@
                enableUpdateByExample="true"/>-->
         <!--<table tableName="user_info" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="true"/>-->
-        <table tableName="recipes" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+      <!--  <table tableName="recipes" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true"/>-->
+       <!-- <table tableName="orders" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               enableUpdateByExample="true"/>-->
+        <table tableName="order_recipes_rel" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="true"/>
-        <table tableName="orders" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
-               enableUpdateByExample="true"/>
-        <table tableName="user_address_rel" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
-               enableUpdateByExample="true"/>
-
+        <!--<table tableName="user_address_rel" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+            enableUpdateByExample="true"/>
+          -->
         <!--<table tableName="manage_user" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
                enableUpdateByExample="true"/>
         <table tableName="manage_system" enableCountByExample="true" enableDeleteByExample="true" enableSelectByExample="true"

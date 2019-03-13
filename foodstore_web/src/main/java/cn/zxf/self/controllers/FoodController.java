@@ -1,24 +1,25 @@
 package cn.zxf.self.controllers;
 
 import cn.zxf.self.bussiness.FoodInfoBussiness;
+import cn.zxf.self.bussiness.OrderInfoBussiness;
 import cn.zxf.self.entry.Recipes;
-import cn.zxf.self.entry.dto.StateInfo;
-import cn.zxf.self.entry.vo.PageMsg;
-import cn.zxf.self.entry.vo.PagerModel;
-import com.github.pagehelper.Page;
+import cn.zxf.self.dto.StateInfo;
+import cn.zxf.self.entry.UserInfo;
+import cn.zxf.self.vo.PageMsg;
+import cn.zxf.self.vo.PagerModel;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpSession;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName FoodController
@@ -34,14 +35,53 @@ public class FoodController  extends  BaseController{
     @Autowired
     private FoodInfoBussiness foodInfoBussiness;
 
+    @Autowired
+    private OrderInfoBussiness orderInfoBussiness;
+
     private PagerModel pageModel = new PagerModel();
 
     private StateInfo stateInfo = new StateInfo();
 
+
+    @RequestMapping(value = "/htm/searchRecipesByOrder.htm")
+    public PagerModel   searchRecipesByOrder(HttpServletRequest request, HttpSession session){
+        logger.info("url:"+request.getRequestURI());
+        UserInfo currUser = (UserInfo) session.getAttribute("userInfo");
+        Long orderId = (Long) request.getAttribute("orderId");
+        stateInfo = orderInfoBussiness.findRecipesByOrder(currUser.getUserId(),orderId);
+        logger.info("return");
+        return pageModel;
+    }
+
+
+    /***
+        *@Description  //TODO  修改菜品的状态
+        *@Param [request]
+        *@Return  cn.zxf.self.vo.PagerModel
+     **/
+    @RequestMapping(value = "/htm/modifyFoodStatus.htm",method = RequestMethod.GET)
+    @ResponseBody
+    public PagerModel modifyFoodStatus(HttpServletRequest request ){
+        logger.info("url:"+request.getRequestURI());
+        String ids = request.getParameter("ids");
+        //String  转list<Integer>
+        List<Integer>  idList = Arrays.asList(ids.split(",")).stream()
+                .map(s -> Integer.parseInt(s))  //.map(Integer::valueOf)
+                .collect(Collectors.toList());
+        Integer flag = (Integer) JSON.parse(request.getParameter("flag"));
+        logger.info("params :" +idList.toString());
+        stateInfo = foodInfoBussiness.modifyFoodStatus(idList,flag);
+        if(ObjectUtils.allNotNull(stateInfo)){
+            pageModel.setMessage(stateInfo.getMessage());
+            pageModel.setStatus(stateInfo.isState());
+        }
+        return  pageModel;
+    }
+
     /***
         *@Description  //TODO  修改食物信息
         *@Param [request, recipes]
-        *@Return  cn.zxf.self.entry.vo.PagerModel
+        *@Return  cn.zxf.self.vo.PagerModel
      **/
     @RequestMapping(value = "/htm/modifyFood.htm")
     @ResponseBody
@@ -69,7 +109,7 @@ public class FoodController  extends  BaseController{
     /***
         *@Description  //TODO  添加食物信息
         *@Param [request, recipes]
-        *@Return  cn.zxf.self.entry.vo.PagerModel
+        *@Return  cn.zxf.self.vo.PagerModel
      **/
     @RequestMapping(value="/htm/addFoodInfo.htm")
     @ResponseBody
@@ -105,7 +145,7 @@ public class FoodController  extends  BaseController{
     /***
         *@Description  //TODO  根据条件获取所有食物信息
         *@Param [request]
-        *@Return  cn.zxf.self.entry.vo.PageMsg
+        *@Return  cn.zxf.self.vo.PageMsg
      **/
     @RequestMapping("/htm/foodInfoData.htm")
     @ResponseBody

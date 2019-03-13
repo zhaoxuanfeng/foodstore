@@ -13,32 +13,40 @@ import org.springframework.stereotype.Service;
 @Service
 public class BaseBussiness {
 
+    @Autowired
+    protected  ManageGroupMapper manageGroupMapper;
 
     @Autowired
-    protected ManageGroupMapper manageGroupMapper;
+    protected  ManageRoleFuncRelMapper manageRoleFuncRelMapper;
 
     @Autowired
-    protected ManageRoleFuncRelMapper manageRoleFuncRelMapper;
+    protected  ManageRoleMapper manageRoleMapper;
 
     @Autowired
-    protected ManageRoleMapper manageRoleMapper;
-
-    @Autowired
-    protected ManageSystemMapper manageSystemMapper;
+    protected  ManageSystemMapper manageSystemMapper;
 
     @Autowired
     protected  ManageUserMapper manageUserMapper;
 
     @Autowired
-    protected ManageUserRoleRelMapper manageUserRoleRelMapper;
+    protected  ManageUserRoleRelMapper manageUserRoleRelMapper;
 
     @Autowired
-    protected UserInfoMapper userInfoMapper;
+    protected  UserInfoMapper userInfoMapper;
 
     @Autowired
-    protected ManageFuncMapper manageFuncMapper;
+    protected  ManageFuncMapper manageFuncMapper;
 
     @Autowired
     protected  RecipesMapper recipesMapper;
+
+    @Autowired
+    protected  OrdersMapper ordersMapper;
+
+    @Autowired
+    protected OrderRecipesRelMapper orderRecipesRelMapper;
+
+    @Autowired
+    protected UserAddressRelMapper userAddressRelMapper;
 
 }

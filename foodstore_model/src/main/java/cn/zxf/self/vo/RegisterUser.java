@@ -1,4 +1,4 @@
-package cn.zxf.self.entry.vo;
+package cn.zxf.self.vo;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

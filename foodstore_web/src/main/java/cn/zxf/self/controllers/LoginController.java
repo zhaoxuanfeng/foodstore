@@ -4,12 +4,12 @@ import cn.zxf.self.bussiness.ManageFunBusiness;
 import cn.zxf.self.bussiness.UserInfoBussiness;
 import cn.zxf.self.entry.ManageFunc;
 import cn.zxf.self.entry.UserInfo;
-import cn.zxf.self.entry.dto.StateInfo;
-import cn.zxf.self.entry.vo.RegisterUser;
+import cn.zxf.self.dto.StateInfo;
+import cn.zxf.self.vo.RegisterUser;
 import cn.zxf.self.security.VerifyCode;
-import cn.zxf.self.entry.dto.JsonModel;
+import cn.zxf.self.dto.JsonModel;
 import cn.zxf.self.utils.MD5Utils;
-import cn.zxf.self.entry.dto.RestModel;
+import cn.zxf.self.dto.RestModel;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.ObjectUtils;
@@ -72,7 +72,7 @@ public class LoginController extends  BaseController{
     /***
         *@Description  //TODO  账号登录信息
         *@Param [request, session]
-        *@Return  cn.zxf.self.entry.dto.JsonModel
+        *@Return  cn.zxf.self.dto.JsonModel
      **/
     @RequestMapping(value="/htm/loginManagerAccount.htm")
     @ResponseBody

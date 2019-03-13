@@ -1,7 +1,7 @@
 package cn.zxf.self.bussiness;
 
 import cn.zxf.self.entry.Recipes;
-import cn.zxf.self.entry.dto.StateInfo;
+import cn.zxf.self.dto.StateInfo;
 import cn.zxf.self.example.RecipesExample;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,7 @@ public class FoodInfoBussiness extends BaseBussiness {
 
     private StateInfo stateInfo = new StateInfo();
 
-    public StateInfo findFoodInfo(Map<String,Object> map) {
+    public StateInfo findFoodInfo(final Map<String,Object> map) {
         RecipesExample recipesExample = new RecipesExample();
         RecipesExample.Criteria criteria = recipesExample.createCriteria();
         if(null != map.get("foodName")){
@@ -58,7 +58,7 @@ public class FoodInfoBussiness extends BaseBussiness {
     }
 
     @Transactional
-    public StateInfo addFoodInfo(Recipes recipes) {
+    public StateInfo addFoodInfo(final Recipes recipes) {
 
         int count = recipesMapper.insertSelective(recipes);
         if(count == 0){
@@ -72,7 +72,7 @@ public class FoodInfoBussiness extends BaseBussiness {
     }
 
     @Transactional
-    public StateInfo modifyFoodInfo(Recipes recipes) {
+    public StateInfo modifyFoodInfo(final  Recipes recipes) {
         RecipesExample recipesExample = new RecipesExample();
         recipesExample.createCriteria().andIdEqualTo(recipes.getId());
         int count = recipesMapper.updateByExampleSelective(recipes,recipesExample);
@@ -81,6 +81,26 @@ public class FoodInfoBussiness extends BaseBussiness {
             stateInfo.setState(false);
         }else {
             stateInfo.setState(true);
+        }
+        return stateInfo;
+    }
+
+    @Transactional
+    public StateInfo modifyFoodStatus(final List<Integer> ids,final Integer flag) {
+        RecipesExample recipesExample = new RecipesExample();
+        recipesExample.createCriteria()
+                      .andIdIn(ids);
+        Recipes recipes = new Recipes();
+        recipes.setFoodStatus(flag);
+        int count = recipesMapper.updateByExampleSelective(recipes,recipesExample);
+        if(count == 0){
+            stateInfo.setMessage("更新状态失败！");
+            stateInfo.setState(false);
+            stateInfo.setCode("400");
+        }else{
+            stateInfo.setMessage("更新！"+count+"条信息！");
+            stateInfo.setState(true);
+            stateInfo.setCode("200");
         }
         return stateInfo;
     }

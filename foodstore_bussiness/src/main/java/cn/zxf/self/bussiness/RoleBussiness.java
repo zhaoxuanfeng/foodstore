@@ -1,7 +1,7 @@
 package cn.zxf.self.bussiness;
 
 import cn.zxf.self.entry.*;
-import cn.zxf.self.entry.dto.StateInfo;
+import cn.zxf.self.dto.StateInfo;
 import cn.zxf.self.example.ManageFuncExample;
 import cn.zxf.self.example.ManageRoleExample;
 import cn.zxf.self.example.ManageRoleFuncRelExample;

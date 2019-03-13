@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header">
+</head>
+
+<body style="margin:0px;">
+<table id="dg" class="easyui-datagrid" title="订单管理-厨师订单" singleSelect="true" fitColumns="true" nowrap="false" striped="true"
+       SelectOnCheck="true" CheckOnSelect="true" rownumbers="true" pagination="true" pageSize="25" pageList="[25, 50, 150]" toolbar="#tb" fit="true"
+>
+    <thead>
+    <tr>
+        <th field="select" align="center" checkbox="true">选择</th>
+        <th field="userId" align="center" width="8%">用户ID</th>
+        <th field="orderId" align="center" width="8%">订单id</th>
+    </tr>
+    </thead>
+</table>
+<div id="tb" style="padding:2px 5px;">
+    <form id="formSearch">
+        <input type="hidden" name="pageSize" id="pageSize" />
+        <input type="hidden" name="pageNumber" id="pageNumber" />
+        <!--查询条件: userId和手机号-->
+        <div width="100%" style="margin:4px">
+            用户ID：<input type="text"  name="userId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+            订单ID:<input type="text"  name="orderId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="searchOrder()">搜索</a>
+        </div>
+        <div width="100%" style="margin:4px">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openModifyStatusWindow()">修改用户状态</a>&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openInitPasswordWindow()">重置登录密码</a>&nbsp;&nbsp;
+        </div>
+    </form>
+</div>
+<div id="dlgModifyUserStatus" class="easyui-dialog" title="修改菜品制作状态" width="400px" height="150px" closed="true" buttons="#dlgModifyRecipesStatus" style="padding:10px" modal="true">
+    <form id="formModifyUserStatus" method="post">
+        <input type="hidden" name="userId" id="userId" />
+        <input type="hidden" name="orderRecipesStatus" id="userStatusOld" />
+        <table align="center" width="90%" cellpadding="2" cellspacing="2">
+            <tr>
+                <td>
+                    将用户状态修改为：
+                    <select class="easyui-combobox" id="userStatusNew" name="orderRecipesStatus" panelHeight="auto" editable="false" style="width:100px">
+                        <option value="4">待制作</option>
+                        <option value="5">制作中</option>
+                        <option value="6">制作完成</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="dlgModifyRecipesStatus">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="modifyRecipesStatus()" iconcls="icon-save">提交</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" iconcls="icon-cancel">取消</a>
+</div>
+
+</body>
+<footer th:replace="footer :: footer"></footer>
+
+<script type="text/javascript"  th:inline="none">
+
+    $('#dg').datagrid({
+        url:'/htm/searchRecipesByOrder.htm',
+        striped: true,
+        rownumbers:true,
+        pagination: true,
+        pageSize: 10,
+        pageList: [10, 20, 50],
+        border : false,
+        showFooter : true,
+        loadMsg:'数据加载中，请稍等...',
+        columns:[[
+            {field:'select',checkbox:true},
+            {field:'orderId',title:'订单id',width:'10%',align:'right'},
+            {field:'recipesId',title:'菜品id',width:'10%',align:'right'},
+            {field:'foodName',title:'菜名',width:'20%',align:'center',fontStyle:''},
+            {field:'orderRecipesStatus',title:'制作状态',width:'20%',align:'right',formatter: function (value, row, index) {
+                    var res = '';
+                    switch (value) {
+                        case 4:
+                            res = '<p style="color:red;">待制作</p>';        //蓝色字体
+                            break;
+                        case 5:
+                            res = '<p style="color:blue;">制作中</p>';
+                            break;
+                        case 6:
+                            res = '<p style="color:silver;">制作完成</p>';
+                            break;
+                        case 2:
+                            res = '完成';
+                            break;
+                        default:
+                            break;
+                    }
+                    return res;
+                }
+            }
+
+        ]],
+        onBeforeLoad:function(param){
+            console.log(param);
+        },
+        onLoadSuccess: function (data){
+            console.log(data);
+        },
+        onLoadError: function (){
+            alert("数据加载失败！");
+        }
+    });
+    
+    function searchOrder() {
+        /*
+            $.post("//",$("#formSearch").serialize(),function () {
+            });
+        */
+        $("#formSearch").form('submit',{
+            url:/htm/,
+            onSubmit: function(param){
+                console.log(param);
+            },
+            success:function (data) {
+                alert(data);
+            },
+            error:function (data) {
+                alert(data);
+            }
+        });
+    }
+    
+    
+    function openModifyStatusWindow() {
+        $("#dlgModifyUserStatus").dialog("open").window("center");
+    }
+
+    function cancel() {
+        $("#dlgModifyUserStatus").dialog("close");
+    }
+
+    function modifyRecipesStatus() {
+        var  rows = $("#dg").datagrid("getChecked");
+        var ids = [];
+        console.log(rows);
+        if(rows){
+            $.get("",rows.stringify(),function (data) {
+                alert("111");
+            });
+        }else{
+            alert("请选择订单。");
+            cancel();
+        }
+
+
+    }
+
+
+
+
+</script>

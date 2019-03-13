@@ -40,49 +40,35 @@
             <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="searchUser()">搜索</a>
         </div>
         <div width="100%" style="margin:4px">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="">修改用户状态</a>&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openModifyUserStatusWindow()">修改用户状态</a>&nbsp;&nbsp;
             <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="">刷新用户缓存</a>&nbsp;&nbsp;
-            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="">重置登录密码</a>&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openInitPasswordWindow()">重置登录密码</a>&nbsp;&nbsp;
         </div>
     </form>
 </div>
-<!--<div id="dlgModifyUserStatus" class="easyui-dialog" title="修改用户状态" width="400px" height="150px" closed="true" buttons="#dlgModifyUserStatus-buttons" style="padding:10px" modal="true">
+
+<div id="dlgModifyUserStatus" class="easyui-dialog" title="修改用户状态" width="400px" height="150px" closed="true" buttons="#modifyUserStatus" style="padding:10px" modal="true">
     <form id="formModifyUserStatus" method="post">
         <input type="hidden" name="userId" id="userId" />
         <input type="hidden" name="userStatusOld" id="userStatusOld" />
         <table align="center" width="90%" cellpadding="2" cellspacing="2">
             <tr>
                 <td>
-                    将用户状态修改为：<select class="easyui-combobox" id="userStatusNew" name="userStatusNew" panelHeight="auto" editable="false" style="width:100px">
-                    <option value="1">正常</option>
-                    <option value="0">冻结</option>
-                </select>
+                    将用户状态修改为：
+                    <select class="easyui-combobox" id="userStatusNew" name="userFlag" panelHeight="auto" editable="true" style="width:100px">
+                        <option value="1">正常</option>
+                        <option value="0">冻结</option>
+                    </select>
                 </td>
             </tr>
         </table>
     </form>
 </div>
-<div id="dlgModifyUserStatus-buttons">
-    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="" iconcls="icon-save">保存</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="" iconcls="icon-cancel">取消</a>
+<div id="modifyUserStatus">
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="summitUserStatus()" iconcls="icon-save">提交</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" iconcls="icon-cancel">取消</a>
 </div>
 
-&lt;!&ndash;点击刷新用户缓存后，显示的弹框&ndash;&gt;
-<div id="dlgRefreshUserCache" class="easyui-dialog" title="刷新用户缓存" width="400px" height="150px" closed="true" buttons="#dlgRefreshUserCache-buttons" style="padding:10px" modal="true">
-    <form id="formRefreshUserCache" method="post">
-        <table align="center" width="90%" cellpadding="2" cellspacing="2">
-            <tr>
-                <td>
-                    需要刷新缓存的用户Id：<input type="text" id="refreshUserId" name="refreshUserId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>-->
-<div id="dlgRefreshUserCache-buttons">
-    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="" iconcls="icon-save">刷新</a>
-    <a href="javascript:void(0)" class="easyui-linkbutton" onclick="" iconcls="icon-cancel">取消</a>
-</div>
 </body>
 <footer th:replace="footer :: footer"></footer>
 
@@ -133,6 +119,107 @@
 
 
     }
+
+    function  openModifyUserStatusWindow(){
+        var row = $("#dg").datagrid("getSelected");
+        $("#userId").val(row.userId);
+        $("#userStatusOld").val(row.userFlag);
+        $("#dlgModifyUserStatus").dialog("open").window("center");
+
+        /*$("#userStatusNew").combobox(
+            "loadData",
+            [
+                {"text":"正常","value":"1"}
+                ,{"text":"冻结","value":"0"}
+            ]
+        );*/
+
+    }
+
+    function cancel() {
+        $("#tb").dialog("close");
+        $("#dlgModifyUserStatus").dialog("close");
+    }
+
+    function summitUserStatus() {
+        var newFlag = $("#userStatusNew").combobox("getValue");
+        var oldFlag = $("#userStatusOld").val();
+        var userId = $("#userId").val();
+        if(null == userId){
+            alert("请选择用户！");
+            return;
+        }
+        if(newFlag == oldFlag){
+            $.messager.alert("信息", "修改成功", "success");
+        }else {
+            $.get("/htm/modifyUserStatus.htm",$("#formModifyUserStatus").serialize(),function (data) {
+                   if(data){
+                       if(data.message){
+                           alert(data.message);
+                           $("#dlgModifyUserStatus").dialog("close");
+                           searchUser();
+                       }
+                   }
+            });
+
+       /*     $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: 'POST',
+                dataType: "json",
+                data: {userId:userId,userFlag:newFlag},
+                url: '/htm/modifyUserStatus.htm',
+                success: function(result){
+                    if(null != result && result.message != null ){
+                        alert(result.message);
+                    }
+                }
+            });*/
+        }
+
+    }
+
+    function openInitPasswordWindow() {
+        var rows  = $("#dg").datagrid("getChecked");
+        var items = new Array();
+        var names = new Array();
+        if(rows){
+            $.each(rows,function (index,item) {
+                items.push(item.userId);
+                names.push(item.username);
+            });
+        }
+
+        $.messager.confirm("confirm","确定重置选定帐号密码: "+names+"?",function (result) {
+            if(result){
+
+               $.ajax({
+                   headers: {
+                       'Accept': 'application/json',
+                       'Content-Type': 'application/json'
+                   },
+                   type: 'POST',
+                   dataType: "json", //表示返回值类型，不必须
+                   data: JSON.stringify(items),
+                   url: '/htm/resetUserPassword.htm',
+                   success: function(pageModel){
+                       if(pageModel){
+                           if(pageModel.message){
+                               alert(pageModel.message);
+                               searchUser();
+                           }
+                       }
+                   }
+               });
+            }
+        });
+
+
+    }
+
+
 
 
 

@@ -1,4 +1,4 @@
-package cn.zxf.self.entry.vo;
+package cn.zxf.self.vo;
 
 import java.util.List;
 

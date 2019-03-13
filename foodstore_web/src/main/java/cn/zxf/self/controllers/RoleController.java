@@ -4,11 +4,9 @@ import cn.zxf.self.bussiness.FuncBussiness;
 import cn.zxf.self.bussiness.RoleBussiness;
 import cn.zxf.self.entry.ManageFunc;
 import cn.zxf.self.entry.ManageRole;
-import cn.zxf.self.entry.UserInfo;
-import cn.zxf.self.entry.dto.RestModel;
-import cn.zxf.self.entry.dto.StateInfo;
-import cn.zxf.self.entry.vo.PagerModel;
-import cn.zxf.self.entry.vo.RoleFuncModel;
+import cn.zxf.self.dto.RestModel;
+import cn.zxf.self.dto.StateInfo;
+import cn.zxf.self.vo.RoleFuncModel;
 import cn.zxf.self.utils.DateUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
@@ -55,7 +53,7 @@ public class RoleController extends BaseController{
     /***
         *@Description  //TODO  管理或添加角色及其相关功能
         *@Param [addRole, request]
-        *@Return  cn.zxf.self.entry.dto.RestModel
+        *@Return  cn.zxf.self.dto.RestModel
      **/
     @RequestMapping(value="/htm/manageRoleAddMod.htm")
     @ResponseBody
@@ -100,7 +98,7 @@ public class RoleController extends BaseController{
     /***
         *@Description  //TODO  添加角色功能列表
         *@Param [request, roleFuncModel]
-        *@Return  cn.zxf.self.entry.dto.RestModel
+        *@Return  cn.zxf.self.dto.RestModel
      **/
     @RequestMapping("/htm/manageRoleFunc.htm")
     @ResponseBody
@@ -125,7 +123,7 @@ public class RoleController extends BaseController{
     /***
         *@Description  //TODO  删除角色
         *@Param [request, roleId]
-        *@Return  cn.zxf.self.entry.dto.RestModel
+        *@Return  cn.zxf.self.dto.RestModel
      **/
     @RequestMapping("/htm/manageRoleDel.htm")
     @ResponseBody
@@ -144,7 +142,7 @@ public class RoleController extends BaseController{
     /***
         *@Description  //TODO  获取角色所属功能列表
         *@Param [request, manageRoleId]
-        *@Return  cn.zxf.self.entry.dto.RestModel
+        *@Return  cn.zxf.self.dto.RestModel
      **/
     @RequestMapping("/htm/manageRoleFuncList.htm")
     @ResponseBody
@@ -168,7 +166,7 @@ public class RoleController extends BaseController{
     /***
         *@Description  //TODO  获取所有角色列表
         *@Param [request]
-        *@Return  cn.zxf.self.entry.dto.RestModel
+        *@Return  cn.zxf.self.dto.RestModel
      **/
     @RequestMapping(value = "/htm/manageRoleList.htm")
     @ResponseBody
@@ -186,7 +184,7 @@ public class RoleController extends BaseController{
     /***
         *@Description  //TODO  获取所有功能列表
         *@Param [request]
-        *@Return  cn.zxf.self.entry.dto.RestModel
+        *@Return  cn.zxf.self.dto.RestModel
      **/
     @RequestMapping("/htm/manageFuncList.htm")
     @ResponseBody
