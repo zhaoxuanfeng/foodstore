@@ -2,12 +2,17 @@ package cn.zxf.self.bussiness;
 
 import cn.zxf.self.dto.StateInfo;
 import cn.zxf.self.entry.OrderRecipesRel;
+import cn.zxf.self.entry.Recipes;
 import cn.zxf.self.example.OrderRecipesRelExample;
+import cn.zxf.self.example.OrdersExample;
 import cn.zxf.self.example.RecipesExample;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName OrderInfoBussiness
@@ -22,7 +27,7 @@ public class OrderInfoBussiness extends BaseBussiness{
     private StateInfo stateInfo = new StateInfo();
 
 
-    public StateInfo findRecipesByOrder(final Long userId,final Long orderId) {
+    public List<Recipes>  findRecipesByOrder(final Long userId,final Long orderId) {
         OrderRecipesRelExample orderRecipesRelExample = new OrderRecipesRelExample();
         RecipesExample recipesExample = new RecipesExample();
 
@@ -36,10 +41,46 @@ public class OrderInfoBussiness extends BaseBussiness{
         }
         recipesExample.createCriteria()
                       .andIdIn(recipesIds);
+        List<Recipes> recipesList = recipesMapper.selectByExample(recipesExample);
 
 
+        return recipesList;
+    }
 
+    public StateInfo findRecipesByUser(final  Long userId,final Long orderId) {
+        List<Map<String, Object>> dataList = new ArrayList<>();
 
+        List<Recipes> recipesList;
+        if (ObjectUtils.allNotNull(orderId)) {
+            Map<String,Object> map = new HashMap<>();
+            map.put("userId",userId);
+            recipesList = findRecipesByOrder(userId, orderId);
+            map.put("orderId",orderId);
+            map.put("recipes",recipesList);
+            dataList.add(map);
+        } else {
+            OrderRecipesRelExample orderRecipesRelExample = new OrderRecipesRelExample();
+            List<String> statusList = new ArrayList<>();
+            statusList.add("2");
+            statusList.add("3");
+            statusList.add("5");
+            orderRecipesRelExample.createCriteria()
+                    .andCookIdEqualTo(userId)
+                    .andRelStatusNotIn(statusList);
+            List<OrderRecipesRel> orderRecipesRelList = orderRecipesRelMapper.selectByExample(orderRecipesRelExample);
+
+            for (OrderRecipesRel orderRecipesRel : orderRecipesRelList) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("userId", userId);
+                map.put("orderId", orderRecipesRel.getOrderId());
+                recipesList = findRecipesByOrder(userId, orderRecipesRel.getOrderId());
+                map.put("recipes", recipesList);
+                dataList.add(map);
+            }
+        }
+        stateInfo.setData(dataList);
         return stateInfo;
     }
+
+
 }

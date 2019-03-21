@@ -5,6 +5,7 @@ import cn.zxf.self.example.ManageUserRoleRelExample;
 import cn.zxf.self.entry.UserInfo;
 import cn.zxf.self.example.UserInfoExample;
 import cn.zxf.self.dto.StateInfo;
+import cn.zxf.self.utils.DateUtils;
 import cn.zxf.self.vo.UserCondition;
 import cn.zxf.self.utils.DataUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -136,6 +138,7 @@ public class UserInfoBussiness extends BaseBussiness {
       /*  UserInfoExample userInfoExample = new UserInfoExample();
         userInfoExample.createCriteria().andUserIdEqualTo(requestUserInfo.getUserId());
         int count = userInfoMapper.updateByExampleSelective(requestUserInfo,userInfoExample);*/
+        requestUserInfo.setModifyTime(new Date());
         int count = userInfoMapper.updateByPrimaryKeySelective(requestUserInfo);
         if(count == 0){
             stateInfo.setState(false);

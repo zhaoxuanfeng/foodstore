@@ -108,6 +108,7 @@ public class RoleController extends BaseController{
 
         ManageRole manageRole = new ManageRole();
         manageRole.setManageRoleId(roleFuncModel.getManageRoleId());
+        manageRole.setCreateTime(DateUtils.getCurrMilli());
         stateInfo =  roleBussiness.modifyRole(manageRole,roleFuncModel.getManageFuncIds(),0);
 
         restModel.setMessage(stateInfo.getMessage());

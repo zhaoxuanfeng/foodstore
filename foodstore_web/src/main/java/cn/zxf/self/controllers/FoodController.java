@@ -36,21 +36,39 @@ public class FoodController  extends  BaseController{
     private FoodInfoBussiness foodInfoBussiness;
 
     @Autowired
-    private OrderInfoBussiness orderInfoBussiness;
+    private OrderInfoBussiness  orderInfoBussiness;
 
+    private PageMsg pageMsg = new PageMsg();
+    private StateInfo stateInfo = new StateInfo();
     private PagerModel pageModel = new PagerModel();
 
-    private StateInfo stateInfo = new StateInfo();
+
+    @RequestMapping("/htm/cookerOrderInfo.htm")
+    public String cookerMain(){
+        return "cookerMain";
+    }
 
 
+
+    /***
+        *@Description  //TODO  根据order查询菜品
+        *@Param [request, session]
+        *@Return  cn.zxf.self.vo.PagerModel
+     **/
     @RequestMapping(value = "/htm/searchRecipesByOrder.htm")
-    public PagerModel   searchRecipesByOrder(HttpServletRequest request, HttpSession session){
+    @ResponseBody
+    public PageMsg   searchRecipesByOrder(HttpServletRequest request, HttpSession session){
         logger.info("url:"+request.getRequestURI());
         UserInfo currUser = (UserInfo) session.getAttribute("userInfo");
         Long orderId = (Long) request.getAttribute("orderId");
-        stateInfo = orderInfoBussiness.findRecipesByOrder(currUser.getUserId(),orderId);
-        logger.info("return");
-        return pageModel;
+        if(ObjectUtils.allNotNull(orderId) ) {
+            stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(), orderId);
+        }else {
+            stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(),null);
+        }
+        pageMsg.setRows((List<Map<String, Object>>) stateInfo.getData());
+        logger.info("return" + stateInfo.getMessage());
+        return pageMsg;
     }
 
 
@@ -59,7 +77,8 @@ public class FoodController  extends  BaseController{
         *@Param [request]
         *@Return  cn.zxf.self.vo.PagerModel
      **/
-    @RequestMapping(value = "/htm/modifyFoodStatus.htm",method = RequestMethod.GET)
+//    @RequestMapping(value = "/htm/modifyFoodStatus.htm",method = RequestMethod.GET)
+    @GetMapping("/htm/modifyFoodStatus.htm")
     @ResponseBody
     public PagerModel modifyFoodStatus(HttpServletRequest request ){
         logger.info("url:"+request.getRequestURI());

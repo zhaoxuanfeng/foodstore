@@ -6,11 +6,13 @@ import cn.zxf.self.example.ManageFuncExample;
 import cn.zxf.self.example.ManageRoleExample;
 import cn.zxf.self.example.ManageRoleFuncRelExample;
 import cn.zxf.self.example.ManageUserRoleRelExample;
+import cn.zxf.self.utils.DateUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -83,10 +85,11 @@ public class RoleBussiness extends BaseBussiness {
     public StateInfo modifyRole(final ManageRole manageRole,final  List<Long> funcIdsList,final int  modifyRoleFlag) {
         ManageRoleExample manageRoleExample = new ManageRoleExample();
         ManageRoleFuncRelExample selectExample = new ManageRoleFuncRelExample();
-
+        Long currTime = DateUtils.getCurrMilli();
         if(1 == modifyRoleFlag){
             manageRoleExample.createCriteria()
                     .andManageRoleIdEqualTo(manageRole.getManageRoleId());
+            manageRole.setModifyTime(currTime);
             int count = manageRoleMapper.updateByExampleSelective(manageRole,manageRoleExample);
             if(count == 0){
                 stateInfo.setCode("403");
@@ -101,8 +104,6 @@ public class RoleBussiness extends BaseBussiness {
             ManageRoleFuncRelExample.Criteria selectCriteria = selectExample.createCriteria();
                         selectCriteria.andManageRoleIdEqualTo(manageRole.getManageRoleId());
             List<ManageRoleFuncRel>  manageRoleFuncRelList = manageRoleFuncRelMapper.selectByExample(selectExample);
-            ManageRoleFuncRel newRoleFuncRel = new ManageRoleFuncRel();
-
             //原属于角色的功能是否为空
             if(null != manageRoleFuncRelList && manageRoleFuncRelList.size() > 0) {
                 for(Long funcId:funcIdsList){
@@ -114,6 +115,7 @@ public class RoleBussiness extends BaseBussiness {
                             //原有的所属关系是否有效
                             if(manageRoleFuncRel.getIsDelete().equals(1)) {
                                 manageRoleFuncRel.setIsDelete(0);
+                                manageRoleFuncRel.setModifyTime(currTime);
                                 ManageRoleFuncRelExample updateExample = new ManageRoleFuncRelExample();
                                 updateExample.createCriteria()
                                         .andManageRoleIdEqualTo(manageRole.getManageRoleId())
@@ -130,10 +132,7 @@ public class RoleBussiness extends BaseBussiness {
                    }
                    if(flag){
                          //原有的关系里没有，新增关系
-                        newRoleFuncRel.setManageFuncId(funcId);
-                        newRoleFuncRel.setManageRoleId(manageRole.getManageRoleId());
-                        newRoleFuncRel.setIsDelete(0);
-                        int k = manageRoleFuncRelMapper.insertSelective(newRoleFuncRel);
+                        int k = insertRoleRel(manageRole.getManageRoleId(),funcId);
                         if(k==0){
                             stateInfo.setMessage("插入新关系失败！");
                             stateInfo.setCode("404");
@@ -144,10 +143,7 @@ public class RoleBussiness extends BaseBussiness {
             }else{
                 //没有角色，重新插入角色
                 for(Long id :funcIdsList){
-                    newRoleFuncRel.setManageFuncId(id);
-                    newRoleFuncRel.setManageRoleId(manageRole.getManageRoleId());
-                    newRoleFuncRel.setIsDelete(0);
-                    int l = manageRoleFuncRelMapper.insertSelective(newRoleFuncRel);
+                    int l = insertRoleRel(manageRole.getManageRoleId(),id);
                     if(l==0){
                         stateInfo.setMessage("插入新关系失败！");
                         stateInfo.setCode("404");
@@ -159,6 +155,21 @@ public class RoleBussiness extends BaseBussiness {
         stateInfo.setMessage("更新角色信息成功！");
         stateInfo.setState(true);
         return stateInfo;
+    }
+    /**
+        *@Description  //TODO  插入角色与菜单关系
+        *@Param [manageRoleId, funcId]
+        *@Return  int
+     **/
+    private int insertRoleRel(Long manageRoleId,Long funcId){
+        ManageRoleFuncRel newRoleFuncRel = new ManageRoleFuncRel();
+        newRoleFuncRel.setManageFuncId(funcId);
+        newRoleFuncRel.setManageRoleId(manageRoleId);
+        newRoleFuncRel.setIsDelete(0);
+        newRoleFuncRel.setCreateTime(DateUtils.getCurrMilli());
+        newRoleFuncRel.setModifyTime(DateUtils.getCurrMilli());
+        int l = manageRoleFuncRelMapper.insertSelective(newRoleFuncRel);
+       return l;
     }
 
     @Transactional
@@ -178,6 +189,7 @@ public class RoleBussiness extends BaseBussiness {
 
         ManageRole manageRole = manageRoleMapper.selectByPrimaryKey(roleId);
         manageRole.setIsDelete(1);
+        manageRole.setModifyTime(DateUtils.getCurrMilli());
         int count = manageRoleMapper.updateByPrimaryKeySelective(manageRole);
         if(count == 0){
             stateInfo.setCode("400");

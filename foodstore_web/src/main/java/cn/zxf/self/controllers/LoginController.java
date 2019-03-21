@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -126,7 +127,8 @@ public class LoginController extends  BaseController{
     }
 
     //动态加载
-    @RequestMapping(value="/htm/menu.htm", method=RequestMethod.GET)
+//    @RequestMapping(value="/htm/menu.htm", method=RequestMethod.GET)
+    @GetMapping("/htm/menu.htm")
     @ResponseBody
     public RestModel menu(HttpSession session, HttpServletRequest request, HttpServletResponse response)
     {
