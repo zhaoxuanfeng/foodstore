@@ -133,7 +133,7 @@ public class UserController extends BaseController {
      **/
     @RequestMapping("/htm/userinfo.htm")
     public String  userInfo(HttpServletRequest request, HttpServletResponse response, HttpSession session){
-        return "userMain";
+        return "/backstage/userMain";
     }
 
     /***

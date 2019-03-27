@@ -25,4 +25,9 @@ public class OrderListener {
         Orders orders =JSONObject.parseObject(message,Orders.class);
 
     }
+
+    @RabbitListener(queues = "${express.info.mq.queue.name}",containerFactory = "singleListenerContainer")
+    public void transmitExpressOrder(Orders orders){
+
+    }
 }

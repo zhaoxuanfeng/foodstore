@@ -59,6 +59,7 @@ public class OrderController {
         Message msg=MessageBuilder.withBody(message).setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT)
                 .build();
         rabbitTemplate.convertAndSend(msg);
+        logger.info("订单加入队列");
         return pagerModel;
     }
 

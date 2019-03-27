@@ -1,10 +1,7 @@
 package cn.zxf.self.bussiness;
 
 import cn.zxf.self.dto.StateInfo;
-import cn.zxf.self.entry.OrderRecipesRel;
 import cn.zxf.self.entry.Recipes;
-import cn.zxf.self.example.OrderRecipesRelExample;
-import cn.zxf.self.example.OrdersExample;
 import cn.zxf.self.example.RecipesExample;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
@@ -42,8 +39,6 @@ public class OrderInfoBussiness extends BaseBussiness{
         recipesExample.createCriteria()
                       .andIdIn(recipesIds);
         List<Recipes> recipesList = recipesMapper.selectByExample(recipesExample);
-
-
         return recipesList;
     }
 

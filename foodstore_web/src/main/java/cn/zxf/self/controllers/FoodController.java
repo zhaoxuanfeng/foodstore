@@ -45,7 +45,7 @@ public class FoodController  extends  BaseController{
 
     @RequestMapping("/htm/cookerOrderInfo.htm")
     public String cookerMain(){
-        return "cookerMain";
+        return "/backstage/cookerMain";
     }
 
 
@@ -61,8 +61,13 @@ public class FoodController  extends  BaseController{
         logger.info("url:"+request.getRequestURI());
         UserInfo currUser = (UserInfo) session.getAttribute("userInfo");
         Long orderId = (Long) request.getAttribute("orderId");
+        Long userId  = (Long) request.getAttribute("userId");
         if(ObjectUtils.allNotNull(orderId) ) {
-            stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(), orderId);
+            if (ObjectUtils.allNotNull(userId)){
+                stateInfo = orderInfoBussiness.findRecipesByUser(userId, orderId);
+            }else {
+                stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(), orderId);
+            }
         }else {
             stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(),null);
         }
@@ -158,7 +163,7 @@ public class FoodController  extends  BaseController{
     **/
     @RequestMapping("/htm/foodInfo.htm")
     public String foodMain(HttpServletRequest request){
-        return "foodMain";
+        return "/backstage/foodMain";
     }
 
     /***

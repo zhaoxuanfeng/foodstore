@@ -52,10 +52,10 @@ public class LoginController extends  BaseController{
      **/
     @RequestMapping(value="/htm/login.htm")
     public String  login(HttpSession session, HttpServletRequest request, HttpServletResponse response){
-        return "login";
+        return "/backstage/login";
     }
     @RequestMapping(value="/htm/register.htm")
-    public String registerUser(HttpSession session,HttpServletRequest request,HttpServletResponse response){return "register";}
+    public String registerUser(HttpSession session,HttpServletRequest request,HttpServletResponse response){return "/backstage/register";}
 
     
     /***
@@ -183,12 +183,12 @@ public class LoginController extends  BaseController{
             jsonModel.setStatus(true);
             jsonModel.setResult(userInfo);
             jsonModel.setMessage("跳转个人页面");
-            return "self";
+            return "/backstage/self";
         }else{
             jsonModel.setStatus(false);
             jsonModel.setMessage("未找到个人信息");
             logger.info("返回信息："+jsonModel.toString());
-            return "main";
+            return "/backstage/main";
         }
 
 
@@ -212,7 +212,7 @@ public class LoginController extends  BaseController{
                     response.addCookie(cookie);
                 }
         }
-        return "main";
+        return "/backstage/main";
     }
 
     /***
