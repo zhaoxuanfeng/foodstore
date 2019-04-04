@@ -133,7 +133,7 @@ public class UserController extends BaseController {
      **/
     @RequestMapping("/htm/userinfo.htm")
     public String  userInfo(HttpServletRequest request, HttpServletResponse response, HttpSession session){
-        return "backstage/userMain";
+        return "/backstage/userMain";
     }
 
     /***
@@ -181,7 +181,7 @@ public class UserController extends BaseController {
         StateInfo stateInfo = userInfoBussiness.modifyUser(requestUserInfo);
         logger.info("返回状态:"+stateInfo.isState());
         if(stateInfo.isState()){
-            return "htm/userinfo_data.htm";
+            return "/htm/userinfo_data.htm";
         }
         return "";
     }
