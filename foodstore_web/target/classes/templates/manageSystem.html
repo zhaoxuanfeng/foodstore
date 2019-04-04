@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header">
+</head>
+
+<body style="margin:0px;padding: 0px">
+    <div id="syslis" style="width: 100%;position: absolute;top: 10px;"></div>
+</body>
+<footer th:replace="footer :: footer"></footer>
+
+<script type="text/javascript">
+    $(function(){
+        manageSystemList();
+    });
+
+    function manageSystemList() {
+        var systems = "";
+        $.get("getManageSystemList.htm", function(restModel) {
+            for (var i = 0; i < restModel.data.length; i++) {
+                systems = systems + "<div style='width:150px;float: left; border: 1px #ddd solid;margin-left: 20px;margin-bottom: 20px;padding: 40px 20px;text-align: center;'>" +
+                    "<a href='#' onclick=\"gotoSystem('" + restModel.data[i].clientId + "')\" class='easyui-linkbutton' data-options='plain:true'>" + restModel.data[i].systemName + "</a></div>";
+            }
+            $("#syslis").html(systems);
+            $.parser.parse($('#syslis'));
+        }, "json");
+    }
+
+
+
+</script>
+
+</html>

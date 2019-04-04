@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>红米5 plus</title>
+    <link rel="stylesheet" href="<%=basePath %>css/index.css">
+    <script src="<%=basePath %>js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+	function addTrolley(cid){
+		//判断是否登录
+		var user = '${sessionScope.user}';
+		if(null == user || "" == user){
+			alert("请先登录在添加商品！");
+			window.location = "login.jsp";
+			return;
+		}
+		
+		//ajax添加购物车数据
+		$.post("trolleyServlet",{"mark":"addTrolley","cid":cid},function(obj){
+			//等于1 增加购物车商品数量（不含具体个数）
+			if(Number(obj) == 1){
+				alert("添加成功！");
+				var trolleyNumber = $("#trolleyNumber").text();
+				$("#trolleyNumber").text(Number(trolleyNumber) + 1);
+			}
+		},"text");
+		
+	}
+
+</script>
+</head>
+<body>
+    
+    <!--<jsp:include page="header.jsp"></jsp:include>-->
+    
+  <!--  <c:if test="${null == sessionScope.user}">
+	    <div class="plus5_no2 ">
+	        <div class="plus5_no2_in">
+	            <a class="plus5_no2_in_a"> 为方便您购买，请提前登录 </a>
+	            <a class="plus5_no2_in_a orange"style="color: pink;" href="login.html">立即登录</a>
+	            <a id="plus5_no2_in" class="plus5_no2_in_a" href="javascript:;">x</a>
+	        </div>
+	    </div>
+    </c:if>-->
+    <div class="plus5_no3">
+        <div class="plus5_no3_img">
+            <img width="560px" height="560px" src="<%=imgPath %>${commodity.pic}" style="display: block" alt="">
+        </div>
+        <div class="plus5_no3_right">
+            <h3>${commodity.name}</h3>
+            <p class="plus5_no3_right_p2">
+            	<span class="plus5_no3_right_span2">「${commodity.description}」</span>
+            	<div style="font-size: 14px;">${commodity.full_description}</div>
+            	
+            </p>
+            <p class="plus5_no3_right_p3">${commodity.price} 元<span class="plus5_no3_right_span3">价格${commodity.price+10}元</span></p>
+            <div class="plus5_no3_right_div4">
+                <div class="plus5_no3_right_div4_in">
+                    <p class="plus5_no3_right_p4">赠品</p><span>**</span>
+                </div>
+                <div class="plus5_no3_right_div4_in">
+                    <p class="plus5_no3_right_p4">赠品</p><span>**</span>
+                </div>
+
+
+            </div>
+            <div class="plus5_no3_right_div5">
+                    <p >北京 北京市 东城区 永定门外街道 <span class="plus5_no3_right_div5_span"><a class="plus5_no3_right_div5_span" href="">修改</a> &nbsp;&nbsp;  有现货</span></p>
+            </div>
+            <div class="plus5_no3_right_div6">选择版本</div>
+            <div class="plus5_no3_right_div7">
+            
+            	<li class="plus5_no3_right_div7_in plus5_no3_right_div7_in_hover">
+                    <span class="plus5_no3_right_div7_span0 ">${commodity.version}</span>
+                    <span class="plus5_no3_right_div7_span " >${commodity.price}  元</span>
+                </li>
+            	
+                <!-- <li class="plus5_no3_right_div7_in plus5_no3_right_div7_in_hover">
+                    <span class="plus5_no3_right_div7_span0 ">3GB+32GB</span>
+                    <span class="plus5_no3_right_div7_span " >999元</span>
+                </li>
+                <li class="plus5_no3_right_div7_in plus5_no3_float">
+                    <span class="plus5_no3_right_div7_span0 ">4GB+64GB</span>
+                    <span class="plus5_no3_right_div7_span " >1299元</span>
+                </li> -->
+            </div>
+            <div class="plus5_no3_right_div6">选择颜色</div>
+            <div class="plus5_no3_right_div9">
+            	<li class="plus5_no3_right_div7_in plus5_no3_right_div7_in_hover ">
+            		<img src="img/plus5_phone_01.png" alt=""><span>${commodity.color}</span>
+            	</li>
+                <!-- <li class="plus5_no3_right_div7_in plus5_no3_right_div7_in_hover "><img src="img/plus5_phone_01.png" alt=""><span>金色</span></li>
+                <li class="plus5_no3_right_div7_in plus5_no3_float"><img src="img/plus5_phone_02.png" alt=""><span>黑色</span></li>
+                <li class="plus5_no3_right_div7_in"><img src="img/plus5_phone_03.png" alt=""><span>玫瑰金</span></li>
+                <li class="plus5_no3_right_div7_in plus5_no3_float"><img src="img/plus5_phone_04.png" alt=""><span>浅蓝色</span></li> -->
+            </div>
+            <div class="plus5_no3_right_div10">
+                <p class="plus5_no3_right_div10_p1">${commodity.name} <span class="plus5_no3_right_div10_span0">${commodity.version}</span> <span class="plus5_no3_right_div10_span1"></span><span class="plus5_no3_right_div10_span2">${commodity.color}</span></p><span class="plus5_no3_right_span10">${commodity.price}元</span>
+                <p class="plus5_no3_right_div10_p2" style="font-size: 18px;font-weight: bold;">总计 ：${commodity.price} 元</p>
+
+            </div>
+            <a href="javascript:void(0)" onclick="addTrolley(${commodity.cid})" ><div class="plus5_no3_right_div11" style="cursor: pointer;" >加入购物车</div></a>
+            <div class="plus5_no3_right_div12">
+                <div class="plus5_no3_right_div12_y">√</div>
+                <div class="plus5_no3_right_div12_z">七天无理由退货</div>
+                <div class="plus5_no3_right_div12_y">√</div>
+                <div class="plus5_no3_right_div12_z">15天质量问题换货</div>
+                <div class="plus5_no3_right_div12_y">√</div>
+                <div class="plus5_no3_right_div12_z">360天保障</div>
+            </div>
+            <a href="javascript:void (0);"></a>
+
+        </div>
+    </div>
+    
+    <jsp:include page="footer.jsp"></jsp:include>
+    
+    <script>
+        var plus5_no2_in = document.getElementById("plus5_no2_in");
+        var plus5_no2 = document.getElementsByClassName("plus5_no2")[0];
+        plus5_no2.onclick = function () {
+            plus5_no2.className="plus5_no2 plus5_no2_close";
+//            plus5_no2.style.display="none";
+        }
+        $(".plus5_no3_right_div9 .plus5_no3_right_div7_in").click(function () {
+            console.log($(this).children().eq(1).html());
+            $(".plus5_no3_right_div10_span2").html($(this).children().eq(1).html());
+
+            $(".plus5_no3_img img").css("display","none").eq($(this).index()).css("display", "block");
+            $(this).siblings().removeClass("plus5_no3_right_div7_in_hover").end().addClass("plus5_no3_right_div7_in_hover");
+
+        })
+        $(".plus5_no3_right_div7 .plus5_no3_right_div7_in").click(function () {
+//            var value = $(".plus5_no3_right_div7_span0 ").html();
+            console.log($(this).children().eq(1).html());
+            $(".plus5_no3_right_div10_span0").html($(this).children().html());
+            $(".plus5_no3_right_span10").html($(this).children().eq(1).html());
+            var value = "总计:"+$(this).children().eq(1).html()
+            $(".plus5_no3_right_div10_p2").html(value);
+
+            $(this).siblings().removeClass("plus5_no3_right_div7_in_hover").end().addClass("plus5_no3_right_div7_in_hover");
+        })
+    </script>
+
+</body>
+</html>

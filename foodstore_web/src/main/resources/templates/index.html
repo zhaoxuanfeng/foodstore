@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header">
+</head>
+<!--<head>
+    <title>餐饮管理系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="/css/css.css" />
+    <link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.5/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.5/themes/icon.css" />
+</head>-->
+<footer th:replace="footer :: footer"></footer>
+<body>
+<div style="margin:10px 0;"></div>
+<div class="easyui-layout" style="width:100%;height:1040px;">
+    <div data-options="region:'north',split:false" style="height:50px">
+        <div>哭脸美食</div>
+        <div><span>yonghu</span>
+            <span>退出</span>
+        </div>
+    </div>
+    <div data-options="region:'south',split:false" style="height:50px;">主页底部
+
+    </div>
+    <div id="trolley_layout" data-options="region:'east',split:true" title="购物车" style="width:180px;border: none"   >
+        <form class="easyui-datagrid" id="tolley_from">
+            <table>
+                <thead>
+                <tr>
+                    <th field="foodName" width="80px"></th>
+                    <th field="foodPrice" width="80px"></th>
+                    <th field="count" width="80px"></th>
+                </tr>
+                </thead>
+            </table>
+        </form>
+    </div>
+    <div data-options="region:'west',split:false" title="菜单" style="width:100px;">
+        <div class="easyui-accordion" data-options="fit:true,border:false">
+            <div title="热门美食" style="padding:10px">
+                <span class="menu-item"><a href="#" onclick="" th:value="1">热门小吃</a></span><br/>
+                <span class="menu-item"><a href="#" onclick="" th:value="2">热门风味</a></span><br/>
+                <span class="menu-item"><a href="#" onclick="" th:value="3">销量排行</a></span><br/>
+            </div>
+            <div title="八大菜系" style="padding:10px;">
+                <span><a href="#" onclick="" th:value="1">鲁菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="2">川菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="3">浙菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="4">粤菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="5">苏菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="6">闽菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="7">湘菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="8">徽菜</a></span><br/>
+            </div>
+            <div title="美食分类" data-options="selected:true" style="padding:10px;">
+                <span><a href="#" onclick="" th:value="1">饮品</a></span><br/>
+                <span><a href="#" onclick="" th:value="2">主菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="3">主食</a></span><br/>
+            </div>
+        </div>
+    </div>
+    <div class="products" data-options="region:'center',title:'火爆销售',split:true" style="border: none">
+        <ul id="hotStore">
+        </ul>
+    </div>
+</div>
+</body>
+
+<!--<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery-easyui-1.5/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="/js/jquery-easyui-1.5/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/common.js"></script>
+<script type="text/javascript" src="/js/echarts.min.js"></script>-->
+<script type="text/javascript"  th:inline="javascript">
+    $(function() {
+        console.log("begin");
+        $.ajax({
+            url:"/view/searchInedxData.htm",
+            async:true,
+            dataType:JSON,
+            success:function (data) {
+                console.log(data);
+                dataMap = data.getData();
+                hotRecipesList = data.get("hotRecipesList");
+                $.each(hotRecipesList,function (index,hotRecipes) {
+                    childli =  "<li><a href='#' class='item'>" +
+                        "<img src="+hotRecipes.foodImgUrl+">" +
+                        "<div><p>"+hotRecipes.foodName
+                        +"</p><p>"+hotRecipes.foodIntroduce
+                    "</p></div></a></li>";
+                    $("#hotStore").add(childli);
+                });
+            },
+            error:function () {
+            }
+        });
+
+        currentUser = [[${session.userInfo}]];
+        if(null != currentUser ){
+            $("#tolley_from").datagrid({
+                url:"/self/tolleyData.htm",
+                rownumbers:true,
+                pagination: true,
+                border : false,
+                showFooter : true,
+                loadMsg:'数据加载中，请稍等...',
+                columns:[
+                    {field:'select',checkbox:true},
+                    {field:'foodName',title:'食物名称',width:'40%',align:'right'},
+                    {field:'foorPrice',title:'单价',width:'10%',align:'right'},
+                    {field:'count',title:'数量',width:'30%',align:'right'}
+                ],
+                onBeforeLoad:function(param){
+                    console.log(param);
+                },
+                onLoadSuccess: function (data){
+                    console.log(data);
+                },
+                onLoadError: function (){
+                    alert("数据加载失败！");
+                }
+            });
+        }else{
+            trolleyInfo = "<div><a href='/htm/login.htm'><span>请登录</span></a></div>";
+            $("#trolley_layout").add(trolleyInfo);
+        }
+
+    });
+
+</script>
+</html>
