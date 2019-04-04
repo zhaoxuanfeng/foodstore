@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -52,10 +51,10 @@ public class LoginController extends  BaseController{
      **/
     @RequestMapping(value="/htm/login.htm")
     public String  login(HttpSession session, HttpServletRequest request, HttpServletResponse response){
-        return "/backstage/login";
+        return "backstage/login";
     }
     @RequestMapping(value="/htm/register.htm")
-    public String registerUser(HttpSession session,HttpServletRequest request,HttpServletResponse response){return "/backstage/register";}
+    public String registerUser(HttpSession session,HttpServletRequest request,HttpServletResponse response){return "backstage/register";}
 
     
     /***
@@ -183,12 +182,12 @@ public class LoginController extends  BaseController{
             jsonModel.setStatus(true);
             jsonModel.setResult(userInfo);
             jsonModel.setMessage("跳转个人页面");
-            return "/backstage/self";
+            return "backstage/self";
         }else{
             jsonModel.setStatus(false);
             jsonModel.setMessage("未找到个人信息");
             logger.info("返回信息："+jsonModel.toString());
-            return "/backstage/main";
+            return "backstage/main";
         }
 
 
@@ -212,7 +211,7 @@ public class LoginController extends  BaseController{
                     response.addCookie(cookie);
                 }
         }
-        return "/backstage/main";
+        return "backstage/main";
     }
 
     /***

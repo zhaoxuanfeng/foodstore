@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="foodstore_web:war">
-    <output-path>$PROJECT_DIR$/foodstore_web/target</output-path>
-    <root id="archive" name="foodstore_web-0.0.1-SNAPSHOT.war">
-      <element id="artifact" artifact-name="foodstore_web:war exploded" />
-    </root>
-  </artifact>
-</component>

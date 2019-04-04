@@ -47,7 +47,7 @@ public class RoleController extends BaseController{
     @RequestMapping(value = "/htm/roleMain.htm")
     public  String roleMain(HttpServletRequest request){
         logger.info("url:"+request.getRequestURI());
-        return "/backstage/manageRole";
+        return "backstage/manageRole";
     }
     
     /***

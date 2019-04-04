@@ -12,7 +12,7 @@
         <th field="select" align="center" checkbox="true">选择</th>
         <th field="userId" align="center" width="8%">用户ID</th>
         <th field="orderId" align="center" width="8%">订单id</th>
-        <th field="foodName" align="center" width="8%">菜名</th>
+        <th field="recipes.foodName" align="center" width="8%">菜名</th>
     </tr>
     </thead>
 </table>
@@ -23,28 +23,28 @@
         <input type="hidden" name="conditionFlag"/>
         <!--查询条件: userId和手机号-->
         <div width="100%" style="margin:4px">
-            <!--用户ID：<input type="text"  name="userId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;-->
+            用户ID：<input type="text"  name="userId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
             订单ID:<input type="text"  name="orderId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
             <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="searchOrder()">搜索</a>
         </div>
         <div width="100%" style="margin:4px">
-            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openModifyStatusWindow()">完成菜品</a>&nbsp;&nbsp;
-            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openInitPasswordWindow()">标记订单</a>&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openModifyStatusWindow()">修改用户状态</a>&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openInitPasswordWindow()">重置登录密码</a>&nbsp;&nbsp;
         </div>
     </form>
 </div>
-<div id="dlgModifyRelStatus" class="easyui-dialog" title="修改菜品制作状态" width="400px" height="150px" closed="true" buttons="#dlgModifyRecipesStatus" style="padding:10px" modal="true">
-    <form id="recipesStatusForm" method="post">
-        <input type="hidden" name="id" id="id" />
-        <input type="hidden" name="" id="userStatusOld" />
+<div id="dlgModifyUserStatus" class="easyui-dialog" title="修改菜品制作状态" width="400px" height="150px" closed="true" buttons="#dlgModifyRecipesStatus" style="padding:10px" modal="true">
+    <form id="formModifyUserStatus" method="post">
+        <input type="hidden" name="userId" id="userId" />
+        <input type="hidden" name="orderRecipesStatus" id="userStatusOld" />
         <table align="center" width="90%" cellpadding="2" cellspacing="2">
             <tr>
                 <td>
-                    将菜品状态修改为：
-                    <select class="easyui-combobox" id="recipesStatusNew" name="orderRecipesStatus" panelHeight="auto" editable="false" style="width:100px">
+                    将用户状态修改为：
+                    <select class="easyui-combobox" id="userStatusNew" name="orderRecipesStatus" panelHeight="auto" editable="false" style="width:100px">
                         <option value="4">待制作</option>
                         <option value="5">制作中</option>
-                        <option value="6" selected="selected">制作完成</option>
+                        <option value="6">制作完成</option>
                     </select>
                 </td>
             </tr>
@@ -74,17 +74,10 @@
         columns:[[
             {field:'select',checkbox:true},
             {field:'orderId',title:'订单id',width:'10%',align:'right'},
-            {field:'id',title:'菜品id',width:'10%',align:'right',formatter: function (value,row,index) {
-                    return row.recipes[index].id;
-                }},
-            {field:'foodName',title:'菜名',width:'20%',align:'center',fontStyle:'',formatter:function (value,row,index) {
-                    return row.recipes[index].foodName;
-                }},
-            {field:'orderRecipesStatus',title:'制作状态',width:'20%',align:'right',formatter: function (value,row,index) {
+            {field:'recipes.foodName',title:'菜品id',width:'10%',align:'right'},
+            {field:'foodName',title:'菜名',width:'20%',align:'center',fontStyle:''},
+            {field:'orderRecipesStatus',title:'制作状态',width:'20%',align:'right',formatter: function (value, row, index) {
                     var res = '';
-                    console.log("---");
-                    console.log(row);
-
                     switch (value) {
                         case 4:
                             res = '<p style="color:red;">待制作</p>';        //蓝色字体
@@ -123,15 +116,12 @@
             });
         */
         $("#formSearch").form('submit',{
-            url:"/htm/searchRecipesByOrder.htm",
+            url:/htm/,
             onSubmit: function(param){
                 console.log(param);
             },
             success:function (data) {
                 alert(data);
-                if (null == data.rows){
-                    $.messager("没有相应订单");
-                }
             },
             error:function (data) {
                 alert(data);
@@ -153,9 +143,6 @@
         var ids = [];
         console.log(rows);
         if(rows){
-            $.each(rows,function () {
-                ids.push(rows.id);
-            });
             $.get("",rows.stringify(),function (data) {
                 alert("111");
             });
@@ -163,24 +150,11 @@
             alert("请选择订单。");
             cancel();
         }
-    }
 
-    function modifyRecipesStatus() {
-        $("#recipesStatusForm").form("submit",{
-            url:"/htm/modifyRecipesOrderRelStatus.htm",
-            onsubmit:function (param) {
-
-            },
-            success:function (data) {
-                console.log("...");
-                $("#dlgModifyRelStatus").dialog("close");
-            },
-            error:function () {
-                
-            }
-        });
 
     }
+
+
 
 
 </script>

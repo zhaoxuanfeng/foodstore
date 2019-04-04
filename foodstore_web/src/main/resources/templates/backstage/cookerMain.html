@@ -10,9 +10,9 @@
     <thead>
     <tr>
         <th field="select" align="center" checkbox="true">选择</th>
-        <th field="userId" align="center" width="8%">用户ID</th>
         <th field="orderId" align="center" width="8%">订单id</th>
         <th field="foodName" align="center" width="8%">菜名</th>
+        <th field="orderRecipesStatus" align="center" width="8%">菜品状态</th>
     </tr>
     </thead>
 </table>
@@ -21,9 +21,7 @@
         <input type="hidden" name="pageSize" id="pageSize" />
         <input type="hidden" name="pageNumber" id="pageNumber" />
         <input type="hidden" name="conditionFlag"/>
-        <!--查询条件: userId和手机号-->
         <div width="100%" style="margin:4px">
-            <!--用户ID：<input type="text"  name="userId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;-->
             订单ID:<input type="text"  name="orderId" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
             <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="searchOrder()">搜索</a>
         </div>
@@ -60,7 +58,6 @@
 <footer th:replace="footer :: footer"></footer>
 
 <script type="text/javascript"  th:inline="none">
-
     $('#dg').datagrid({
         url:'/htm/searchRecipesByOrder.htm',
         striped: true,
@@ -75,16 +72,18 @@
             {field:'select',checkbox:true},
             {field:'orderId',title:'订单id',width:'10%',align:'right'},
             {field:'id',title:'菜品id',width:'10%',align:'right',formatter: function (value,row,index) {
-                    return row.recipes[index].id;
+                console.log(row);
+                console.log(value);
+                console.log(row.recipes.id);
+                    value = row.recipes.id;
+                    return  value;
                 }},
             {field:'foodName',title:'菜名',width:'20%',align:'center',fontStyle:'',formatter:function (value,row,index) {
-                    return row.recipes[index].foodName;
+                value =     row.recipes.foodName;
+                return value;
                 }},
             {field:'orderRecipesStatus',title:'制作状态',width:'20%',align:'right',formatter: function (value,row,index) {
                     var res = '';
-                    console.log("---");
-                    console.log(row);
-
                     switch (value) {
                         case 4:
                             res = '<p style="color:red;">待制作</p>';        //蓝色字体
@@ -104,24 +103,19 @@
                     return res;
                 }
             }
-
         ]],
         onBeforeLoad:function(param){
-            console.log(param);
         },
         onLoadSuccess: function (data){
-            console.log(data);
+            // console.log(data);
         },
         onLoadError: function (){
             alert("数据加载失败！");
         }
     });
-    
+
     function searchOrder() {
-        /*
-            $.post("//",$("#formSearch").serialize(),function () {
-            });
-        */
+
         $("#formSearch").form('submit',{
             url:"/htm/searchRecipesByOrder.htm",
             onSubmit: function(param){
@@ -138,16 +132,14 @@
             }
         });
     }
-    
-    
+
+
     function openModifyStatusWindow() {
         $("#dlgModifyUserStatus").dialog("open").window("center");
     }
-
     function cancel() {
         $("#dlgModifyUserStatus").dialog("close");
     }
-
     function modifyRecipesStatus() {
         var  rows = $("#dg").datagrid("getChecked");
         var ids = [];
@@ -164,23 +156,18 @@
             cancel();
         }
     }
-
     function modifyRecipesStatus() {
         $("#recipesStatusForm").form("submit",{
             url:"/htm/modifyRecipesOrderRelStatus.htm",
             onsubmit:function (param) {
-
             },
             success:function (data) {
                 console.log("...");
                 $("#dlgModifyRelStatus").dialog("close");
             },
             error:function () {
-                
+
             }
         });
-
     }
-
-
 </script>

@@ -45,7 +45,7 @@ public class FoodController  extends  BaseController{
 
     @RequestMapping("/htm/cookerOrderInfo.htm")
     public String cookerMain(){
-        return "/backstage/cookerMain";
+        return "backstage/cookerMain";
     }
 
 
@@ -163,7 +163,7 @@ public class FoodController  extends  BaseController{
     **/
     @RequestMapping("/htm/foodInfo.htm")
     public String foodMain(HttpServletRequest request){
-        return "/backstage/foodMain";
+        return "backstage/foodMain";
     }
 
     /***
