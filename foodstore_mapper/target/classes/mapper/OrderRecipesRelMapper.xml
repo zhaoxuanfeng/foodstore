@@ -120,20 +120,20 @@
   </select>
 
   <!--查询销量最高的产品-->
-  <select id="selectMaxCountRecipes" resultType="long" parameterType="java.lang.Long">
+  <select id="selectMaxCountRecipes" resultType="java.lang.Long" parameterType="java.lang.Long">
     select  recipes_id from (
     select recipes_id ,count(recipes_id)
     from order_recipes_rel
     <where>
       <if test="startTime != null">
-        start_time  &gt;= #{startTime}
+        start_time  &gt;= #{startTime,jdbcType=BIGINT}
       </if>
       <if test="endTime != null">
-        end_time   &lt;= #{startTime}
+        end_time   &lt;= #{endTime,jdbcType=BIGINT}
       </if>
     </where>
     group by recipes_id
-    order by count(recipes_id)  desc;
+    order by count(recipes_id)  desc
     ) s1
   </select>
 

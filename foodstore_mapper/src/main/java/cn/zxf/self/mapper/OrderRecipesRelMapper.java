@@ -94,6 +94,6 @@ public interface OrderRecipesRelMapper {
      */
     int updateByPrimaryKey(OrderRecipesRel record);
 
-    List<Long>  selectMaxCountRecipes(Long startTime,Long endTime);
+    List<Long>  selectMaxCountRecipes(@Param("startTime") Long startTime,@Param("endTime")Long endTime);
 
 }

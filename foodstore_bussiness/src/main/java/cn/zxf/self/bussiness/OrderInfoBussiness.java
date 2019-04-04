@@ -1,7 +1,9 @@
 package cn.zxf.self.bussiness;
 
 import cn.zxf.self.dto.StateInfo;
+import cn.zxf.self.entry.OrderRecipesRel;
 import cn.zxf.self.entry.Recipes;
+import cn.zxf.self.example.OrderRecipesRelExample;
 import cn.zxf.self.example.RecipesExample;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
@@ -24,13 +26,17 @@ public class OrderInfoBussiness extends BaseBussiness{
     private StateInfo stateInfo = new StateInfo();
 
 
-    public List<Recipes>  findRecipesByOrder(final Long userId,final Long orderId) {
+    public List<Recipes>  findRecipesByOrder(final Long orderId,final Long cookid) {
         OrderRecipesRelExample orderRecipesRelExample = new OrderRecipesRelExample();
         RecipesExample recipesExample = new RecipesExample();
 
-        orderRecipesRelExample.createCriteria()
-                              .andCookIdEqualTo(userId)
-                              .andOrderIdEqualTo(orderId);
+        OrderRecipesRelExample.Criteria criteria = orderRecipesRelExample.createCriteria();
+         if(ObjectUtils.allNotNull(cookid)){
+                criteria.andCookIdEqualTo(cookid);
+         }
+         if(ObjectUtils.allNotNull(orderId)){
+             criteria.andOrderIdEqualTo(orderId);
+         }
         List<OrderRecipesRel>  orderRecipesRelList =  orderRecipesRelMapper.selectByExample(orderRecipesRelExample);
         List<Integer> recipesIds = new ArrayList<>();
         for (OrderRecipesRel orderRecipesRel:orderRecipesRelList){
@@ -42,14 +48,14 @@ public class OrderInfoBussiness extends BaseBussiness{
         return recipesList;
     }
 
-    public StateInfo findRecipesByUser(final  Long userId,final Long orderId) {
+    public StateInfo findRecipesByUser(final  Long userId,final Long orderId,final Long cookId) {
         List<Map<String, Object>> dataList = new ArrayList<>();
 
         List<Recipes> recipesList;
         if (ObjectUtils.allNotNull(orderId)) {
             Map<String,Object> map = new HashMap<>();
             map.put("userId",userId);
-            recipesList = findRecipesByOrder(userId, orderId);
+            recipesList = findRecipesByOrder(orderId,cookId);
             map.put("orderId",orderId);
             map.put("recipes",recipesList);
             dataList.add(map);
@@ -68,7 +74,7 @@ public class OrderInfoBussiness extends BaseBussiness{
                 Map<String, Object> map = new HashMap<>();
                 map.put("userId", userId);
                 map.put("orderId", orderRecipesRel.getOrderId());
-                recipesList = findRecipesByOrder(userId, orderRecipesRel.getOrderId());
+                recipesList = findRecipesByOrder(orderRecipesRel.getOrderId(),cookId);
                 map.put("recipes", recipesList);
                 dataList.add(map);
             }
@@ -78,4 +84,14 @@ public class OrderInfoBussiness extends BaseBussiness{
     }
 
 
+    public List<Recipes> findHotRecipesIds(final Long startTime,final  Long endTime) {
+
+        List<Long> receipesIds = orderRecipesRelMapper.selectMaxCountRecipes(startTime,endTime);
+        List<Recipes> recipesList = new ArrayList<>();
+        for(Long id : receipesIds){
+            Recipes recipes = recipesMapper.selectByPrimaryKey(id.intValue());
+            recipesList.add(recipes);
+        }
+        return recipesList;
+    }
 }

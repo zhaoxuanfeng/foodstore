@@ -49,7 +49,6 @@ public class FoodController  extends  BaseController{
     }
 
 
-
     /***
         *@Description  //TODO  根据order查询菜品
         *@Param [request, session]
@@ -64,12 +63,12 @@ public class FoodController  extends  BaseController{
         Long userId  = (Long) request.getAttribute("userId");
         if(ObjectUtils.allNotNull(orderId) ) {
             if (ObjectUtils.allNotNull(userId)){
-                stateInfo = orderInfoBussiness.findRecipesByUser(userId, orderId);
+                stateInfo = orderInfoBussiness.findRecipesByUser(userId, orderId,userId);
             }else {
-                stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(), orderId);
+                stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(), orderId,currUser.getUserId());
             }
         }else {
-            stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(),null);
+            stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(),null,currUser.getUserId());
         }
         pageMsg.setRows((List<Map<String, Object>>) stateInfo.getData());
         logger.info("return" + stateInfo.getMessage());
@@ -163,7 +162,7 @@ public class FoodController  extends  BaseController{
     **/
     @RequestMapping("/htm/foodInfo.htm")
     public String foodMain(HttpServletRequest request){
-        return "/backstage/foodMain";
+        return "backstage/foodMain";
     }
 
     /***
