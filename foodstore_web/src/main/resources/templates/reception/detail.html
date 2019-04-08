@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>红米5 plus</title>
-    <link rel="stylesheet" href="<%=basePath %>css/index.css">
-    <script src="<%=basePath %>js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="/js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 	function addTrolley(cid){
 		//判断是否登录
-		var user = '${sessionScope.user}';
+		var user = '${session.userInfo}';
 		if(null == user || "" == user){
 			alert("请先登录在添加商品！");
-			window.location = "login.jsp";
+			window.location = "/htm/userlogin.action";
 			return;
 		}
-		
 		//ajax添加购物车数据
 		$.post("trolleyServlet",{"mark":"addTrolley","cid":cid},function(obj){
 			//等于1 增加购物车商品数量（不含具体个数）
@@ -24,7 +23,6 @@
 				$("#trolleyNumber").text(Number(trolleyNumber) + 1);
 			}
 		},"text");
-		
 	}
 
 </script>
@@ -44,17 +42,16 @@
     </c:if>-->
     <div class="plus5_no3">
         <div class="plus5_no3_img">
-            <img width="560px" height="560px" src="<%=imgPath %>${commodity.pic}" style="display: block" alt="">
+            <img width="560px" height="560px" src="#" th:src="${commodity.foodImgUrl}" style="display: block" alt="">
         </div>
         <div class="plus5_no3_right">
-            <h3>${commodity.name}</h3>
+            <h3 th:text="${commodity.foodName}"></h3>
             <p class="plus5_no3_right_p2">
-            	<span class="plus5_no3_right_span2">「${commodity.description}」</span>
-            	<div style="font-size: 14px;">${commodity.full_description}</div>
-            	
+            	<span class="plus5_no3_right_span2" th:text="'「'+${commodity.foodIntroduce}+'」'" ></span>
+            	<div style="font-size: 14px;" th:text="${commodity.foodIntroduce}"></div>
             </p>
-            <p class="plus5_no3_right_p3">${commodity.price} 元<span class="plus5_no3_right_span3">价格${commodity.price+10}元</span></p>
-            <div class="plus5_no3_right_div4">
+            <p class="plus5_no3_right_p3" th:text="${commodity.foodPrice}"># 元<span class="plus5_no3_right_span3">价格#元</span></p>
+           <!-- <div class="plus5_no3_right_div4">
                 <div class="plus5_no3_right_div4_in">
                     <p class="plus5_no3_right_p4">赠品</p><span>**</span>
                 </div>
@@ -62,44 +59,48 @@
                     <p class="plus5_no3_right_p4">赠品</p><span>**</span>
                 </div>
 
-
-            </div>
+            </div>-->
             <div class="plus5_no3_right_div5">
-                    <p >北京 北京市 东城区 永定门外街道 <span class="plus5_no3_right_div5_span"><a class="plus5_no3_right_div5_span" href="">修改</a> &nbsp;&nbsp;  有现货</span></p>
+                   <select th:each="entries,stat:${addressList}">
+                            <option th:if="${entries.isFirst == 1}" th:text="${entries.oderAddress}" selected="selected"></option>
+                             <option th:if="${entries.isFirst != 1}" th:text="${entries.oderAddress}" ></option>
+                   </select>
+
+                    <!--<p th:text="${addressList[0].oderAddress}"> <span class="plus5_no3_right_div5_span"><a class="plus5_no3_right_div5_span" href="">修改</a> &nbsp;&nbsp;  有现货</span></p>-->
             </div>
-            <div class="plus5_no3_right_div6">选择版本</div>
+           <!-- <div class="plus5_no3_right_div6">选择版本</div>
             <div class="plus5_no3_right_div7">
             
             	<li class="plus5_no3_right_div7_in plus5_no3_right_div7_in_hover">
-                    <span class="plus5_no3_right_div7_span0 ">${commodity.version}</span>
-                    <span class="plus5_no3_right_div7_span " >${commodity.price}  元</span>
+                    <span class="plus5_no3_right_div7_span0 ">#</span>
+                    <span class="plus5_no3_right_div7_span " >#  元</span>
                 </li>
             	
-                <!-- <li class="plus5_no3_right_div7_in plus5_no3_right_div7_in_hover">
+                &lt;!&ndash; <li class="plus5_no3_right_div7_in plus5_no3_right_div7_in_hover">
                     <span class="plus5_no3_right_div7_span0 ">3GB+32GB</span>
                     <span class="plus5_no3_right_div7_span " >999元</span>
                 </li>
                 <li class="plus5_no3_right_div7_in plus5_no3_float">
                     <span class="plus5_no3_right_div7_span0 ">4GB+64GB</span>
                     <span class="plus5_no3_right_div7_span " >1299元</span>
-                </li> -->
+                </li> &ndash;&gt;
             </div>
             <div class="plus5_no3_right_div6">选择颜色</div>
             <div class="plus5_no3_right_div9">
             	<li class="plus5_no3_right_div7_in plus5_no3_right_div7_in_hover ">
-            		<img src="img/plus5_phone_01.png" alt=""><span>${commodity.color}</span>
+            		<img src="/img/plus5_phone_01.png" alt=""><span>${commodity.color}</span>
             	</li>
-                <!-- <li class="plus5_no3_right_div7_in plus5_no3_right_div7_in_hover "><img src="img/plus5_phone_01.png" alt=""><span>金色</span></li>
+                &lt;!&ndash; <li class="plus5_no3_right_div7_in plus5_no3_right_div7_in_hover "><img src="img/plus5_phone_01.png" alt=""><span>金色</span></li>
                 <li class="plus5_no3_right_div7_in plus5_no3_float"><img src="img/plus5_phone_02.png" alt=""><span>黑色</span></li>
                 <li class="plus5_no3_right_div7_in"><img src="img/plus5_phone_03.png" alt=""><span>玫瑰金</span></li>
-                <li class="plus5_no3_right_div7_in plus5_no3_float"><img src="img/plus5_phone_04.png" alt=""><span>浅蓝色</span></li> -->
-            </div>
+                <li class="plus5_no3_right_div7_in plus5_no3_float"><img src="img/plus5_phone_04.png" alt=""><span>浅蓝色</span></li> &ndash;&gt;
+            </div>-->
             <div class="plus5_no3_right_div10">
-                <p class="plus5_no3_right_div10_p1">${commodity.name} <span class="plus5_no3_right_div10_span0">${commodity.version}</span> <span class="plus5_no3_right_div10_span1"></span><span class="plus5_no3_right_div10_span2">${commodity.color}</span></p><span class="plus5_no3_right_span10">${commodity.price}元</span>
-                <p class="plus5_no3_right_div10_p2" style="font-size: 18px;font-weight: bold;">总计 ：${commodity.price} 元</p>
+                <p class="plus5_no3_right_div10_p1" th:text="${commodity.foodName}"> <span class="plus5_no3_right_div10_span0" th:text="${commodity.foodCuisine}"></span> <span class="plus5_no3_right_div10_span1"></span><span class="plus5_no3_right_div10_span2">${commodity.color}</span></p><span class="plus5_no3_right_span10">${commodity.price}元</span>
+                <p class="plus5_no3_right_div10_p2" style="font-size: 18px;font-weight: bold;" th:name="sumPrice" th:text="'总计 ：'+${commodity.price}+'元' "></p>
 
             </div>
-            <a href="javascript:void(0)" onclick="addTrolley(${commodity.cid})" ><div class="plus5_no3_right_div11" style="cursor: pointer;" >加入购物车</div></a>
+            <a href="javascript:void(0)" onclick="addTrolley(${commodity.id})" ><div class="plus5_no3_right_div11" style="cursor: pointer;" >加入购物车</div></a>
             <div class="plus5_no3_right_div12">
                 <div class="plus5_no3_right_div12_y">√</div>
                 <div class="plus5_no3_right_div12_z">七天无理由退货</div>
@@ -112,24 +113,21 @@
 
         </div>
     </div>
-    
-    <jsp:include page="footer.jsp"></jsp:include>
-    
-    <script>
+
+
+    <script type="text/javascript">
         var plus5_no2_in = document.getElementById("plus5_no2_in");
         var plus5_no2 = document.getElementsByClassName("plus5_no2")[0];
         plus5_no2.onclick = function () {
             plus5_no2.className="plus5_no2 plus5_no2_close";
 //            plus5_no2.style.display="none";
-        }
+        };
         $(".plus5_no3_right_div9 .plus5_no3_right_div7_in").click(function () {
             console.log($(this).children().eq(1).html());
             $(".plus5_no3_right_div10_span2").html($(this).children().eq(1).html());
-
             $(".plus5_no3_img img").css("display","none").eq($(this).index()).css("display", "block");
             $(this).siblings().removeClass("plus5_no3_right_div7_in_hover").end().addClass("plus5_no3_right_div7_in_hover");
-
-        })
+        });
         $(".plus5_no3_right_div7 .plus5_no3_right_div7_in").click(function () {
 //            var value = $(".plus5_no3_right_div7_span0 ").html();
             console.log($(this).children().eq(1).html());
@@ -137,9 +135,8 @@
             $(".plus5_no3_right_span10").html($(this).children().eq(1).html());
             var value = "总计:"+$(this).children().eq(1).html()
             $(".plus5_no3_right_div10_p2").html(value);
-
             $(this).siblings().removeClass("plus5_no3_right_div7_in_hover").end().addClass("plus5_no3_right_div7_in_hover");
-        })
+        });
     </script>
 
 </body>

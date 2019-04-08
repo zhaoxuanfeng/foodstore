@@ -104,4 +104,8 @@ public class FoodInfoBussiness extends BaseBussiness {
         }
         return stateInfo;
     }
+
+    public Recipes findFoodInfoById(Long id) {
+        return  recipesMapper.selectByPrimaryKey(id.intValue());
+    }
 }

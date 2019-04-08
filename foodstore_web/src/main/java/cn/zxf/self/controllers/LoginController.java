@@ -5,6 +5,7 @@ import cn.zxf.self.bussiness.UserInfoBussiness;
 import cn.zxf.self.entry.ManageFunc;
 import cn.zxf.self.entry.UserInfo;
 import cn.zxf.self.dto.StateInfo;
+import cn.zxf.self.utils.DateUtils;
 import cn.zxf.self.vo.RegisterUser;
 import cn.zxf.self.security.VerifyCode;
 import cn.zxf.self.dto.JsonModel;
@@ -19,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -82,11 +82,9 @@ public class LoginController extends  BaseController{
         logger.info("url:/htm/loginManagerAccount.htm");
         logger.info("验证码："+verifyCode);
         if(null !=  verifyCode && verifyCode.equals((String)session.getAttribute("verifyCode")) ){
-
-
             String accountName = request.getParameter("accountName");
             String accountPassword = request.getParameter("accountPassword");
-
+//            Integer userFlag = (Integer) request.getAttribute("userFlag");
             try {
                 String password = MD5Utils.getMD5Str(accountPassword);
 
@@ -94,7 +92,14 @@ public class LoginController extends  BaseController{
                 //        String searchClientId = request.getParameter("searchClientId");
                 if (userInfo != null) {
                     session.setAttribute("userInfo", userInfo);
-                    //            session.setAttribute("searchClientId",searchClientId);
+
+                    response.addCookie(new Cookie("userId",(userInfo.getUserId()).toString()));
+                    response.addCookie(new Cookie("userFlag",(userInfo.getUserFlag()).toString()));
+                    response.addCookie(new Cookie("accountName",userInfo.getAccountName()));
+                    Cookie cookie = new Cookie("loginFlag","1");
+                    cookie.setMaxAge(60*24*60*7);
+                    cookie.setVersion(DateUtils.getCurrMilli().intValue());
+                    response.addCookie(cookie);
                     logger.info("登录用户：" + userInfo.getUserName() + ",账户：" + userInfo.getAccountName());
                     jsonModel.setStatus(true);
                     jsonModel.setMessage("成功");
@@ -115,7 +120,12 @@ public class LoginController extends  BaseController{
         logger.info("返回信息:"+jsonModel.toString());
         return jsonModel;
     }
-    
+
+    @RequestMapping("/htm/userlogin.action")
+    public String userLogin(HttpServletRequest request){
+       return "login";
+    }
+
     /***
         *@Description  //TODO  跳转到主页面
         *@Param [request]
