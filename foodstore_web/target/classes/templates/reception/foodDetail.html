@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>餐饮管理系统</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/css/css.css" />
+    <link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.5/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.5/themes/icon.css" />
+    <script src="/js/jquery-3.3.1.js"></script>
+</head>
+
+<body>
+
+<div style="margin:10px 0;"></div>
+<div id= "main_layout" class="easyui-layout" data-options="collapsedSize:'12'" style="width:100%;height:1040px;">
+    <div data-options="region:'north',split:false" style="height:50px">
+        <div>哭脸美食</div>
+        <div  th:if="null != ${session.userInfo}">
+            <span th:text="${session.userInfo.accountName}"></span>
+            <a><span>退出</span></a>
+        </div>
+        <div th:if="null == ${session.userInfo}">
+            <a href="/htm/userlogin.action"><span>请登录</span> </a>
+        </div>
+    </div>
+    <div data-options="region:'south',split:false" style="height:50px;">主页底部
+
+    </div>
+    <div id="trolley_layout" data-options="region:'east',split:true,expandMode:'float'" title="购物车" style="width:180px;border: none"   >
+        <form class="easyui-datagrid" id="tolley_from">
+            <table>
+                <thead>
+                <tr>
+                    <th field="foodName" width="80px"></th>
+                    <th field="foodPrice" width="80px"></th>
+                    <th field="count" width="80px"></th>
+                </tr>
+                </thead>
+            </table>
+        </form>
+    </div>
+    <div id="menu_layout" data-options="region:'west',split:false" title="菜单" style="width:100px;">
+        <div class="easyui-accordion" data-options="fit:true,border:false">
+            <div title="热门美食" style="padding:10px">
+                <span class="menu-item"><a href="#" onclick="" th:value="1">热门小吃</a></span><br/>
+                <span class="menu-item"><a href="#" onclick="" th:value="2">热门风味</a></span><br/>
+                <span class="menu-item"><a href="#" onclick="" th:value="3">销量排行</a></span><br/>
+            </div>
+            <div title="八大菜系" style="padding:10px;">
+                <span><a href="#" onclick="" th:value="1">鲁菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="2">川菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="3">浙菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="4">粤菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="5">苏菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="6">闽菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="7">湘菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="8">徽菜</a></span><br/>
+            </div>
+            <div title="美食分类" data-options="selected:true" style="padding:10px;">
+                <span><a href="#" onclick="" th:value="1">饮品</a></span><br/>
+                <span><a href="#" onclick="" th:value="2">主菜</a></span><br/>
+                <span><a href="#" onclick="" th:value="3">主食</a></span><br/>
+            </div>
+        </div>
+    </div>
+    <div class="products" data-options="region:'center',title:'商品详情',split:true" style="border: none">
+        <div class="">
+            <div class="">
+                <img width="60%" height="40%px" src="#" th:src="${commodity.foodImgUrl}" style="display: block" alt="">
+            </div>
+            <div class="">
+                <h3 id="foodNameText" th:text="${commodity.foodName}"  th:value="${commodity.foodName}" ></h3>
+                <p class="">
+                    <span class="plus5_no3_right_span2" th:text="'「'+${commodity.foodIntroduce}+'」'" ></span>
+                <div style="font-size: 14px;" th:text="${commodity.foodIntroduce}"></div>
+                </p>
+                <p class="plus5_no3_right_p3"  th:text="${commodity.foodPrice}" th:value="${commodity.foodPrice}"># 元<span class="plus5_no3_right_span3">价格#元</span></p>
+                <div class="plus5_no3_right_div5">
+                    <select  class="plus5_no3_right_div5_span"  id="orderAddressText">
+                        <p class="plus5_no3_right_div5_span"  th:each="entries,stat:${addressList}">
+                        <option class="plus5_no3_right_div5_span"  th:if="${entries.isFirst == 1}" th:text="${entries.oderAddress}" selected="selected"></option>
+                        <option class="plus5_no3_right_div5_span"  th:if="${entries.isFirst != 1}" th:text="${entries.oderAddress}" ></option>
+                        </p>
+                    </select>
+                </div>
+                <div class="">
+                    <p class="" th:text="${commodity.foodName}" >
+                        <span class="" th:text="${commodity.foodCuisine}"></span>
+                    </p>
+                    <div >
+                        <p>商品数量: <input class="plus5_no3_right_div5_span" type="button" onclick="numDec()" value="-"/>
+                            <input class="plus5_no3_right_div5_span" type="text" style="width: 20px" id="quantity"  readonly="readonly"   placeholder="1"/>
+                            <input class="plus5_no3_right_div5_span" type="button" onclick="numAdd()" value="+"/>
+                        </p>
+                        <input type="text" id="orderNoteText" class="plus5_no3_right_div5_span" placeholder="如有备注请输入："/>
+                    </div>
+                    <input class="plus5_no3_right_div10_p2" style="font-size: 18px;font-weight: bold;border: none" readonly="readonly" id="foodSumPriceText" />
+                </div>
+                    <input type="button" onclick="addTrolley()" class="plus5_no3_right_div11" style="cursor: pointer;"  value="加入购物车"/>
+                <div class="plus5_no3_right_div12">
+                    <div class="plus5_no3_right_div12_y">√</div>
+                    <div class="plus5_no3_right_div12_z">新鲜食材</div>
+                    <div class="plus5_no3_right_div12_y">√</div>
+                    <div class="plus5_no3_right_div12_z">现订现做</div>
+                    <div class="plus5_no3_right_div12_y">√</div>
+                    <div class="plus5_no3_right_div12_z">卫生保障</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<footer th:replace="footer::footer">
+</footer>
+<script type="text/javascript" th:inline="javascript">
+
+    var foodPrice =  [[${commodity.foodPrice}]];
+    var userId = [[${session.userInfo.userId}]];
+    var recipesId = [[${commodity.id}]];
+    var recipesName = [[${commodity.foodName}]];
+    $(function () {
+  /*      $.messager.progress({
+            title: "商品添加中",
+            msg: "正在添加到购物车，请稍候..."
+        });*/
+        $("#quantity").val(1);
+        var count =  $("#quantity").val();
+        console.log([[${commodity.foodPrice}]]);
+        $("#foodSumPriceText").val(count * foodPrice);
+    });
+    
+    function addTrolley() {
+        if(null == userId){
+            $.ajax({
+                url:"/htm/userlogin.action"
+            });
+        }
+
+        var count = $("#quantity").val();
+        var orderNote = $("#orderNoteText").val();
+        var orderPrice = $("#foodSumPriceText").val();
+        var orderAddress = $("#orderAddressText").val();
+
+        var orderInfo = {
+            "count":count,
+            "orderNote":orderNote,
+            "orderPrice":orderPrice,
+            "recipesId":recipesId,
+            "orderAddress":orderAddress,
+            "recipesName":recipesName,
+            "userId":userId
+        }
+        console.log(JSON.stringify(orderInfo));
+
+        $.ajax({
+            url:"/self/addTolleyData.action",
+            data:orderInfo,
+            dataType:'json',
+            type:"POST",
+            success:function () {
+                alert("111");
+            },
+            error:function () {
+                
+            }
+        });
+    }
+
+    /*商品数量+1*/
+    function numAdd(){
+
+        var quantity = $("#quantity").val();
+        var num_add = parseInt(quantity)+1;
+        if(quantity==""){
+            num_add = 1;
+        }
+        console.log(quantity);
+        if(num_add>=10){
+            $("#quantity").value=num_add-1;
+            alert("商品数量不能大于10");
+        }else{
+            $("#quantity").value=num_add;
+            var Num=foodPrice*num_add;
+            $("#foodSumPriceText").val(Num.toFixed(2));
+        }
+    }
+    /*商品数量-1*/
+    function numDec() {
+        var quantity = $("#quantity").val();
+        var num_dec = parseInt(quantity) - 1;
+        if (num_dec > 0) {
+            $("#quantity").value = num_dec;
+            var Num = foodPrice * num_dec;
+            $("#foodSumPriceText").val( Num.toFixed(2));
+        }
+    }
+
+
+
+</script>
+</html>

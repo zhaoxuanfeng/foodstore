@@ -20,7 +20,6 @@ public class UserDataBussiness extends BaseBussiness {
         UserAddressRelExample userAddressRelExample = new UserAddressRelExample();
         userAddressRelExample.createCriteria()
                              .andUserIdEqualTo(id.intValue());
-//        List<UserAddressRel>  userAddressRelList =  userAddressRelMapper.selectByExample(userAddressRelExample);
         return userAddressRelMapper.selectByExample(userAddressRelExample);
     }
 

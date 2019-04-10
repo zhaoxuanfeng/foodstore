@@ -3,19 +3,21 @@ package cn.zxf.self.controllers;
 import cn.zxf.self.bussiness.FoodInfoBussiness;
 import cn.zxf.self.bussiness.OrderInfoBussiness;
 import cn.zxf.self.bussiness.UserDataBussiness;
+import cn.zxf.self.entry.Orders;
 import cn.zxf.self.entry.Recipes;
 import cn.zxf.self.entry.UserAddressRel;
 import cn.zxf.self.entry.UserInfo;
 import cn.zxf.self.utils.DateUtils;
 import cn.zxf.self.vo.PageMsg;
 import cn.zxf.self.vo.PagerModel;
+import cn.zxf.self.vo.UserOrder;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,9 +69,10 @@ public class ViewDataController {
 
 
     @RequestMapping(value = "/view/detailData.action")
-    public String  dataDetial(Long id, HttpServletRequest request, HttpServletResponse response){
+    public String  dataDetial(@RequestParam(value = "id") Long id, HttpServletRequest request, HttpServletResponse response){
         logger.info(request.getRequestURI());
         logger.info(id.toString());
+        UserInfo currUser = (UserInfo) request.getSession().getAttribute("userInfo");
         if(!ObjectUtils.allNotNull(id)){
             return null;
         }
@@ -77,10 +80,21 @@ public class ViewDataController {
         if(ObjectUtils.allNotNull(recipes)){
             request.setAttribute("commodity",recipes);
         }
-        List<UserAddressRel> userAddressRelList = userDataBussiness.findAddressListById(id);
+        List<UserAddressRel> userAddressRelList = userDataBussiness.findAddressListById(currUser.getUserId());
         if(ObjectUtils.allNotNull(userAddressRelList) && userAddressRelList.size() != 0 ){
             request.setAttribute("addressList",userAddressRelList);
         }
-        return "/reception/detail";
+        logger.info("end");
+        return "reception/foodDetail";
+    }
+
+
+    @RequestMapping("/self/addTolleyData.action")
+    public PagerModel addTolleyData(UserOrder  userOrder ,HttpServletRequest request){
+        logger.info(request.getRequestURI());
+        System.out.println(userOrder);
+        Orders orders = new Orders();
+        orders.setUserId();
+        return pagerModel;
     }
 }
