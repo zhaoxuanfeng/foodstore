@@ -384,4 +384,22 @@ public class Orders {
     public void setOrderAddress(String orderAddress) {
         this.orderAddress = orderAddress == null ? null : orderAddress.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "orderId=" + orderId +
+                ", orderDate=" + orderDate +
+                ", orderRecipesId=" + orderRecipesId +
+                ", count=" + count +
+                ", userId=" + userId +
+                ", orderStatus='" + orderStatus + '\'' +
+                ", realPrice=" + realPrice +
+                ", isDelete=" + isDelete +
+                ", notes='" + notes + '\'' +
+                ", createTime=" + createTime +
+                ", endTime=" + endTime +
+                ", orderAddress='" + orderAddress + '\'' +
+                '}';
+    }
 }

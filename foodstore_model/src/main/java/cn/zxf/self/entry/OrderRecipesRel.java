@@ -288,4 +288,19 @@ public class OrderRecipesRel {
     public void setEndTime(Long endTime) {
         this.endTime = endTime;
     }
+
+    @Override
+    public String toString() {
+        return "OrderRecipesRel{" +
+                "id=" + id +
+                ", orderId=" + orderId +
+                ", recipesId=" + recipesId +
+                ", cookId=" + cookId +
+                ", waiterId=" + waiterId +
+                ", takeawayId=" + takeawayId +
+                ", relStatus='" + relStatus + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
+    }
 }

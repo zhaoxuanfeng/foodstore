@@ -1,0 +1,18 @@
+.self_head{
+    position: relative;
+    float: right;
+    right: 20px;
+}
+#self_left{
+    float: left;
+}
+
+.self_head_span{
+    font-family: "微软雅黑 Light";
+    font-size: 16px;
+}
+
+.self_logo{
+    position: absolute;
+    float: left;
+}

@@ -40,11 +40,16 @@
             <groupId>cn.zxf.self</groupId>
             <version>${project.version}</version>
         </dependency>
-
-
-
-
-
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.17</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.5.4</version>
+        </dependency>
     </dependencies>
     <build>
         <resources>

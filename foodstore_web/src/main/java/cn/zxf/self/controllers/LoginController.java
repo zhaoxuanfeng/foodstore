@@ -6,6 +6,7 @@ import cn.zxf.self.entry.ManageFunc;
 import cn.zxf.self.entry.UserInfo;
 import cn.zxf.self.dto.StateInfo;
 import cn.zxf.self.utils.DateUtils;
+import cn.zxf.self.utils.MailUtils;
 import cn.zxf.self.vo.RegisterUser;
 import cn.zxf.self.security.VerifyCode;
 import cn.zxf.self.dto.JsonModel;
@@ -87,12 +88,10 @@ public class LoginController extends  BaseController{
 //            Integer userFlag = (Integer) request.getAttribute("userFlag");
             try {
                 String password = MD5Utils.getMD5Str(accountPassword);
-
                 UserInfo userInfo = userInfoBussiness.getUserInfoByAccountInfo(accountName, password);
                 //        String searchClientId = request.getParameter("searchClientId");
                 if (userInfo != null) {
                     session.setAttribute("userInfo", userInfo);
-
                     response.addCookie(new Cookie("userId",(userInfo.getUserId()).toString()));
                     response.addCookie(new Cookie("userFlag",(userInfo.getUserFlag()).toString()));
                     response.addCookie(new Cookie("accountName",userInfo.getAccountName()));
@@ -108,11 +107,9 @@ public class LoginController extends  BaseController{
                     jsonModel.setStatus(false);
                     jsonModel.setMessage("账号密码错误！");
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }else{
             jsonModel.setStatus(false);
             jsonModel.setMessage("验证码错误！");
@@ -198,10 +195,9 @@ public class LoginController extends  BaseController{
             jsonModel.setStatus(false);
             jsonModel.setMessage("未找到个人信息");
             logger.info("返回信息："+jsonModel.toString());
-            return "/backstage/main";
+
         }
-
-
+        return "/backstage/main";
     }
 
     /***
@@ -261,7 +257,10 @@ public class LoginController extends  BaseController{
                 jsonModel.setMessage("用户已注册");
 
             }
-
+            String emialMsg = "您好：<br/> 您已注册笑脸餐饮管理系统！激活<a href='http://localhost:8888/htm/registerMail.htm?useId="+
+                    stateInfo.getData()
+                    +"'>点击http://localhost:8888/htm/registerMail.htm</a>";
+            MailUtils.sendMail(registerUser.getEmail(),emialMsg);
             if(stateInfo.isState()){
                 jsonModel.setStatus(true);
                 jsonModel.setMessage("注册账户"+registerUser.getAccountName()+"成功");
@@ -274,13 +273,21 @@ public class LoginController extends  BaseController{
                 logger.info("注册失败："+registerUser.getAccountName());
                 jsonModel.setResult(registerUser);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return jsonModel;
-
     }
 
+
+    @RequestMapping("/htm/registerMail.htm")
+    public String registerMail(HttpServletRequest request){
+        Long userId = (Long) request.getAttribute("userId");
+        Boolean flag = userInfoBussiness.updateUserStatusFlag(userId);
+        if(flag){
+            return "login";
+        }else {
+            return "error";
+        }
+    }
 }

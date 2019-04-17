@@ -1,5 +1,6 @@
 package cn.zxf.self.config;
 
+import cn.zxf.self.enums.RabbitConstant;
 import cn.zxf.self.listeners.UserOrderListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,6 @@ import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFacto
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +16,11 @@ import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.web.filter.reactive.HiddenHttpMethodFilter;
+import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilterChain;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
+import reactor.core.publisher.Mono;
 import javax.annotation.Resource;
 
 /**
@@ -25,14 +30,13 @@ import javax.annotation.Resource;
  * @DATE 2019/3/20
  */
 @Configuration
-public class RabbitmqConfiguration {
+public class RabbitmqConfiguration  {
 
-    public static final  String cookerOrderQueue = "basic.info.mq.exchange.name";
+
     private static final Logger log= LoggerFactory.getLogger(RabbitmqConfiguration.class);
-
-    //TODO: 通过该变量获取配置文件属性
     @Resource
     private Environment env;
+    //TODO: 通过该变量获取配置文件属性
 
     @Autowired
     private CachingConnectionFactory connectionFactory;
@@ -49,10 +53,10 @@ public class RabbitmqConfiguration {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(new Jackson2JsonMessageConverter());
-        factory.setConcurrentConsumers(1);
-        factory.setMaxConcurrentConsumers(1);
+        factory.setConcurrentConsumers(2);
+        factory.setMaxConcurrentConsumers(50);
         factory.setPrefetchCount(1);
-        factory.setTxSize(1);
+        factory.setTxSize(100);
         factory.setAcknowledgeMode(AcknowledgeMode.AUTO);
         return factory;
     }
@@ -83,12 +87,8 @@ public class RabbitmqConfiguration {
         connectionFactory.setPublisherReturns(true);
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMandatory(true);
-        rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
-            @Override
-            public void confirm(CorrelationData correlationData, boolean ack, String cause) {
-                log.info("消息发送成功:correlationData({}),ack({}),cause({})",correlationData,ack,cause);
-            }
-        });
+        // rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
+        rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> log.info("消息发送成功:correlationData({}),ack({}),cause({})",correlationData,ack,cause));
         rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> log.info("消息丢失:exchange({}),route({}),replyCode({}),replyText({}),message:{}",exchange,routingKey,replyCode,replyText,message));
         return rabbitTemplate;
     }
@@ -97,7 +97,7 @@ public class RabbitmqConfiguration {
     private UserOrderListener userOrderListener;
 
     @Bean
-    public SimpleMessageListenerContainer listenerContainerUserOrder(@Qualifier("expressOrderQueue") Queue userOrderQueue){
+    public SimpleMessageListenerContainer listenerContainerUserOrder(@Qualifier(RabbitConstant.QUEUE_EXPRESS) Queue userOrderQueue){
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
         container.setMessageConverter(new Jackson2JsonMessageConverter());
@@ -116,55 +116,63 @@ public class RabbitmqConfiguration {
 
     }
 
-    /*    @Bean(name="message")
-            public Queue queueMessage() {
-                return new Queue("topic.message");
-            }
-            @Bean(name="messages")
-            public Queue queueMessages() {
-                return new Queue("topic.messages");
-            }
-            @Bean
-            public TopicExchange exchange() {
-                return new TopicExchange("exchange");
-            }
-             @Bean
-            Binding bindingExchangeMessage(@Qualifier("message") Queue queueMessage, TopicExchange exchange) {
-                return BindingBuilder.bind(queueMessage).to(exchange).with("topic.message");
-            }
-            @Bean
-            Binding bindingExchangeMessages(@Qualifier("messages") Queue queueMessages, TopicExchange exchange) {
-                return BindingBuilder.bind(queueMessages).to(exchange).with("topic.#");//*表示一个词,#表示零个或多个词
-            }
-    */
     @Bean
     public DirectExchange basicExchange() {
-        return new DirectExchange(env.getProperty("basic.info.mq.exchange.name"), true, false);
+        return new DirectExchange(RabbitConstant.EXCHANGE, true, false);
     }
-
-    @Bean(name = "basicOrderQueue")
+    @Bean(name = RabbitConstant.QUEUE_BASE_ORDER)
     public Queue basicQueue() {
-        return new Queue(env.getProperty("basic.info.mq.queue.name"), true);
+        return new Queue(RabbitConstant.QUEUE_BASE_ORDER, true);
     }
 
     @Bean
     public DirectExchange expressExchange(){
-        return new DirectExchange(env.getProperty("express.info.mq.exchange.name"),true,false);
+        return new DirectExchange(RabbitConstant.EXCHANGE_EXPRESS,true,false);
+    }
+    @Bean(name= RabbitConstant.QUEUE_EXPRESS)
+    public Queue expressQueue(){
+        return new Queue(RabbitConstant.QUEUE_EXPRESS,true);
     }
 
-    @Bean(name= "expressOrderQueue")
-    public Queue expressQueue(){
-        return new Queue(env.getProperty("express.info.mq.queue.name"),true);
+    @Bean
+    public DirectExchange waiterExchange(){
+        return new DirectExchange(RabbitConstant.EXCHANGE_WAITER,true,false);
+    }
+
+    @Bean(name = RabbitConstant.QUEUE_WAITER)
+    public Queue waiterQueue() {
+        return new Queue(RabbitConstant.QUEUE_WAITER, true);
     }
 
     @Bean
     public Binding basicBinding() {
-        return BindingBuilder.bind(basicQueue()).to(basicExchange()).with(env.getProperty("basic.info.mq.routing.key.name"));
+        return BindingBuilder.bind(basicQueue()).to(basicExchange()).with(RabbitConstant.RK_TRANSACTION);
+    }
+    @Bean
+    public Binding expressBinding(){
+        return BindingBuilder.bind(expressQueue()).to(expressExchange()).with(RabbitConstant.RK_CONTRACT);
+    }
+
+    @Bean Binding waiterBinding(){
+        return BindingBuilder.bind(waiterQueue()).to(waiterExchange()).with(RabbitConstant.RK_QUALIFICATION);
+    }
+    /**
+        *@Description  //TODO  配置websocket
+        *@Param []
+        *@Return  ServerEndpointExporter
+     **/
+    @Bean
+    public ServerEndpointExporter serverEndpointExporter() {
+        return new ServerEndpointExporter();
     }
 
     @Bean
-    public Binding expressBinding(){
-        return BindingBuilder.bind(expressQueue()).to(expressExchange()).with(env.getProperty("express.info.mq.routing.key.name"));
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+        return new HiddenHttpMethodFilter() {
+            @Override
+            public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+                return chain.filter(exchange);
+            }
+        };
     }
-
 }

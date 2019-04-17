@@ -60,6 +60,14 @@ public class UserInfoBussiness extends BaseBussiness {
         if(count == 1){
             stateInfo.setState(true);
             stateInfo.setMessage("注册成功");
+            UserInfoExample userInfoExample = new UserInfoExample();
+            userInfoExample.createCriteria()
+                           .andAccountNameEqualTo(userInfo.getAccountName())
+                           .andAccountPasswordEqualTo(userInfo.getAccountPassword());
+            List<UserInfo>  userInfo_insert = userInfoMapper.selectByExample(userInfoExample);
+            if(ObjectUtils.allNotNull(userInfo) && userInfo_insert.size() > 0){
+                stateInfo.setData(userInfo_insert.get(0).getUserId());
+            }
 
         }else{
             stateInfo.setState(false);
@@ -194,5 +202,13 @@ public class UserInfoBussiness extends BaseBussiness {
             stateInfo.setCode("200");
         }
         return stateInfo;
+    }
+
+    public Boolean updateUserStatusFlag(final Long userId) {
+        UserInfo userInfo = userInfoMapper.selectByPrimaryKey(userId);
+        userInfo.setUserFlag(1);
+        int count = userInfoMapper.updateByPrimaryKeySelective(userInfo);
+        if (count > 0) return true;
+        else return false;
     }
 }

@@ -132,7 +132,15 @@
             <optional>true</optional>
             <scope>true</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>3.0.52.ALL</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -80,4 +80,14 @@ public class StateInfo  implements Serializable {
     public void setData(Object data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "StateInfo{" +
+                "state=" + state +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                ", code='" + code + '\'' +
+                '}';
+    }
 }
