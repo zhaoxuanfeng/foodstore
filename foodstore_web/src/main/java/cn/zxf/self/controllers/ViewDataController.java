@@ -138,7 +138,6 @@ public class ViewDataController {
         if(!stateInfo.isState()){
             pagerModel.setData(orders);
         }
-
 //        logger.info("向queue中添加消息");
 //        RabbitSenderUtils rabbitSenderUtils = new RabbitSenderUtils();s
 //        rabbitSenderUtils.send(userOrder);

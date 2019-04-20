@@ -274,7 +274,7 @@
 
 <script type="text/javascript"  th:inline="none">
     $("#food_table").datagrid( {
-        url:'/htm/foodInfoData.htm',
+        url:'htm/foodInfoData.htm',
         striped: true,
         rownumbers:true,
         pagination: true,
@@ -324,7 +324,6 @@
             onSubmit:function () {
             },
             success:function (data) {
-
                  var json = $.parseJSON(data);
                 if( json.status == true){
                     alert(json.message);
@@ -419,7 +418,6 @@
                     $('#modifyWindow').dialog("close");
                 }
             }
-
         });
     }
 

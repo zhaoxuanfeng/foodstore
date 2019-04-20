@@ -17,17 +17,19 @@
         </div>
     </div>
     <div data-options="region:'south',split:false" style="height:50px;">主页底部
-
+        <p>本系统为毕业设计专业系统</p>
     </div>
     <div id="trolley_layout" data-options="region:'east',split:true,expandMode:'float'" title="购物车" style="width:180px;border: none"   >
-        <form class="easyui-datagrid" id="tolley_from">
-            <table id="tolley_table">
+        <form  id="tolley_from">
+            <table id="tolley_table" class="easyui-datagrid" title="购物车列表" singleSelect="false" striped="true"
+                   SelectOnCheck="true" CheckOnSelect="true">
+                <!--fitColumns="true"   nowrap="false" -->
                 <thead>
                 <tr>
                     <th field="select" align="center" checkbox="true"></th>
                     <th field="foodName"  align="left"   width="40%"></th>
                     <th field="foodPrice"  align="left"  width="10%"></th>
-                    <th field="count"  align="left"  width="30%"></th>
+                    <!--<th field="count"  align="left"  width="30%"></th>-->
                 </tr>
                 </thead>
             </table>
@@ -156,30 +158,27 @@
             }
         }
         );
-
+        console.log("-----------");
         selfdata();
 
     });
     
     function selfdata() {
-
         if(userInfo){
+            console.log("11111");
             $("#tolley_table").datagrid({
-                url:'/self/tolleyData.action',
-                border:false,
+                url:'self/tolleyData.action',
+                // border:false,
                 striped: true,
-                pagination: true,
-                showFooter : true,
+                // pagination: true,
+                // showFooter : true,
                 loadMsg:'数据加载中，请稍等...',
                 columns:[
                     {field:'select',checkbox:true},
-                    {field:'foodName',title:'食物名称',align:"center"},
-                    {field:'foorPrice',title:'单价',align:"center"},
-                    {field:'count',title:'数量',align:"center"}
+                    {field:'recipes.foodName',title:'食物名称',align:"center"},
+                    {field:'recipes.foodPrice',title:'单价',align:"center"}
+                    // ,{field:'count',title:'数量',align:"center"}
                 ],
-                onBeforeLoad:function(param){
-                    console.log(param);
-                },
                 onLoadSuccess: function (data){
                     console.log(data);
                 },
@@ -188,6 +187,7 @@
                 }
             });
         }else{
+
             var trolleyInfo = '<div><a href="/htm/userlogin.action"><span>请登录</span></a></div>';
             $("#trolley_layout").append(trolleyInfo) ;
         }

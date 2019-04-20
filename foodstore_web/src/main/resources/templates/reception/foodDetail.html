@@ -29,12 +29,13 @@
     </div>
     <div id="trolley_layout" data-options="region:'east',split:true,expandMode:'float'" title="购物车" style="width:180px;border: none"   >
         <form class="easyui-datagrid" id="tolley_from">
-            <table>
+            <table id="tolley_table" class="easyui-datagrid" title="购物车列表" singleSelect="false" fitColumns="true" nowrap="false" striped="true"
+                   SelectOnCheck="true" CheckOnSelect="true">
                 <thead>
                 <tr>
-                    <th field="foodName" width="80px"></th>
-                    <th field="foodPrice" width="80px"></th>
-                    <th field="count" width="80px"></th>
+                    <th field="select" align="center" checkbox="true"></th>
+                    <th field="foodName"  align="left"   width="40%"></th>
+                    <th field="foodPrice"  align="left"  width="10%"></th>
                 </tr>
                 </thead>
             </table>
@@ -114,7 +115,7 @@
 <footer th:replace="footer::footer">
 </footer>
 <script type="text/javascript" th:inline="javascript">
-
+    var userInfo = [[${session.userInfo}]];
     var foodPrice =  [[${commodity.foodPrice}]];
     var userId = [[${session.userInfo.userId}]];
     var recipesId = [[${commodity.id}]];
@@ -128,6 +129,7 @@
         var count =  $("#quantity").val();
         console.log([[${commodity.foodPrice}]]);
         $("#foodSumPriceText").val(count * foodPrice);
+        selfdata();
     });
     
     function addTrolley() {
@@ -158,10 +160,6 @@
             data:orderInfo,
             dataType:'json',
             type:"POST",
-            success:function (data) {
-                    alert(data);
-
-            },
             error:function () {
                 
             }
@@ -197,6 +195,35 @@
         }
     }
 
+    function selfdata() {
+        if(userInfo){
+            console.log("11111");
+            $("#tolley_table").datagrid({
+                url:'/self/tolleyData.action',
+                border:false,
+                striped: true,
+                // pagination: true,
+                // showFooter : true,
+                loadMsg:'数据加载中，请稍等...',
+                columns:[
+                    {field:'select',checkbox:true},
+                    {field:'recipes.foodName',title:'食物名称',align:"center"},
+                    {field:'recipes.foodPrice',title:'单价',align:"center"}
+                    // ,{field:'count',title:'数量',align:"center"}
+                ],
+                onLoadSuccess: function (data){
+                    console.log(data);
+                },
+                onLoadError: function (){
+                    alert("数据加载失败！");
+                }
+            });
+        }else{
+
+            var trolleyInfo = '<div><a href="/htm/userlogin.action"><span>请登录</span></a></div>';
+            $("#trolley_layout").append(trolleyInfo) ;
+        }
+    }
 
 
 </script>

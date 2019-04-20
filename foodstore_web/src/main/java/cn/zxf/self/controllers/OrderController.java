@@ -203,7 +203,7 @@ public class OrderController {
     }
 
     @RequestMapping("/self/pay.action")
-    public void payHandler(HttpServletRequest request,HttpServletResponse response,String orderId,String money,String name) throws AlipayApiException, Exception{
+    public void payHandler(HttpServletRequest request,HttpServletResponse response,Long orderId,String money,String name) throws AlipayApiException, Exception{
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
 
@@ -213,7 +213,7 @@ public class OrderController {
         alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
 
         //商户订单号，商户网站订单系统中唯一订单号，必填
-        String out_trade_no = new String(request.getParameter("orderId").getBytes("ISO-8859-1"),"UTF-8");
+        String out_trade_no = ((Long)request.getAttribute("orderId")).toString();
         //付款金额，必填
         String total_amount = new String(request.getParameter("money").getBytes("ISO-8859-1"),"UTF-8");
         //订单名称，必填

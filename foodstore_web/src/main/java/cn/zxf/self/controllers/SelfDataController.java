@@ -33,15 +33,16 @@ public class SelfDataController {
 
     PageMsg pageMsg = new PageMsg();
 
-    @RequestMapping(value = "/self/tolleyData.htm")
+    @RequestMapping("/self/tolleyData.action")
     @ResponseBody
-    public PageMsg selfTolleyData(HttpServletRequest request , HttpSession session){
-
+    public PageMsg selfTolleyData(HttpServletRequest request,HttpSession session){
+        System.out.println("1111111111111111");
         logger.info("url : " + request.getRequestURI());
         UserInfo currUser = (UserInfo) session.getAttribute("userInfo");
         if(ObjectUtils.allNotNull(currUser)){
             logger.info(currUser.getUserId().toString());
             StateInfo stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(),null,null);
+            logger.info(stateInfo.getData().toString());
             if(ObjectUtils.allNotNull(stateInfo)){
                 pageMsg.setRows((List<Recipes>) stateInfo.getData());
                 pageMsg.setTotal(((List<Recipes>) stateInfo.getData()).size());
