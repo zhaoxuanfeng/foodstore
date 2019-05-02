@@ -113,6 +113,7 @@
     function searchUser() {
         $("#dg").datagrid("loading");
         $.get("/htm/userinfo_data.htm",$("#formSearch").serialize(),function (pager) {
+
             $("#dg").datagrid("loadData",{total:pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
             $("#dg").datagrid("loaded");
         });

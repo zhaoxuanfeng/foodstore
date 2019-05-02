@@ -138,10 +138,24 @@ public class ViewDataController {
         if(!stateInfo.isState()){
             pagerModel.setData(orders);
         }
+        System.out.println(stateInfo.getData());
 //        logger.info("向queue中添加消息");
 //        RabbitSenderUtils rabbitSenderUtils = new RabbitSenderUtils();s
 //        rabbitSenderUtils.send(userOrder);
         pagerModel.setData(stateInfo.getData());
+        return pagerModel;
+    }
+
+
+    @RequestMapping("/view/selectRecepiesInfo")
+    @ResponseBody
+    public PagerModel selectRecepiesInfo(Recipes recipes){
+        StateInfo stateInfo = foodInfoBussiness.findFoodInfoByRecepies(recipes);
+        pagerModel.setMessage(stateInfo.getMessage());
+        pagerModel.setStatus(stateInfo.isState());
+        if (ObjectUtils.allNotNull(stateInfo) && stateInfo.isState()){
+            pagerModel.setData(stateInfo.getData());
+        }
         return pagerModel;
     }
 }

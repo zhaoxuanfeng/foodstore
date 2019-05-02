@@ -268,35 +268,34 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitUpdateInfo()"  iconcls="icon-save">更新菜品</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" iconcls="icon-cancel">取消</a>
     </div>
-
 </body>
-<footer th:replace="footer :: footer"></footer>
+    <footer th:replace="footer :: footer"></footer>
 
-<script type="text/javascript"  th:inline="none">
-    $("#food_table").datagrid( {
-        url:'htm/foodInfoData.htm',
-        striped: true,
-        rownumbers:true,
-        pagination: true,
-        pageSize: 10,
-        pageList: [10, 20, 50, 100, 150, 200],
-        border : false,
-        showFooter : true,
-        loadMsg:'数据加载中，请稍等...',
-        columns:[[
-            {field:'select',checkbox:true},
-            {field:'id',title:'菜品id',width:'8%'},
-            {field:'foodName',title:'菜名',width:'8%',align:'right'},
-            {field:'foodType',title:'菜品类型',width:'10%',align:'right'},
-            {field:'foodPrice',title:'菜价',width:'10%',align:'right'},
-            {field:'foodStatus',title:'菜品状态',width:'8%',align:'right'},
-            {field:'foodCuisine',title:'菜系',width:'10%',align:'right'},
-            {field:'foodKey',title:'菜品关键字',width:'10%',align:'right'},
-            {field:'foodIntroduce',title:'菜品介绍',width:'10%',align:'right'},
-            {field:'foodImgUrl',title:'菜品图片路径',width:'10%',align:'right'}
+    <script type="text/javascript"  th:inline="none">
+        $("#food_table").datagrid( {
+            url:'/htm/foodInfoData.htm',
+            striped: true,
+            rownumbers:true,
+            pagination: true,
+            pageSize: 10,
+            pageList: [10, 20, 50],
+            border : false,
+            showFooter : true,
+            loadMsg:'数据加载中，请稍等...',
+            columns:[[
+                {field:'select',checkbox:true},
+                {field:'id',title:'菜品id',width:'8%'},
+                {field:'foodName',title:'菜名',width:'8%',align:'right'},
+                {field:'foodType',title:'菜品类型',width:'10%',align:'right'},
+                {field:'foodPrice',title:'菜价',width:'10%',align:'right'},
+                {field:'foodStatus',title:'菜品状态',width:'8%',align:'right'},
+                {field:'foodCuisine',title:'菜系',width:'10%',align:'right'},
+                {field:'foodKey',title:'菜品关键字',width:'10%',align:'right'},
+                {field:'foodIntroduce',title:'菜品介绍',width:'10%',align:'right'},
+                {field:'foodImgUrl',title:'菜品图片路径',width:'10%',align:'right'}
         ]],
         onBeforeLoad:function(param){
-            console.log(param);
+            // console.log(param);
         },
         onLoadSuccess: function (data){
             console.log(data);
@@ -307,10 +306,10 @@
     });
 
     function searchFood() {
-        $("#dg").datagrid("loading");
-        $.get("/htm/foodInfoData.htm",$("#formSearch").serialize(),function (pager) {
-            $("#dg").datagrid("loadData",{total:pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
-            $("#dg").datagrid("loaded");
+        $("#food_table").datagrid("loading");
+        $.get("htm/foodInfoData.htm",$("#formSearch").serialize(),function (pager) {
+            $("#food_table").datagrid("loadData",{total:pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
+            $("#food_table").datagrid("loaded");
         });
     }
     

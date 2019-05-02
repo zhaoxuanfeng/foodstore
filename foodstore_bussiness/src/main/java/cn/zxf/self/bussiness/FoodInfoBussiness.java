@@ -3,6 +3,7 @@ package cn.zxf.self.bussiness;
 import cn.zxf.self.entry.Recipes;
 import cn.zxf.self.dto.StateInfo;
 import cn.zxf.self.example.RecipesExample;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -107,5 +108,34 @@ public class FoodInfoBussiness extends BaseBussiness {
 
     public Recipes findFoodInfoById(Long id) {
         return  recipesMapper.selectByPrimaryKey(id.intValue());
+    }
+
+    public StateInfo findFoodInfoByRecepies(Recipes recipes) {
+        if(ObjectUtils.allNotNull(recipes)){
+            RecipesExample recipesExample = new RecipesExample();
+            RecipesExample.Criteria criteria = recipesExample.createCriteria();
+            if(ObjectUtils.allNotNull(recipes.getFoodCuisine())){
+                criteria.andFoodCuisineEqualTo(recipes.getFoodCuisine());
+            }
+
+            if (ObjectUtils.allNotNull(recipes.getFoodKey())){
+                criteria.andFoodKeyLike(recipes.getFoodKey());
+            }
+            List<Recipes> recipesList = recipesMapper.selectByExample(recipesExample);
+            if(ObjectUtils.allNotNull(recipesList) && recipesList.size() > 0){
+                stateInfo.setData(recipesList);
+                stateInfo.setMessage("查询成功");
+                stateInfo.setState(true);
+            }else {
+                stateInfo.setState(false);
+                stateInfo.setMessage("查询失败");
+                stateInfo.setData(null);
+            }
+
+        }else {
+            stateInfo.setState(false);
+            stateInfo.setMessage("参数错误。");
+        }
+        return stateInfo;
     }
 }

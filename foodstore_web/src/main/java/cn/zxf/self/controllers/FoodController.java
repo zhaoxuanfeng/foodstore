@@ -182,6 +182,7 @@ public class FoodController  extends  BaseController{
         pageMsg.setPageNumber((Integer) request.getAttribute("pageNumber"));
 
         stateInfo = foodInfoBussiness.findFoodInfo(params);
+        logger.info(stateInfo.getData().toString());
         if(stateInfo.isState()){
             pageMsg.setRows((List<Recipes>) stateInfo.getData());
             pageMsg.setTotal(((List<Recipes>) stateInfo.getData()).size());

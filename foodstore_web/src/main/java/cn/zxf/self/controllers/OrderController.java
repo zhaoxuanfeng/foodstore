@@ -27,6 +27,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -86,8 +87,7 @@ public class OrderController {
 
 
     @RequestMapping("/htm/download.htm")
-    public void downloadProduct(String year , String month,Long customerId, HttpServletResponse response, HttpSession session, HttpServletRequest request) throws IOException {
-
+    public void downloadProduct(@RequestParam("year") String year ,@RequestParam("month")  String month, @RequestParam("customerId") Long customerId, HttpServletResponse response, HttpSession session, HttpServletRequest request) throws IOException {
 //        List<ProductList> productList =   adminProductService.findProductList(year,month);
         List<Orders>  ordersList = orderInfoBussiness.findOrderByList(year,month,customerId);
         String monthName,yearName ;
@@ -101,7 +101,6 @@ public class OrderController {
         }else {
             yearName = year + "年";
         }
-
 
         String fileName = yearName + "_"+monthName+".lsx";
         String sheetName = monthName ;

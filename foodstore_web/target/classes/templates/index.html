@@ -3,37 +3,40 @@
 <head th:replace="header :: header">
 </head>
 <body>
-
-<div style="margin:10px 0;"></div>
 <div id= "main_layout" class="easyui-layout" data-options="collapsedSize:'12'" style="width:100%;height:1040px;">
     <div data-options="region:'north',split:false" style="height:50px" class="self_head">
         <a href="/" id="self_left" class="self_logo"><h3>哭脸餐饮管理系统</h3></a>
         <div  th:if="null != ${session.userInfo}" class="self_head">
             <span th:text="${session.userInfo.accountName}" class="self_head_span"> </span>
-            <a href="/htm/logout.htm"><span class="self_head_span">退出</span></a>
+            <a href="htm/logout.htm"><span class="self_head_span">退出</span></a>
         </div>
         <div th:if="null == ${session.userInfo}" class="self_head">
-            <a href="/htm/userlogin.action"><span>请登录</span> </a>
+            <a href="htm/userlogin.action"><span>请登录</span> </a>
         </div>
     </div>
-    <div data-options="region:'south',split:false" style="height:50px;">主页底部
-        <p>本系统为毕业设计专业系统</p>
+    <div data-options="region:'south',split:false" style="height:50px;">
+        <p>主页底部<br>本系统为毕业设计专业系统</p>
     </div>
-    <div id="trolley_layout" data-options="region:'east',split:true,expandMode:'float'" title="购物车" style="width:180px;border: none"   >
-        <form  id="tolley_from">
-            <table id="tolley_table" class="easyui-datagrid" title="购物车列表" singleSelect="false" striped="true"
-                   SelectOnCheck="true" CheckOnSelect="true">
-                <!--fitColumns="true"   nowrap="false" -->
+    <div id="trolley_layout" class="easyui-panel"  data-options="region:'east',split:true,expandMode:'float'" title="购物车" style="width:180px;border: none;"   >
+        <form  id="tolley_from" >
+            <table id="tolley_table" class="easyui-datagrid"  singleSelect="false" fitColumns="true" nowrap="false" striped="true"
+                   SelectOnCheck="true" CheckOnSelect="true" rownumbers="true"
+                    toolbar="#buy_div" fit="false" style="width:100%;height: 900px" pagination="true" pageSize="10" pageList="[25, 50, 150]" >
+                <!-- title="购物车列表"   href="self/addTolleyData.action" -->
                 <thead>
                 <tr>
-                    <th field="select" align="center" checkbox="true"></th>
-                    <th field="foodName"  align="left"   width="40%"></th>
-                    <th field="foodPrice"  align="left"  width="10%"></th>
-                    <!--<th field="count"  align="left"  width="30%"></th>-->
+                    <th field="select" align="center" checkbox="true" ></th>
+                    <th field="foodName" title="食品名称" align="left"   width="60%"></th>
+                    <th field="foodPrice"  title="食品价格" align="left"  width="30%"></th>
+                </tr>
                 </tr>
                 </thead>
             </table>
         </form>
+    </div>
+    <div id="buy_div" >
+        <input class="easyui-linkbutton" form="tolley_from" type="submit" value="确定购买" onclick="addOrder()" >
+        <input type="text" id="sum_price" readonly="readonly" name="sumPrice" value="0">
     </div>
     <div id="menu_layout" data-options="region:'west',split:false" title="菜单" style="width:100px;">
         <div class="easyui-accordion" data-options="fit:true,border:false">
@@ -43,19 +46,19 @@
                 <span class="menu-item"><a href="#" onclick="" th:value="3">销量排行</a></span><br/>
             </div>
             <div title="八大菜系" style="padding:10px;">
-                <span><a href="#" onclick="" th:value="1">鲁菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="2">川菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="3">浙菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="4">粤菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="5">苏菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="6">闽菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="7">湘菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="8">徽菜</a></span><br/>
+                <span><a href="#" onclick="selectInfo(1,'鲁菜')" th:value="1">鲁菜</a></span><br/>
+                <span><a href="#" onclick="selectInfo(1,'川菜')" th:value="2">川菜</a></span><br/>
+                <span><a href="#" onclick="selectInfo(1,'浙菜')" th:value="3">浙菜</a></span><br/>
+                <span><a href="#" onclick="selectInfo(1,'粤菜')" th:value="4">粤菜</a></span><br/>
+                <span><a href="#" onclick="selectInfo(1,'苏菜')" th:value="5">苏菜</a></span><br/>
+                <span><a href="#" onclick="selectInfo(1,'闽菜')" th:value="6">闽菜</a></span><br/>
+                <span><a href="#" onclick="selectInfo(1,'湘菜')" th:value="7">湘菜</a></span><br/>
+                <span><a href="#" onclick="selectInfo(1,'徽菜')" th:value="8">徽菜</a></span><br/>
             </div>
             <div title="美食分类" data-options="selected:true" style="padding:10px;">
-                <span><a href="#" onclick="" th:value="1">饮品</a></span><br/>
-                <span><a href="#" onclick="" th:value="2">主菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="3">主食</a></span><br/>
+                <span><a href="#" onclick="selectInfo(2,'饮品')" th:value="1">饮品</a></span><br/>
+                <span><a href="#" onclick="selectInfo(2,'主菜')" th:value="2">主菜</a></span><br/>
+                <span><a href="#" onclick="selectInfo(2,'主食')" th:value="3">主食</a></span><br/>
             </div>
         </div>
     </div>
@@ -91,12 +94,8 @@
             }
         }
     }
-
-    // $('#main_layout').layout('collapse','west');
-
     <!-- 右边-->
     var bRightExpand = false;
-
     $("#main_layout").panel({
         onCollapse:function(){
             if(!bRightExpand){
@@ -105,7 +104,6 @@
             }
         }
     });
-
     function expandEast(){
         var objs = $(".layout-expand-east");
         var obj = null;
@@ -122,7 +120,7 @@
 
     $(function() {
         $.ajax({
-            url:"/view/searchInedxData.action",
+            url:"view/searchInedxData.action",
             async:true,
             type:"GET",
             dataType:"json",
@@ -139,7 +137,7 @@
                             '</p></div></a></li>';
                         $("#hotStore").append(childli);
                     }else {
-                        childli =  '<li><a href="/view/detailData.action?id='+
+                        childli =  '<li><a href="view/detailData.action?id='+
                             hotRecipes.id
                             +'" class="item" >'  +
                             '<img src="'+hotRecipes.foodImgUrl+
@@ -158,43 +156,93 @@
             }
         }
         );
-        console.log("-----------");
+
         selfdata();
 
     });
     
     function selfdata() {
         if(userInfo){
-            console.log("11111");
-            $("#tolley_table").datagrid({
-                url:'self/tolleyData.action',
-                // border:false,
-                striped: true,
-                // pagination: true,
-                // showFooter : true,
-                loadMsg:'数据加载中，请稍等...',
-                columns:[
-                    {field:'select',checkbox:true},
-                    {field:'recipes.foodName',title:'食物名称',align:"center"},
-                    {field:'recipes.foodPrice',title:'单价',align:"center"}
-                    // ,{field:'count',title:'数量',align:"center"}
-                ],
-                onLoadSuccess: function (data){
-                    console.log(data);
-                },
-                onLoadError: function (){
-                    alert("数据加载失败！");
-                }
-            });
+            loadTolleyData();
+          /* $("#tolley_table").datagrid("loading");
+           $("#tolley_table").datagrid("loadData",{total:0,rows:[]});
+           $.get("self/tolleyData.action",$("#tolley_from").serialize(),function (pager) {
+               console.log(pager);
+               console.log(pager.rows);
+               $("#tolley_table").datagrid("loadData",{'total':pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
+               $("#tolley_table").datagrid("loaded");
+           });*/
         }else{
-
-            var trolleyInfo = '<div><a href="/htm/userlogin.action"><span>请登录</span></a></div>';
+            var trolleyInfo = '<div style="width: 100%;height: 100%"><a href="htm/userlogin.action"><span>请登录</span></a></div>';
             $("#trolley_layout").append(trolleyInfo) ;
         }
     }
-    
-    
+</script>
 
+<script type="text/javascript"  th:inline="none">
+    
+    function loadTolleyData(){
+        $("#tolley_table").datagrid( {
+            url:'self/tolleyData.action',
+            height:'100%',
+            striped: true,
+            rownumbers:true,
+            pagination: true,
+            pageSize: 10,
+            pageList: [10, 20, 50],
+            border : false,
+            showFooter : true,
+            loadMsg:'数据加载中，请稍等...',
+            columns:[[
+                {field:'select',checkbox:true},
+                {field:'foodName',title:'菜名',width:'60%',align:'right'},
+                {field:'foodPrice',title:'菜价',width:'30%',align:'right'}
+            ]],
+            onBeforeLoad:function(param){
+                // console.log(param);
+            },
+            onLoadSuccess: function (data){
+                console.log(data);
+                var sumPrice = 0;
+                $.each(data.rows,function (i,val) {
+                    sumPrice = sumPrice +val.foodPrice;
+                });
+                $("#sum_price").val(sumPrice);
+            },
+            onLoadError: function (){
+                alert("数据加载失败！");
+            }
+        });
+       /* $("#tolley_table").datagrid("loading");
+        $("#tolley_table").datagrid("loadData",{total:0,rows:[]});
+        $.get("self/tolleyData.action",$("#tolley_from").serialize(),function (pager) {
+            console.log(pager);
+            console.log(pager.rows);
+            $("#tolley_table").datagrid("loadData",{'total':pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
+            $("#tolley_table").datagrid("loaded");
+        });*/
+    }
+    
+    
+    function selectInfo( selectType,  selectValue) {
+        var recipes = {};
+        if(1=== selectType){
+            recipes.foodCuisine = selectValue;
+        }
+        if(2===selectType){
+            recipes.foodKey = selectValue;
+        }
+        $.ajax("view/selectRecepiesInfo",recipes.serialize(),function (data) {
+            console.log(data);
+
+        });
+    }
+    
+    
+    function addOrder() {
+        var sumprice =  $("#sum_price").val();
+
+    }
 
 </script>
 </html>
