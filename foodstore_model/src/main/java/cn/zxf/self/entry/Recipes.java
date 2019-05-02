@@ -288,4 +288,19 @@ public class Recipes {
     public void setFoodImgUrl(String foodImgUrl) {
         this.foodImgUrl = foodImgUrl == null ? null : foodImgUrl.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Recipes{" +
+                "id=" + id +
+                ", foodName='" + foodName + '\'' +
+                ", foodType=" + foodType +
+                ", foodPrice=" + foodPrice +
+                ", foodStatus=" + foodStatus +
+                ", foodCuisine='" + foodCuisine + '\'' +
+                ", foodKey='" + foodKey + '\'' +
+                ", foodIntroduce='" + foodIntroduce + '\'' +
+                ", foodImgUrl='" + foodImgUrl + '\'' +
+                '}';
+    }
 }

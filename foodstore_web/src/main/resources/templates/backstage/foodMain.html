@@ -307,7 +307,7 @@
 
     function searchFood() {
         $("#food_table").datagrid("loading");
-        $.get("htm/foodInfoData.htm",$("#formSearch").serialize(),function (pager) {
+        $.get("/htm/foodInfoData.htm",$("#formSearch").serialize(),function (pager) {
             $("#food_table").datagrid("loadData",{total:pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
             $("#food_table").datagrid("loaded");
         });
@@ -352,7 +352,7 @@
              console.log(items);
             if(flag == 0){
                 //修改全部信息
-                if(items.length >1){
+                if(items.length > 1){
                     alert("修改全部信息请选择一项！")
                     return ;
                 }
@@ -406,7 +406,7 @@
     
     function submitUpdateInfo() {
         $("#modifuMenu").form("submit",{
-            url:'/htm/modifyFood.htm',
+            url:'htm/modifyFood.htm',
             onsubmit:function (param) {
                 
             },

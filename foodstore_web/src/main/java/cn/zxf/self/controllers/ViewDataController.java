@@ -63,6 +63,11 @@ public class ViewDataController {
         return "index";
     }
 
+    /**
+        *@Description  //TODO  主页默认数据
+        *@Param [request, session]
+        *@Return  cn.zxf.self.vo.PageMsg
+     **/
     @RequestMapping(value = "/view/searchInedxData.action")
     @ResponseBody
     public PageMsg mainViewData(HttpServletRequest request, HttpSession session){
@@ -79,6 +84,11 @@ public class ViewDataController {
     }
 
 
+    /**
+        *@Description  //TODO  对食品信息进行数据展示
+        *@Param [id, request, response]
+        *@Return  java.lang.String
+     **/
     @RequestMapping(value = "/view/detailData.action")
     public String  dataDetial(@RequestParam(value = "id") Long id, HttpServletRequest request, HttpServletResponse response){
         logger.info(request.getRequestURI());
@@ -99,12 +109,15 @@ public class ViewDataController {
         return "reception/foodDetail";
     }
 
-
+    /**
+        *@Description  //TODO  往购物车添加数据
+        *@Param [userOrder, request]
+        *@Return  cn.zxf.self.vo.PagerModel
+     **/
     @RequestMapping("/self/addTolleyData.action")
     @ResponseBody
     public PagerModel addTolleyData(UserOrder  userOrder ,HttpServletRequest request){
         logger.info(request.getRequestURI());
-        System.out.println(userOrder);
 
         Orders orders = new Orders();
         orders.setUserId(userOrder.getUserId());
@@ -120,9 +133,7 @@ public class ViewDataController {
         orders.setOrderDate(Integer.parseInt(df.format(LocalDateTime.now())));
 
         StateInfo stateInfo = orderInfoBussiness.addNewOrder(orders);
-        System.out.println(stateInfo);
         Orders return_orders = (Orders) stateInfo.getData();
-        System.out.println("return order :" + return_orders);
 
         orders.setOrderId(return_orders.getOrderId());
         userOrder.setOrderId(return_orders.getOrderId());
@@ -138,7 +149,6 @@ public class ViewDataController {
         if(!stateInfo.isState()){
             pagerModel.setData(orders);
         }
-        System.out.println(stateInfo.getData());
 //        logger.info("向queue中添加消息");
 //        RabbitSenderUtils rabbitSenderUtils = new RabbitSenderUtils();s
 //        rabbitSenderUtils.send(userOrder);
@@ -146,7 +156,11 @@ public class ViewDataController {
         return pagerModel;
     }
 
-
+    /**
+        *@Description  //TODO  主页其他栏目数据展示
+        *@Param [recipes]
+        *@Return  cn.zxf.self.vo.PagerModel
+     **/
     @RequestMapping("/view/selectRecepiesInfo")
     @ResponseBody
     public PagerModel selectRecepiesInfo(Recipes recipes){

@@ -61,14 +61,20 @@ public class FoodController  extends  BaseController{
         UserInfo currUser = (UserInfo) session.getAttribute("userInfo");
         Long orderId = (Long) request.getAttribute("orderId");
         Long userId  = (Long) request.getAttribute("userId");
+        List<String> statusList = new ArrayList<>();
+        statusList.add("2");
+        statusList.add("3");
+        statusList.add("5");
+        statusList.add("7");
         if(ObjectUtils.allNotNull(orderId) ) {
             if (ObjectUtils.allNotNull(userId)){
-                stateInfo = orderInfoBussiness.findRecipesByUser(userId, orderId,userId);
+                stateInfo = orderInfoBussiness.findRecipesByUser(userId, orderId,userId,statusList);
             }else {
-                stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(), orderId,currUser.getUserId());
+                stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(), orderId,currUser.getUserId(),statusList);
             }
+
         }else {
-            stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(),null,currUser.getUserId());
+            stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(),null,currUser.getUserId(),statusList);
         }
         pageMsg.setRows((List<Map<String, Object>>) stateInfo.getData());
         logger.info("return" + stateInfo.getMessage());

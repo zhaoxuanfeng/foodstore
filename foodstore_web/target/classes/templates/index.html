@@ -26,8 +26,11 @@
                 <thead>
                 <tr>
                     <th field="select" align="center" checkbox="true" ></th>
-                    <th field="foodName" title="食品名称" align="left"   width="60%"></th>
-                    <th field="foodPrice"  title="食品价格" align="left"  width="30%"></th>
+                    <th field="recipesName" title="食品名称" align="left"   width="0%"></th>
+                    <th field="recipesId" title="食品ID" align="left"   width="60%"></th>
+                    <th field="recipesPrice"  title="食品价格" align="left"  width="30%"></th>
+                    <th field="count"  title="数量" align="left"  width="0%"></th>
+                    <th field="orderId" title="订单ID" align="left"  width="0%"></th>
                 </tr>
                 </tr>
                 </thead>
@@ -35,8 +38,8 @@
         </form>
     </div>
     <div id="buy_div" >
-        <input class="easyui-linkbutton" form="tolley_from" type="submit" value="确定购买" onclick="addOrder()" >
-        <input type="text" id="sum_price" readonly="readonly" name="sumPrice" value="0">
+        <input class="easyui-linkbutton" form="tolley_from" type="button" value="确定购买" onclick="addOrder()" >
+        <p>购物车总价为：</p><input type="text" id="sum_price" readonly="readonly" name="sumPrice" value="0">
     </div>
     <div id="menu_layout" data-options="region:'west',split:false" title="菜单" style="width:100px;">
         <div class="easyui-accordion" data-options="fit:true,border:false">
@@ -70,6 +73,78 @@
 </body>
 <footer th:replace="footer :: footer"></footer>
 <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript"  th:inline="none">
+
+    function loadTolleyData(){
+        $("#tolley_table").datagrid( {
+            url:'self/tolleyData.action',
+            height:'100%',
+            striped: true,
+            rownumbers:true,
+            pagination: true,
+            pageSize: 10,
+            pageList: [10, 20, 50],
+            border : false,
+            showFooter : true,
+            loadMsg:'数据加载中，请稍等...',
+            columns:[[
+                {field:'select',checkbox:true},
+                {field:'recipesName',title:'食品名称',width:'60%',align:'right'},
+                {field:'recipesId',title:'食品ID',width:'0%',align:'right'},
+                {field:'recipesPrice',title:'食品价格',width:'30%',align:'right'},
+                {field:'count',title:'数量',width:'30%',align:'right',formatter:function (value,row,index) {
+                        if(row.count){
+                            if(row.count > 0){
+                                return row.count;
+                            }
+                        }
+                        return 1;
+                    }},
+                {field:'orderId',title:'订单ID',width:'0%',align:'right'}
+            ]],
+            onBeforeLoad:function(param){
+                // console.log(param);
+            },
+            onLoadSuccess: function (data){
+                console.log(data);
+                var sumPrice = 0;
+                $.each(data.rows,function (i,val) {
+                    sumPrice = sumPrice +val.recipesPrice;
+                });
+                $("#sum_price").val(sumPrice);
+            },
+            onLoadError: function (){
+                alert("数据加载失败！");
+            }
+        });
+        /* $("#tolley_table").datagrid("loading");
+         $("#tolley_table").datagrid("loadData",{total:0,rows:[]});
+         $.get("self/tolleyData.action",$("#tolley_from").serialize(),function (pager) {
+             console.log(pager);
+             console.log(pager.rows);
+             $("#tolley_table").datagrid("loadData",{'total':pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
+             $("#tolley_table").datagrid("loaded");
+         });*/
+    }
+
+
+    function selectInfo( selectType,  selectValue) {
+        var recipes = {};
+        if(1=== selectType){
+            recipes.foodCuisine = selectValue;
+        }
+        if(2===selectType){
+            recipes.foodKey = selectValue;
+        }
+        $.ajax("view/selectRecepiesInfo",recipes.serialize(),function (data) {
+            console.log(data);
+
+        });
+    }
+
+
+
+</script>
 <script type="text/javascript"  th:inline="javascript">
     var userInfo = [[${session.userInfo}]];
     <!-- 左边-->
@@ -177,72 +252,38 @@
             $("#trolley_layout").append(trolleyInfo) ;
         }
     }
-</script>
 
-<script type="text/javascript"  th:inline="none">
-    
-    function loadTolleyData(){
-        $("#tolley_table").datagrid( {
-            url:'self/tolleyData.action',
-            height:'100%',
-            striped: true,
-            rownumbers:true,
-            pagination: true,
-            pageSize: 10,
-            pageList: [10, 20, 50],
-            border : false,
-            showFooter : true,
-            loadMsg:'数据加载中，请稍等...',
-            columns:[[
-                {field:'select',checkbox:true},
-                {field:'foodName',title:'菜名',width:'60%',align:'right'},
-                {field:'foodPrice',title:'菜价',width:'30%',align:'right'}
-            ]],
-            onBeforeLoad:function(param){
-                // console.log(param);
-            },
-            onLoadSuccess: function (data){
-                console.log(data);
-                var sumPrice = 0;
-                $.each(data.rows,function (i,val) {
-                    sumPrice = sumPrice +val.foodPrice;
-                });
-                $("#sum_price").val(sumPrice);
-            },
-            onLoadError: function (){
-                alert("数据加载失败！");
-            }
-        });
-       /* $("#tolley_table").datagrid("loading");
-        $("#tolley_table").datagrid("loadData",{total:0,rows:[]});
-        $.get("self/tolleyData.action",$("#tolley_from").serialize(),function (pager) {
-            console.log(pager);
-            console.log(pager.rows);
-            $("#tolley_table").datagrid("loadData",{'total':pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
-            $("#tolley_table").datagrid("loaded");
-        });*/
-    }
-    
-    
-    function selectInfo( selectType,  selectValue) {
-        var recipes = {};
-        if(1=== selectType){
-            recipes.foodCuisine = selectValue;
-        }
-        if(2===selectType){
-            recipes.foodKey = selectValue;
-        }
-        $.ajax("view/selectRecepiesInfo",recipes.serialize(),function (data) {
-            console.log(data);
-
-        });
-    }
-    
-    
     function addOrder() {
-        var sumprice =  $("#sum_price").val();
+        var sumPrice =  0;
+        var rows = $('#tolley_table').datagrid("getChecked");
+        console.log(rows);
+
+
+        var items = [];
+        if(rows){
+            $.each(rows,function (index,item) {
+                item.userId = userInfo.userId;
+                if(null == item.count){
+                    item.count = 1;
+                }
+                sumPrice = sumPrice + item.recipesPrice * item.count;
+                items.push(item);
+            });
+            console.log(items);
+            console.log(sumPrice);
+            $.get("/self/payDirect.action",{userOrderList:JSON.stringify(items),sumPrice:sumPrice.toString()},function (data) {
+                // alert(data);
+                window.location=data;
+            });
+
+
+        }else {
+            alert("请至少选择一项商品！");
+        }
 
     }
 
 </script>
+
+
 </html>

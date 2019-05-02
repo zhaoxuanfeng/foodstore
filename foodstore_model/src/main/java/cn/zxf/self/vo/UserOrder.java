@@ -13,9 +13,19 @@ public class UserOrder {
     private Integer count;
     private Long  recipesId;
     private String recipesName;
+    private Integer recipesPrice;
     private String orderAddress;
     private String orderNote;
     private Integer orderPrice;
+
+
+    public Integer getRecipesPrice() {
+        return recipesPrice;
+    }
+
+    public void setRecipesPrice(Integer recipesPrice) {
+        this.recipesPrice = recipesPrice;
+    }
 
     public Integer getOrderPrice() {
         return orderPrice;

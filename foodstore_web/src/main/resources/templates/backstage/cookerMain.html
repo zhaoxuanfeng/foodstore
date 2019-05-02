@@ -75,27 +75,27 @@
             {field:'select',checkbox:true},
             {field:'orderId',title:'订单id',width:'10%',align:'right'},
             {field:'id',title:'菜品id',width:'10%',align:'right',formatter: function (value,row,index) {
-                    return row.recipes[index].id;
+                    return row.recipes.id;
                 }},
             {field:'foodName',title:'菜名',width:'20%',align:'center',fontStyle:'',formatter:function (value,row,index) {
-                    return row.recipes[index].foodName;
+                    return row.recipes.foodName;
                 }},
             {field:'orderRecipesStatus',title:'制作状态',width:'20%',align:'right',formatter: function (value,row,index) {
                     var res = '';
                     console.log("---");
                     console.log(row);
 
-                    switch (value) {
-                        case 4:
+                    switch (row.recipes.foodStatus) {
+                        case '4':
                             res = '<p style="color:red;">待制作</p>';        //蓝色字体
                             break;
-                        case 5:
+                        case '5':
                             res = '<p style="color:blue;">制作中</p>';
                             break;
-                        case 6:
+                        case '6':
                             res = '<p style="color:silver;">制作完成</p>';
                             break;
-                        case 2:
+                        case '2':
                             res = '完成';
                             break;
                         default:
@@ -181,6 +181,7 @@
         });
 
     }
+/*
 
     var websocket = null;
 
@@ -224,5 +225,6 @@
         document.getElementById('message').innerHTML += innerHTML + '<br/>';
 
     }
+*/
 
 </script>

@@ -2,9 +2,11 @@ package cn.zxf.self.controllers;
 
 import cn.zxf.self.bussiness.OrderInfoBussiness;
 import cn.zxf.self.config.AlipayConfig;
+import cn.zxf.self.dto.StateInfo;
 import cn.zxf.self.entry.Orders;
 import cn.zxf.self.entry.Recipes;
 import cn.zxf.self.vo.PagerModel;
+import cn.zxf.self.vo.UserOrder;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
@@ -34,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -202,7 +205,7 @@ public class OrderController {
     }
 
     @RequestMapping("/self/pay.action")
-    public void payHandler(HttpServletRequest request,HttpServletResponse response,Long orderId,String money,String name) throws AlipayApiException, Exception{
+    public void payHandler(HttpServletRequest request, HttpServletResponse response, String orderId, String money, String name, List<UserOrder> userOrderList) throws AlipayApiException, Exception{
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
 
@@ -225,22 +228,11 @@ public class OrderController {
 		String subject = name;
 		String body = name;*/
 
-
-
         alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
                 + "\"total_amount\":\""+ total_amount +"\","
                 + "\"subject\":\""+ subject +"\","
                 + "\"body\":\""+ body +"\","
                 + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
-
-        //若想给BizContent增加其他可选请求参数，以增加自定义超时时间参数timeout_express来举例说明
-        //alipayRequest.setBizContent("{\"out_trade_no\":\""+ out_trade_no +"\","
-        //		+ "\"total_amount\":\""+ total_amount +"\","
-        //		+ "\"subject\":\""+ subject +"\","
-        //		+ "\"body\":\""+ body +"\","
-        //		+ "\"timeout_express\":\"10m\","
-        //		+ "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
-        //请求参数可查阅【电脑网站支付的API文档-alipay.trade.page.pay-请求参数】章节
 
         //请求
         String result = alipayClient.pageExecute(alipayRequest).getBody();
@@ -251,6 +243,47 @@ public class OrderController {
 
     @RequestMapping("/self/pay_success.action")
     public String paySuccessHandler(HttpServletRequest request,Model model) throws Exception{
+        Map<String,String> params = new HashMap<>();
+        Map<String,String[]> requestParams = request.getParameterMap();
+/*        for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
+            String name = (String) iter.next();
+            String[] values = (String[]) requestParams.get(name);
+            String valueStr = "";
+            for (int i = 0; i < values.length; i++) {
+                valueStr = (i == values.length - 1) ? valueStr + values[i]
+                        : valueStr + values[i] + ",";
+            }
+            //乱码解决，这段代码在出现乱码时使用
+            valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
+            params.put(name, valueStr);
+        }*/
+
+        boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); //调用SDK验证签名
+
+        //——请在这里编写您的程序（以下代码仅作参考）——
+        if(signVerified) {
+            //商户订单号
+            String out_trade_no = new String(request.getParameter("order_id").getBytes("ISO-8859-1"),"UTF-8");
+            //支付宝交易号
+            String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
+            //付款金额
+            String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"),"UTF-8");
+            Boolean flag = orderInfoBussiness.updateOrderFlag(Long.getLong(out_trade_no),"已支付");
+//            cartService.paySuccess(out_trade_no);
+            model.addAttribute("money", total_amount);
+            if(flag){
+                return "/reception/self";
+            }else {
+                return "/reception/error";
+            }
+        }else {
+            return "/reception/error";
+        }
+
+    }
+
+    @RequestMapping("/self/payEnd.action")
+    public String payEnd(List<UserOrder> userOrderList,HttpServletRequest request) throws UnsupportedEncodingException, AlipayApiException {
         Map<String,String> params = new HashMap<>();
         Map<String,String[]> requestParams = request.getParameterMap();
         for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
@@ -267,30 +300,16 @@ public class OrderController {
         }
 
         boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); //调用SDK验证签名
+        if(signVerified){
+            HttpSession session = request.getSession();
+            List<UserOrder> userOrdersList = (List<UserOrder>) session.getAttribute("tmpUserOders");
+            StateInfo stateInfo = orderInfoBussiness.updatePayOrder(userOrdersList);
 
-        //——请在这里编写您的程序（以下代码仅作参考）——
-        if(signVerified) {
-            //商户订单号
-            String out_trade_no = new String(request.getParameter("order_id").getBytes("ISO-8859-1"),"UTF-8");
-            //支付宝交易号
-            String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
-
-            //付款金额
-            String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"),"UTF-8");
-            Boolean flag = orderInfoBussiness.updateOrderFlag(out_trade_no);
-//            cartService.paySuccess(out_trade_no);
-            model.addAttribute("money", total_amount);
-            if(flag){
-                return "/reception/self";
-            }else {
-                return "/reception/error";
-            }
-        }else {
-            return "/reception/error";
         }
 
-    }
 
+        return "";
+    }
 
 
 }

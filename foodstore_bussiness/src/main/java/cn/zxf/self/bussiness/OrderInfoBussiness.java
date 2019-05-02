@@ -8,6 +8,7 @@ import cn.zxf.self.example.OrderRecipesRelExample;
 import cn.zxf.self.example.OrdersExample;
 import cn.zxf.self.example.RecipesExample;
 import cn.zxf.self.mapper.OrderRecipesRelMapper;
+import cn.zxf.self.vo.UserOrder;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,11 +56,10 @@ public class OrderInfoBussiness extends BaseBussiness{
         return recipesList;
     }
 
-    public StateInfo findRecipesByUser(final  Long userId,final Long orderId,final Long cookId) {
+    public StateInfo findRecipesByUser(final  Long userId,final Long orderId,final Long cookId,final List<String> statusList) {
         List<Map<String, Object>> dataList = new ArrayList<>();
-
-        List<Recipes> recipesList;
         if (ObjectUtils.allNotNull(orderId)) {
+            List<Recipes> recipesList;
             Map<String,Object> map = new HashMap<>();
             map.put("userId",userId);
             recipesList = findRecipesByOrder(orderId,cookId);
@@ -67,22 +67,30 @@ public class OrderInfoBussiness extends BaseBussiness{
             map.put("recipes",recipesList);
             dataList.add(map);
         } else {
+            Recipes recipes;
             OrderRecipesRelExample orderRecipesRelExample = new OrderRecipesRelExample();
-            List<String> statusList = new ArrayList<>();
+            /*List<String> statusList = new ArrayList<>();
             statusList.add("2");
             statusList.add("3");
-            statusList.add("5");
-            orderRecipesRelExample.createCriteria()
-                    .andCookIdEqualTo(userId)
-                    .andRelStatusNotIn(statusList);
-            List<OrderRecipesRel> orderRecipesRelList = orderRecipesRelMapper.selectByExample(orderRecipesRelExample);
+            statusList.add("5");*/
+            OrderRecipesRelExample.Criteria criteria = orderRecipesRelExample.createCriteria();
+            if(ObjectUtils.allNotNull(cookId)){
+                     criteria.andCookIdEqualTo(cookId);
+            }
+            if(ObjectUtils.allNotNull(statusList) && statusList.size() > 0){
+                criteria.andRelStatusNotIn(statusList);
+            }
 
+            List<OrderRecipesRel> orderRecipesRelList = orderRecipesRelMapper.selectByExample(orderRecipesRelExample);
+            System.out.println("orderRecipesRelist:"+orderRecipesRelList.toString());
             for (OrderRecipesRel orderRecipesRel : orderRecipesRelList) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("userId", userId);
                 map.put("orderId", orderRecipesRel.getOrderId());
-                recipesList = findRecipesByOrder(orderRecipesRel.getOrderId(),cookId);
-                map.put("recipes", recipesList);
+                recipes = recipesMapper.selectByPrimaryKey(orderRecipesRel.getRecipesId());
+//                recipesList = findRecipesByRecipesId(orderRecipesRel.getRecipesId());
+//                map.put("recipes", recipesList);
+                map.put("recipes",recipes);
                 dataList.add(map);
             }
         }
@@ -90,6 +98,7 @@ public class OrderInfoBussiness extends BaseBussiness{
         stateInfo.setState(true);
         return stateInfo;
     }
+
 
 
     public List<Recipes> findHotRecipesIds(final Long startTime,final  Long endTime) {
@@ -178,13 +187,21 @@ public class OrderInfoBussiness extends BaseBussiness{
     }
 
     @Transactional
-    public Boolean updateOrderFlag(String order_id) {
-        Orders orders = ordersMapper.selectByPrimaryKey(Long.valueOf(order_id));
-        orders.setOrderStatus("已支付");
-        Integer count = ordersMapper.updateByPrimaryKey(orders);
+    public Boolean updateOrderFlag(Long order_id,String flag) {
+
+        Orders orders = ordersMapper.selectByPrimaryKey(order_id);
+        orders.setOrderStatus(flag);
+        System.out.println(orders);
+        Integer count = ordersMapper.updateByPrimaryKeySelective(orders);
         if(ObjectUtils.allNotNull(count) && count > 0){
             return true;
         }
         return false;
+    }
+
+    public StateInfo updatePayOrder(List<UserOrder> userOrdersList) {
+
+
+        return stateInfo;
     }
 }

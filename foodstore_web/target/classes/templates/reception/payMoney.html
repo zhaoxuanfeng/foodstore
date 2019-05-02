@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="header :: header">
+<!--<head th:replace="header :: header">-->
+<head>
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
@@ -69,11 +70,11 @@
         </div>
     </div>
     <div class="products" data-options="region:'center',title:'付款页面',split:true" style="border: none">
-        <form action="/self/pay.action"
+        <form action="self/pay.action"
               method="post">
-            订单号：<INPUT TYPE="text" NAME="orderid" value="${order.id}">
-            支付金额：<INPUT TYPE="text" NAME="money" value="${order.money}">元
-
+            订单号：<INPUT TYPE="text" name="orderid" value="${tmpId}">
+            支付金额：<INPUT TYPE="text" name="money" value="${sumPrice}">元
+            <!--<input type="hidden" name="userOrderList" value="${userOrderList}">-->
             <div style="margin: 40px;">
                 <INPUT TYPE="submit" value="确定支付">
             </div>

@@ -40,7 +40,12 @@ public class UserController extends BaseController {
 
     @Autowired
     private UserInfoBussiness  userInfoBussiness;
-
+    
+    /**
+        *@Description  //TODO  修改用户状态
+        *@Param [request, userId, userFlag]
+        *@Return  cn.zxf.self.vo.PagerModel
+     **/
     @RequestMapping(value = "/htm/modifyUserStatus.htm")
     @ResponseBody
     public PagerModel modifyUserStatus(HttpServletRequest request, Long userId , Integer userFlag){
