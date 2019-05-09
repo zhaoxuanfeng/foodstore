@@ -25,7 +25,12 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" align="center"><input type="button" value="登录" onclick="login()" /></td>
+					<td  align="center">
+						<input id="loginButton" class="easyui-linkbutton" type="button" value="登录" onclick="login()" />
+					</td>
+					<td align="center">
+						<input id="registerButton" class="easyui-linkbutton" type="button" value="注册" onclick="register()"/>
+					</td>
 				</tr>
 			</table>
 		</form>
@@ -67,6 +72,10 @@
 
 		}
 	}
+
+    function register() {
+        $.get("htm/registerPage.htm");
+    }
 </script>
 
 </html>

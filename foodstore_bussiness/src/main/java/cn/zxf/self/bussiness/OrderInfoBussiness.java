@@ -8,6 +8,7 @@ import cn.zxf.self.example.OrderRecipesRelExample;
 import cn.zxf.self.example.OrdersExample;
 import cn.zxf.self.example.RecipesExample;
 import cn.zxf.self.mapper.OrderRecipesRelMapper;
+import cn.zxf.self.mapper.OrdersMapper;
 import cn.zxf.self.vo.UserOrder;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
@@ -74,11 +75,12 @@ public class OrderInfoBussiness extends BaseBussiness{
             statusList.add("3");
             statusList.add("5");*/
             OrderRecipesRelExample.Criteria criteria = orderRecipesRelExample.createCriteria();
+
             if(ObjectUtils.allNotNull(cookId)){
                      criteria.andCookIdEqualTo(cookId);
             }
             if(ObjectUtils.allNotNull(statusList) && statusList.size() > 0){
-                criteria.andRelStatusNotIn(statusList);
+                criteria.andRelStatusIn(statusList);
             }
 
             List<OrderRecipesRel> orderRecipesRelList = orderRecipesRelMapper.selectByExample(orderRecipesRelExample);
@@ -87,6 +89,7 @@ public class OrderInfoBussiness extends BaseBussiness{
                 Map<String, Object> map = new HashMap<>();
                 map.put("userId", userId);
                 map.put("orderId", orderRecipesRel.getOrderId());
+//                map.put("payFlag",);
                 recipes = recipesMapper.selectByPrimaryKey(orderRecipesRel.getRecipesId());
 //                recipesList = findRecipesByRecipesId(orderRecipesRel.getRecipesId());
 //                map.put("recipes", recipesList);
@@ -199,9 +202,64 @@ public class OrderInfoBussiness extends BaseBussiness{
         return false;
     }
 
-    public StateInfo updatePayOrder(List<UserOrder> userOrdersList) {
+    @Transactional
+    public StateInfo updatePayOrder(List<UserOrder> userOrdersList, String staus) {
+        Orders orders = new Orders();
+        OrdersExample ordersExample = new OrdersExample();
+        List<Long> idList = new ArrayList<>();
 
 
+        for (UserOrder userOrder:userOrdersList){
+            idList.add(userOrder.getOrderId());
+        }
+
+        orders.setOrderStatus(staus);
+        ordersExample.createCriteria()
+                .andOrderStatusEqualTo("未支付")
+                .andOrderIdIn(idList);
+        int count = ordersMapper.updateByExampleSelective(orders,ordersExample);
+
+        if(count <= 0 ){
+            stateInfo.setMessage("更新订单信息失败");
+            stateInfo.setState(false);
+            return stateInfo;
+        }
+
+        List<OrderRecipesRel> orderRecipesRelList = new ArrayList<>();
+//        List<String> relStatusList = new ArrayList<>();
+//        relStatusList.add("7");
+        //根据用户订单和菜品id来查所需要做的菜品的状态
+        for(UserOrder userOrder :userOrdersList){
+            OrderRecipesRel orderRecipesRel = new OrderRecipesRel();
+//            orderRecipesRel.setOrderId(userOrder.getOrderId());
+//            orderRecipesRel.setRecipesId(userOrder.getRecipesId().intValue());
+            orderRecipesRel.setRelStatus("4");
+            OrderRecipesRelExample orderRecipesRelExample = new OrderRecipesRelExample();
+            OrderRecipesRelExample.Criteria criteria = orderRecipesRelExample.createCriteria()
+                                  .andRecipesIdEqualTo(userOrder.getRecipesId().intValue())
+                                  .andOrderIdEqualTo(userOrder.getOrderId())
+                                  .andRelStatusEqualTo("7");
+            int count_1 = orderRecipesRelMapper.updateByExampleSelective(orderRecipesRel,orderRecipesRelExample);
+
+            if(count_1 <= 0){
+                stateInfo.setMessage("更新关系信息失败");
+                stateInfo.setState(false);
+                return stateInfo;
+            }
+            criteria.andRelStatusEqualTo("4");
+            List<OrderRecipesRel> rowData = orderRecipesRelMapper.selectByExample(orderRecipesRelExample);
+            orderRecipesRelList.addAll(rowData);
+        }
+
+
+        if(!ObjectUtils.allNotNull(orderRecipesRelList) || orderRecipesRelList.size() <= 0){
+            stateInfo.setMessage("获取关系信息失败");
+            stateInfo.setState(false);
+            return stateInfo;
+        }
+        stateInfo.setMessage("更新支付订单成功");
+        stateInfo.setState(true);
+        stateInfo.setData(orderRecipesRelList);
         return stateInfo;
     }
 }

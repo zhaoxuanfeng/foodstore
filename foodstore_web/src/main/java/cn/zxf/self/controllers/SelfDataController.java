@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,7 +52,8 @@ public class SelfDataController {
         if(ObjectUtils.allNotNull(currUser)){
             logger.info(currUser.getUserId().toString());
             List<String> statusList = new ArrayList<>();
-            statusList.add("3");
+            statusList.add("1");
+            statusList.add("7");
             StateInfo stateInfo = orderInfoBussiness.findRecipesByUser(currUser.getUserId(),null,null,statusList);
             logger.info(stateInfo.getData().toString());
             if(ObjectUtils.allNotNull(stateInfo)){
@@ -94,8 +96,8 @@ public class SelfDataController {
     }
 
 
-    @RequestMapping("/self/payDirect.action")
-    @ResponseBody
+    @RequestMapping(value = "/self/payDirect.action" ,method = RequestMethod.GET)
+//    @ResponseBody
 //    public ModelAndView doPayAction(@RequestParam("userOrderList") List<UserOrder> userOrderList, @RequestParam("sumPrice") Integer sumPrice, HttpSession session){
     public String doPayAction(HttpServletRequest request, HttpSession session){
         String tmpId = UUID.randomUUID().toString();
@@ -112,11 +114,15 @@ public class SelfDataController {
 
         }
 */
-
         session.setAttribute("tmpUserOders",userOrderList);
 //        mv.addObject("userOrderList",userOrderList);
-        request.setAttribute("sumPrice",sumPrice);
-        request.setAttribute("tmpId",tmpId);
-        return  "/reception/payMoney.html";
+        session.setAttribute("sumPrice",sumPrice);
+        session.setAttribute("tmpId",tmpId);
+        return  "reception/payMoney";
+    }
+
+    @RequestMapping("/self/payDirectPage.action")
+    public String payDirectT(HttpServletRequest request,HttpSession session){
+        return "reception/payMoney";
     }
 }

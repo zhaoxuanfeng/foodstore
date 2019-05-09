@@ -5,6 +5,7 @@ import cn.zxf.self.config.AlipayConfig;
 import cn.zxf.self.dto.StateInfo;
 import cn.zxf.self.entry.Orders;
 import cn.zxf.self.entry.Recipes;
+import cn.zxf.self.utils.RabbitSenderUtils;
 import cn.zxf.self.vo.PagerModel;
 import cn.zxf.self.vo.UserOrder;
 import com.alipay.api.AlipayApiException;
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -205,7 +207,8 @@ public class OrderController {
     }
 
     @RequestMapping("/self/pay.action")
-    public void payHandler(HttpServletRequest request, HttpServletResponse response, String orderId, String money, String name, List<UserOrder> userOrderList) throws AlipayApiException, Exception{
+    @ResponseBody
+    public String payHandler(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "orderId") String orderId,@RequestParam(value = "money") String money,@RequestParam(value="userOrderList") String userOrderList) throws AlipayApiException, Exception{
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
 
@@ -214,15 +217,19 @@ public class OrderController {
         alipayRequest.setReturnUrl(AlipayConfig.return_url);
         alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
 
-        //商户订单号，商户网站订单系统中唯一订单号，必填
+      /*  //商户订单号，商户网站订单系统中唯一订单号，必填
         String out_trade_no = ((Long)request.getAttribute("orderId")).toString();
         //付款金额，必填
         String total_amount = new String(request.getParameter("money").getBytes("ISO-8859-1"),"UTF-8");
         //订单名称，必填
-        String subject = new String(request.getParameter("note").getBytes("ISO-8859-1"),"UTF-8");
+        String subject = new String(request.getParameter("name").getBytes("ISO-8859-1"),"UTF-8");
         //商品描述，可空
         String body = new String(request.getParameter("name").getBytes("ISO-8859-1"),"UTF-8");
-
+        */
+        String out_trade_no = orderId;
+        String total_amount = money;
+        String subject = orderId;
+        String body = userOrderList.toString();
 		/*String out_trade_no = id;
 		String total_amount = money;
 		String subject = name;
@@ -236,16 +243,17 @@ public class OrderController {
 
         //请求
         String result = alipayClient.pageExecute(alipayRequest).getBody();
-
-        response.getWriter().println(result);
+//        logger.info(result);
+        return result;
+//        response.getWriter().println(result);
 
     }
 
-    @RequestMapping("/self/pay_success.action")
+   /* @RequestMapping("/self/pay_success.action")
     public String paySuccessHandler(HttpServletRequest request,Model model) throws Exception{
         Map<String,String> params = new HashMap<>();
         Map<String,String[]> requestParams = request.getParameterMap();
-/*        for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
+       for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
             String name = (String) iter.next();
             String[] values = (String[]) requestParams.get(name);
             String valueStr = "";
@@ -256,7 +264,7 @@ public class OrderController {
             //乱码解决，这段代码在出现乱码时使用
             valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
             params.put(name, valueStr);
-        }*/
+        }
 
         boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); //调用SDK验证签名
 
@@ -281,9 +289,9 @@ public class OrderController {
         }
 
     }
-
+*/
     @RequestMapping("/self/payEnd.action")
-    public String payEnd(List<UserOrder> userOrderList,HttpServletRequest request) throws UnsupportedEncodingException, AlipayApiException {
+    public String payEnd(HttpServletRequest request) throws UnsupportedEncodingException, AlipayApiException {
         Map<String,String> params = new HashMap<>();
         Map<String,String[]> requestParams = request.getParameterMap();
         for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {
@@ -300,16 +308,31 @@ public class OrderController {
         }
 
         boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); //调用SDK验证签名
+        logger.info("message"+signVerified);
         if(signVerified){
             HttpSession session = request.getSession();
             List<UserOrder> userOrdersList = (List<UserOrder>) session.getAttribute("tmpUserOders");
-            StateInfo stateInfo = orderInfoBussiness.updatePayOrder(userOrdersList);
-
+            StateInfo stateInfo = orderInfoBussiness.updatePayOrder(userOrdersList,"已支付");
+            logger.info("stateInfo"+stateInfo.toString());
+            if(stateInfo.isState()){
+                //将需要做的菜品信息放入队列
+                RabbitSenderUtils rabbitSenderUtils = new RabbitSenderUtils();
+                for (UserOrder userOrder:userOrdersList) {
+                    rabbitSenderUtils.send(userOrder);
+                }
+                request.setAttribute("message","支付成功，已完成下单");
+                return "reception/message";
+            }
+            request.setAttribute("message","存在已支付的订单商品！");
+            return "reception/error";
         }
-
-
-        return "";
+        request.setAttribute("message","支付失败！");
+        return "reception/error";
     }
 
+//    @RequestMapping("/self/payMind.action")
+//    public String payReturn(HttpServletRequest request ,HttpServletResponse response){
+//        return "/reception/payReturn";
+//    }
 
 }

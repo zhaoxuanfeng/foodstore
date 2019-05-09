@@ -21,10 +21,16 @@
 					<td>
 						<img id="imgVerifyCode" src="" width="65px" height="25px" style="vertical-align:middle" onclick="refreshImg()"/>
 						<input type="text" id="verifyCode" name="verifyCode" prompt="请输入验证码" style="width:83px" validType="length[4,4]" deltaX="70" class="easyui-textbox easyui-validatebox" required="true" missingMessage="请输入验证码" validateOnCreate="false" validateOnBlur="true"/>
+						<!--<input type="hidden" id="userFlag"  name="userFlag" value="1"/>-->
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" align="center"><input type="button" value="登录" onclick="login()" /></td>
+					<td  align="center">
+						<input id="loginButton"  type="button" value="登录" onclick="login()" />
+					</td>
+					<td  align="center">
+						<input id="registerButton" type="button" value="注册" onclick="register()">
+					</td>
 				</tr>
 			</table>
 		</form>
@@ -41,6 +47,9 @@
 		$("#imgVerifyCode").attr("src", "/htm/verifyCode.htm?v=" +  Math.random() );
 	}
 
+	function register() {
+		$.get("/htm/registerPage.htm");
+    }
 	function login()
 	{
 		if ($("#formLogin").form("validate")) {
@@ -52,7 +61,7 @@
 
 				$.post("/htm/loginManagerAccount.htm", $("#formLogin").serialize(), function (data) {
 					if (data.status == true && data.message=="成功" ) {
-						window.location.href = "/htm/main.htm";
+						window.location.href = "/";
 					} else if(data.status == false){
 						$.messager.progress("close");
 

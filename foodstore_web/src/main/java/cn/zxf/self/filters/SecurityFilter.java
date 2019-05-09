@@ -34,13 +34,13 @@ public class SecurityFilter  implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String requestUri = request.getRequestURI();
-        System.out.println(requestUri);
+         /*System.out.println(requestUri);
 
         for (String uri : notFilterUri) {
             if (uri.equals(requestUri)) {
                 filterChain.doFilter(request, response);
             }
-        }
+        }*/
         if (request.getSession().getAttribute("rolefunc") != null) {
             List<ManageFunc> funcList = (List<ManageFunc>) request.getSession().getAttribute("rolefunc");
             boolean permit = PrivilegeManager.permit(requestUri, funcList);

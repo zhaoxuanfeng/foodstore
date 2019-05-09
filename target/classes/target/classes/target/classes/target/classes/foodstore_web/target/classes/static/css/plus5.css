@@ -1,0 +1,11 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    font-family: 微软雅黑;
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    color: #333333;
+}

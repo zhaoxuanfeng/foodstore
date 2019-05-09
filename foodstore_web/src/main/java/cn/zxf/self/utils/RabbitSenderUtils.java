@@ -14,6 +14,7 @@ import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -69,6 +70,8 @@ public class RabbitSenderUtils implements RabbitTemplate.ConfirmCallback,RabbitT
         CorrelationData correlationId = new CorrelationData(UUID.randomUUID().toString());
         rabbitTemplate.convertAndSend(exchangeName,RabbitConstant.RK_TRANSACTION, JSONObject.toJSON(userOrder), correlationId);
     }
+
+
 
     private static <T> T  get(Class<T> clazz,Object object){
         if(clazz.isInstance(object)){

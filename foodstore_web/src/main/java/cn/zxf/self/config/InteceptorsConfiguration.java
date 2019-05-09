@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,25 +29,41 @@ public class InteceptorsConfiguration implements WebMvcConfigurer {
     @Autowired
     private AuthSecurityInteceptor authSecurityInteceptor;
 
+  /*  private String[] excludeUrl = {"/htm/login.htm","/htm/register.htm","/htm/error.htm",
+                                    "/htm/verifyCode.htm","/htm/loginManagerAccount.htm",
+            "/htm/logout.htm","/htm/registerMail.htm","/htm/registerPage.htm","/htm/userlogin.action",
+            "/","/js/**","/img/**","/easyui/**","/css/**"};*/
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // addPathPatterns("/**") 表示拦截所有的请求，
         // excludePathPatterns("/login", "/register") 表示除了登陆与注册之外，因为登陆注册不需要登陆也可以访问
 
-        List<String> urlList = new ArrayList<>();
-        urlList.add("/htm/login.htm");
-        urlList.add("/htm/register.htm");
-        urlList.add("/htm/error.htm");
-        urlList.add("/htm/verifyCode.htm");
-        urlList.add("/htm/loginManagerAccount.htm");
-        urlList.add("/htm/logout.htm");
+     /*   List<String> excludeUrlList = new ArrayList<>();
+        excludeUrlList.add("/htm/login.htm");
+        excludeUrlList.add("/htm/register.htm");
+        excludeUrlList.add("/htm/error.htm");
+        excludeUrlList.add("/htm/verifyCode.htm");
+        excludeUrlList.add("/htm/loginManagerAccount.htm");
+        excludeUrlList.add("/htm/logout.htm");
+        excludeUrlList.add("/htm/registerMail.htm");
+        excludeUrlList.add("/htm/registerPage.htm");
+        excludeUrlList.add("/htm/userlogin.action");
+        excludeUrlList.add("/");*/
+      /*  excludeUrlList.add("/js/**");
+        excludeUrlList.add("/easyui/**");
+        excludeUrlList.add("/img/**");
+        excludeUrlList.add("/css/**");
+        excludeUrlList.add("/static/**");
+
+//        List<String> excludeUrlList = Arrays.asList(excludeUrl);
 //        urlList.add("classpath:/static/**");
-        registry.addInterceptor(loginInteceptor).addPathPatterns("/**").excludePathPatterns(urlList);
-        urlList.add("/htm/menu.htm");
-        urlList.add("/htm/main.htm");
-        urlList.add("/htm/self.htm");
-        registry.addInterceptor(authSecurityInteceptor).addPathPatterns("/**").excludePathPatterns(urlList);
+        registry.addInterceptor(loginInteceptor).addPathPatterns("/**.htm","/**.action").excludePathPatterns(excludeUrlList);
+        excludeUrlList.add("/htm/menu.htm");
+        excludeUrlList.add("/htm/main.htm");
+        excludeUrlList.add("/htm/self.htm");
+        registry.addInterceptor(authSecurityInteceptor).addPathPatterns("/**.htm").excludePathPatterns(excludeUrlList);
+    */
     }
 
 

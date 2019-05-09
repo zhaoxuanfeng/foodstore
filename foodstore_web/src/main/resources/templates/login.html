@@ -25,7 +25,12 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" align="center"><input type="button" value="登录" onclick="login()" /></td>
+					<td  align="center">
+						<input id="loginButton"  type="button" value="登录" onclick="login()" />
+					</td>
+					<td  align="center">
+						<input id="registerButton" type="button" value="注册" onclick="register()">
+					</td>
 				</tr>
 			</table>
 		</form>
@@ -42,6 +47,9 @@
 		$("#imgVerifyCode").attr("src", "/htm/verifyCode.htm?v=" +  Math.random() );
 	}
 
+	function register() {
+		$.get("/htm/registerPage.htm");
+    }
 	function login()
 	{
 		if ($("#formLogin").form("validate")) {

@@ -12,63 +12,9 @@
 
 <body>
 
-<div style="margin:10px 0;"></div>
-<div id= "main_layout" class="easyui-layout" data-options="collapsedSize:'12'" style="width:100%;height:1040px;">
-    <div data-options="region:'north',split:false" style="height:50px">
-        <div>哭脸美食</div>
-        <div  th:if="null != ${session.userInfo}">
-            <span th:text="${session.userInfo.accountName}"></span>
-            <a><span>退出</span></a>
-        </div>
-        <div th:if="null == ${session.userInfo}">
-            <a href="/htm/userlogin.action"><span>请登录</span> </a>
-        </div>
-    </div>
-    <div data-options="region:'south',split:false" style="height:50px;">主页底部
-
-    </div>
-    <div id="trolley_layout" data-options="region:'east',split:true,expandMode:'float'" title="购物车" style="width:180px;border: none"   >
-        <form  id="tolley_from">
-            <table id="tolley_table" class="easyui-datagrid"  singleSelect="false" fitColumns="true"
-                   nowrap="false" striped="true" SelectOnCheck="true" CheckOnSelect="true">
-                <thead>
-                <tr>
-                    <th field="select" align="center" checkbox="true"></th>
-                    <th field="foodName"  align="left"   width="40%"></th>
-                    <th field="foodPrice"  align="left"  width="10%"></th>
-                </tr>
-                </thead>
-            </table>
-        </form>
-    </div>
-    <div id="menu_layout" data-options="region:'west',split:false" title="菜单" style="width:100px;">
-        <div class="easyui-accordion" data-options="fit:true,border:false">
-            <div title="热门美食" style="padding:10px">
-                <span class="menu-item"><a href="#" onclick="" th:value="1">热门小吃</a></span><br/>
-                <span class="menu-item"><a href="#" onclick="" th:value="2">热门风味</a></span><br/>
-                <span class="menu-item"><a href="#" onclick="" th:value="3">销量排行</a></span><br/>
-            </div>
-            <div title="八大菜系" style="padding:10px;">
-                <span><a href="#" onclick="" th:value="1">鲁菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="2">川菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="3">浙菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="4">粤菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="5">苏菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="6">闽菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="7">湘菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="8">徽菜</a></span><br/>
-            </div>
-            <div title="美食分类" data-options="selected:true" style="padding:10px;">
-                <span><a href="#" onclick="" th:value="1">饮品</a></span><br/>
-                <span><a href="#" onclick="" th:value="2">主菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="3">主食</a></span><br/>
-            </div>
-        </div>
-    </div>
-    <div class="products" data-options="region:'center',title:'商品详情',split:true" style="border: none">
         <div class="">
             <div class="">
-                <img width="60%" height="40%px" src="#" th:src="${commodity.foodImgUrl}" style="display: block" alt="">
+                <img width="40px" height="50px"  src="#" th:src="${commodity.foodImgUrl}" style="display: block" alt="">
             </div>
             <div class="">
                 <h3 id="foodNameText" th:text="${commodity.foodName}"  th:value="${commodity.foodName}" ></h3>
@@ -109,11 +55,12 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
 </body>
 <footer th:replace="footer::footer">
 </footer>
+<script type="text/javascript">
+
+</script>
 <script type="text/javascript" th:inline="javascript">
     var userInfo = [[${session.userInfo}]];
     var foodPrice =  [[${commodity.foodPrice}]];
@@ -125,13 +72,13 @@
         var count =  $("#quantity").val();
         console.log([[${commodity.foodPrice}]]);
         $("#foodSumPriceText").val(count * foodPrice);
-        selfdata();
+        // selfdata();
     });
     
     function addTrolley() {
         if(null == userId){
             $.ajax({
-                url:"htm/userlogin.action"
+                url:"/htm/userlogin.action"
             });
         }
 
@@ -152,13 +99,14 @@
         console.log(JSON.stringify(orderInfo));
 
         $.ajax({
-            url:"self/addTolleyData.action",
+            url:"/self/addTolleyData.action",
             data:orderInfo,
             dataType:'json',
             type:"POST",
             error:function () {
             }
         });
+
     }
 
     /*商品数量+1*/
@@ -189,20 +137,6 @@
         }
     }
 
-    function selfdata() {
-        if(userInfo){
-            $("#tolley_table").datagrid("loading");
-            $("#tolley_table").datagrid("loadData",{total:0,rows:[]});
-            $.get("self/tolleyData.action",$("#tolley_from").serialize(),function (pager) {
-                console.log(pager);
-                $("#tolley_table").datagrid("loadData",{"total":pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
-                $("#tolley_table").datagrid("loaded");
-            });
-        }else{
-            var trolleyInfo = '<div><a href="htm/userlogin.action"><span>请登录</span></a></div>';
-            $("#trolley_layout").append(trolleyInfo) ;
-        }
-    }
 
 
 </script>

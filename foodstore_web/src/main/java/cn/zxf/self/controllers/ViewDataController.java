@@ -11,6 +11,7 @@ import cn.zxf.self.utils.RabbitSenderUtils;
 import cn.zxf.self.vo.PageMsg;
 import cn.zxf.self.vo.PagerModel;
 import cn.zxf.self.vo.UserOrder;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -161,15 +162,20 @@ public class ViewDataController {
         *@Param [recipes]
         *@Return  cn.zxf.self.vo.PagerModel
      **/
-    @RequestMapping("/view/selectRecepiesInfo")
-    @ResponseBody
-    public PagerModel selectRecepiesInfo(Recipes recipes){
+    @RequestMapping("/view/selectRecipesInfo.action")
+    public String selectRecipesInfo(@RequestParam("foodKey") String foodKey,@RequestParam("foodCuisine") String foodCuisine,HttpServletRequest request){
+        Recipes recipes = new Recipes();
+        recipes.setFoodCuisine(foodCuisine);
+        recipes.setFoodKey(foodKey);
         StateInfo stateInfo = foodInfoBussiness.findFoodInfoByRecepies(recipes);
-        pagerModel.setMessage(stateInfo.getMessage());
-        pagerModel.setStatus(stateInfo.isState());
-        if (ObjectUtils.allNotNull(stateInfo) && stateInfo.isState()){
-            pagerModel.setData(stateInfo.getData());
+
+        if (ObjectUtils.allNotNull(stateInfo) ){
+            request.setAttribute("flag",stateInfo.isState());
+            request.setAttribute("message",stateInfo.getMessage());
+            if(stateInfo.isState()){
+                request.setAttribute("foodListInfo",(List<Recipes>)stateInfo.getData());
+            }
         }
-        return pagerModel;
+        return "reception/foodList";
     }
 }

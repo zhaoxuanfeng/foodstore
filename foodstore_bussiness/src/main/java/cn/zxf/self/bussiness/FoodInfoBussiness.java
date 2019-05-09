@@ -3,6 +3,7 @@ package cn.zxf.self.bussiness;
 import cn.zxf.self.entry.Recipes;
 import cn.zxf.self.dto.StateInfo;
 import cn.zxf.self.example.RecipesExample;
+import cn.zxf.self.utils.DataUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -110,16 +111,16 @@ public class FoodInfoBussiness extends BaseBussiness {
         return  recipesMapper.selectByPrimaryKey(id.intValue());
     }
 
-    public StateInfo findFoodInfoByRecepies(Recipes recipes) {
+    public StateInfo findFoodInfoByRecepies(final Recipes recipes) {
         if(ObjectUtils.allNotNull(recipes)){
             RecipesExample recipesExample = new RecipesExample();
             RecipesExample.Criteria criteria = recipesExample.createCriteria();
             if(ObjectUtils.allNotNull(recipes.getFoodCuisine())){
-                criteria.andFoodCuisineEqualTo(recipes.getFoodCuisine());
+                criteria.andFoodCuisineLike(DataUtils.likeAdd(recipes.getFoodCuisine()));
             }
 
             if (ObjectUtils.allNotNull(recipes.getFoodKey())){
-                criteria.andFoodKeyLike(recipes.getFoodKey());
+                criteria.andFoodKeyLike(DataUtils.likeAdd(recipes.getFoodKey()));
             }
             List<Recipes> recipesList = recipesMapper.selectByExample(recipesExample);
             if(ObjectUtils.allNotNull(recipesList) && recipesList.size() > 0){

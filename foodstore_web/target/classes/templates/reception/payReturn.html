@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <meta charset="UTF-8">
+    <title>餐饮管理系统</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/css.css" />
+    <link rel="stylesheet" type="text/css" href="/static/js/jquery-easyui-1.5/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="/static/js/jquery-easyui-1.5/themes/icon.css" />
+</head>
+<body>
+<!--<div id= "main_layout" class="easyui-layout" data-options="collapsedSize:'12'" style="width:100%;height:1040px;">-->
+<form id="payForm" action=""    method="post">
+    <br/>
+    <p>订单号：</p>  <input class="easyui-linkbutton"  type="text" name="orderId"  th:value="${session.tmpId}"/>
+    <p>支付金额：</p>  <input class="easyui-linkbutton"  type="text" name="money" th:value="${session.sumPrice}"/>元
+    <input class="easyui-linkbutton"  type="hidden" name="name"  th:value="${session.tmpId}"/>
+    <input class="easyui-linkbutton"  type="hidden" name="userOrderList" th:value="${session.tmpUserOders}">
+    <div style="margin: 40px;">
+        <input class="easyui-linkbutton"  type="button" value="确定支付" onclick="submitPay()"/>
+    </div>
+
+</form>
+
+<!--</div>-->
+</body>
+<footer th:replace="footer :: footer"></footer>
+</html>

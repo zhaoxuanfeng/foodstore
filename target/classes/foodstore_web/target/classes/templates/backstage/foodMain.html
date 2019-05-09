@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header">
+</head>
+
+<body style="margin:0px;">
+    <table  id="food_table" class="easyui-datagrid" title="菜品管理" singleSelect="false" fitColumns="true" nowrap="false" striped="true"
+            SelectOnCheck="true" CheckOnSelect="true" rownumbers="true" pagination="true" pageSize="25" pageList="[25, 50, 150]" toolbar="#condition_div" fit="true" >
+        <thead>
+        <tr>
+            <th field="select" align="center" checkbox="true"></th>
+            <th field="id" align="center" width="8%"></th>
+            <th field="foodName" align="center" width="8%"></th>
+            <th field="foodType" align="center" width="8%"></th>
+            <th field="foodPrice" align="center" width="8%"></th>
+            <th field="foodStatus" align="center" width="8%"></th>
+            <th field="foodCuisine" align="center" width="8%"></th>
+            <th field="foodKey" align="center" width="8%"></th>
+            <th field="foodIntroduce" align="center" width="8%"></th>
+            <th field="foodImgUrl" align="center" width="8%"></th>
+        </tr>
+
+        </thead>
+    </table>
+
+    <div id="condition_div" style="padding:2px 5px;">
+        <form id="formSearch">
+            <input type="hidden" name="pageSize" id="pageSize" />
+            <input type="hidden" name="pageNumber" id="pageNumber" />
+            <!--查询条件: userId和手机号-->
+            <div width="100%" style="margin:4px">
+                菜品名称：
+                <input type="text" id="searchUserId" name="foodName" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+                <span>菜品类型：
+                     <select class="easyui-combobox" name="foodType" style="width:100px;">
+                                <option value="20">面食</option>
+                                <option value="30">粥品</option>
+                                <option value="10">主食</option>
+                                <option value="11">主菜</option>
+                                <option value="41">火锅</option>
+                                <option value="40">特色食品</option>
+                                <option value="50">风味小吃</option>
+                                <option value="60">饮品</option>
+                                <option value="70">酒水</option>
+                            </select>
+                    </span>&nbsp;&nbsp;
+                <span>
+                    菜系： <select class="easyui-combobox" name="foodCuisine" style="width:100px;">
+                                <option value="川菜">川菜</option>
+                                <option value="鲁菜">鲁菜</option>
+                                <option value="粤菜">粤菜</option>
+                                <option value="闽菜">闽菜</option>
+                                <option value="苏菜">苏菜</option>
+                                <option value="浙菜">浙菜</option>
+                                <option value="湘菜">湘菜</option>
+                                <option value="徽菜">徽菜</option>
+                                <option value="西餐">西餐</option>
+                                <option value="其他">其他</option>
+                            </select>
+                </span>
+                关键字：<input type="text" id="searchUserName" name="foodKey" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;<br/><br/>
+                菜品价格：<input class="easyui-textbox"  name="lowPrice" type="text" > --
+                <input class="easyui-textbox" name="highPrice" type="text" >&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="searchFood()">搜索</a>
+            </div>
+
+            <div width="100%" style="margin:4px">
+                <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openFoodStatusWindow()">修改菜品状态</a>&nbsp;&nbsp;
+                <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openCreateWindow()">创建菜品信息</a>&nbsp;&nbsp;
+                <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="batchSelection(0)">修改菜品信息</a>&nbsp;&nbsp;
+            </div>
+        </form>
+    </div>
+
+    <div id="dlgModifyFoodStatus" class="easyui-dialog" title="修改菜品状态" width="400px" height="150px" closed="true" buttons="#dlgModifyUserStatus-buttons" style="padding:10px" modal="true">
+        <form id="formModifyUserStatus" method="post">
+            <input type="hidden" name="userId" id="userId" />
+            <input type="hidden" name="userStatusOld" id="userStatusOld" />
+            <table align="center" width="90%" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td>
+                        将用户状态修改为：<select class="easyui-combobox" id="userStatusNew" name="flag" panelHeight="auto" editable="false" style="width:100px">
+                        <option value="1">开售</option>
+                        <option value="0">停售</option>
+                    </select>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div id="dlgModifyUserStatus-buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="batchSelection(1)" iconcls="icon-save">保存</a> <!--modifyUserStatusSave() ,javascript:$('#dlgModifyUserStatus').dialog('close')-->
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" iconcls="icon-cancel">取消</a>
+    </div>
+
+    <!--点击创建菜品后，显示的弹框-->
+    <div id="addMenu" class="easyui-dialog" title="创建菜品" width="400px" height="500px" closed="true" buttons="#dlgRefreshUserCache-buttons" style="padding:10px" modal="true">
+        <form id="createMenu" method="post">
+            <table align="center" width="90%" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td>菜品名称：</td>
+                    <td>
+                        <input type="text"  name="foodName" class="easyui-textbox easyui-validatebox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜品类型：</td>
+                    <td>
+                        <!--<input type="text"  name="foodType" class="easyui-textbox easyui-validatebox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;-->
+                        <select class="easyui-combobox" name="foodType" style="width:100px;">
+                            <option value="20">面食</option>
+                            <option value="30">粥品</option>
+                            <option value="10">主食</option>
+                            <option value="11">主菜</option>
+                            <option value="41">火锅</option>
+                            <option value="40">特色食品</option>
+                            <option value="50">风味小吃</option>
+                            <option value="60">饮品</option>
+                            <option value="70">酒水</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜系：</td>
+                    <td>
+                        <!--<input type="text" name="foodCuisine" class="easyui-textbox easyui-validatebox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;-->
+                        <select class="easyui-combobox" name="foodCuisine" style="width:100px;">
+                            <option value="川菜">川菜</option>
+                            <option value="鲁菜">鲁菜</option>
+                            <option value="粤菜">粤菜</option>
+                            <option value="闽菜">闽菜</option>
+                            <option value="苏菜">苏菜</option>
+                            <option value="浙菜">浙菜</option>
+                            <option value="湘菜">湘菜</option>
+                            <option value="徽菜">徽菜</option>
+                            <option value="西餐">西餐</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜品价格：</td>
+                    <td>
+                        <input type="text"  name="foodPrice" class="easyui-textbox easyui-validatebox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜品关键字：</td>
+                    <td>
+                        <input type="text"  name="foodKey" class="easyui-textbox easyui-validatebox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜品介绍：</td>
+                    <td>
+                        <input type="text"  name="foodIntroduce" class="easyui-textbox easyui-validatebox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>是否开售：</td>
+                    <td>
+                            <span class="radioSpan">
+                                <input type="radio" name="foodStatus" value="0">不开售</input>
+                                <input type="radio" name="foodStatus" value="1">开售</input>
+                         </span>
+                    </td>
+                </tr>
+
+            </table>
+        </form>
+    </div>
+    <div id="dlgRefreshUserCache-buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitInsertInfo()"  iconcls="icon-save">添加菜品</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" iconcls="icon-cancel">取消</a>
+    </div>
+
+    <div id="modifyWindow" class="easyui-dialog" closed="true" buttons="#update_buttons" style="width:490px;height:320px;padding:0px;background: #fafafa;display: none;">
+        <form id="modifuMenu" method="post">
+
+            <table align="center" width="90%" cellpadding="2" cellspacing="2">
+                <tr>
+                    <td>
+                        菜品id:
+                    </td>
+                    <td>
+                        <input name="id" id="modify_id" type="text" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜品名称：</td>
+                    <td>
+                        <input type="text"  id="modify_foodName" name="foodName" class="easyui-textbox"   style="width:150px"/>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜品类型：</td>
+                    <td>
+                        <select class="easyui-combobox" id="modify_foodType" name="foodType" style="width:100px;">
+                            <option value="20">面食</option>
+                            <option value="30">粥品</option>
+                            <option value="10">主食</option>
+                            <option value="11">主菜</option>
+                            <option value="41">火锅</option>
+                            <option value="40">特色食品</option>
+                            <option value="50">风味小吃</option>
+                            <option value="60">饮品</option>
+                            <option value="70">酒水</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜系：</td>
+                    <td>
+                        <!--<input type="text" name="foodCuisine" class="easyui-textbox easyui-validatebox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;-->
+                        <select class="easyui-combobox" id="modify_foodCuisine" name="foodCuisine" style="width:100px;">
+                            <option value="川菜">川菜</option>
+                            <option value="鲁菜">鲁菜</option>
+                            <option value="粤菜">粤菜</option>
+                            <option value="闽菜">闽菜</option>
+                            <option value="苏菜">苏菜</option>
+                            <option value="浙菜">浙菜</option>
+                            <option value="湘菜">湘菜</option>
+                            <option value="徽菜">徽菜</option>
+                            <option value="西餐">西餐</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜品价格：</td>
+                    <td>
+                        <input type="text"  id="modify_foodPrice" name="foodPrice" class="easyui-textbox"  style="width:150px"/>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜品关键字：</td>
+                    <td>
+                        <input type="text" id="modify_foodKey" name="foodKey" class="easyui-textbox" style="width:150px"/>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜品介绍：</td>
+                    <td>
+                        <input type="text" id="modify_foodIntroduce"  name="foodIntroduce" class="easyui-textbox"  style="width:150px"/>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜品图片：</td>
+                    <td>
+                        <input type="text" id="modify_foodImgUrl"  name="foodImgUrl" class="easyui-textbox"  style="width:150px"/>&nbsp;&nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>是否开售：</td>
+                    <td>
+                            <span class="radioSpan" id="modify_foodStatus" >
+                                <input type="radio" name="foodStatus" value="0">不开售</input>
+                                <input type="radio" name="foodStatus" value="1">开售</input>
+                         </span>
+                    </td>
+                </tr>
+
+            </table>
+
+        </form>
+    </div>
+    <div id="update_buttons">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitUpdateInfo()"  iconcls="icon-save">更新菜品</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel()" iconcls="icon-cancel">取消</a>
+    </div>
+</body>
+    <footer th:replace="footer :: footer"></footer>
+
+    <script type="text/javascript"  th:inline="none">
+        $("#food_table").datagrid( {
+            url:'/htm/foodInfoData.htm',
+            striped: true,
+            rownumbers:true,
+            pagination: true,
+            pageSize: 10,
+            pageList: [10, 20, 50],
+            border : false,
+            showFooter : true,
+            loadMsg:'数据加载中，请稍等...',
+            columns:[[
+                {field:'select',checkbox:true},
+                {field:'id',title:'菜品id',width:'8%'},
+                {field:'foodName',title:'菜名',width:'8%',align:'right'},
+                {field:'foodType',title:'菜品类型',width:'10%',align:'right'},
+                {field:'foodPrice',title:'菜价',width:'10%',align:'right'},
+                {field:'foodStatus',title:'菜品状态',width:'8%',align:'right'},
+                {field:'foodCuisine',title:'菜系',width:'10%',align:'right'},
+                {field:'foodKey',title:'菜品关键字',width:'10%',align:'right'},
+                {field:'foodIntroduce',title:'菜品介绍',width:'10%',align:'right'},
+                {field:'foodImgUrl',title:'菜品图片路径',width:'10%',align:'right'}
+        ]],
+        onBeforeLoad:function(param){
+            // console.log(param);
+        },
+        onLoadSuccess: function (data){
+            console.log(data);
+        },
+        onLoadError: function (){
+            alert("数据加载失败！");
+        }
+    });
+
+    function searchFood() {
+        $("#food_table").datagrid("loading");
+        $.get("/htm/foodInfoData.htm",$("#formSearch").serialize(),function (pager) {
+            $("#food_table").datagrid("loadData",{total:pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
+            $("#food_table").datagrid("loaded");
+        });
+    }
+    
+    function openCreateWindow() {
+        $('#addMenu').dialog("open").window("center");
+    }
+    
+    function submitInsertInfo() {
+        $("#createMenu").form('submit',{
+            url:'/htm/addFoodInfo.htm',
+            onSubmit:function () {
+            },
+            success:function (data) {
+                 var json = $.parseJSON(data);
+                if( json.status == true){
+                    alert(json.message);
+                    $('#addMenu').dialog("close");
+                }
+            }
+        });
+    }
+
+    function cancel(){
+        $("#addMenu").dialog("close");
+        $("#modifyWindow").dialog("close");
+        $("#dlgModifyFoodStatus").dialog("close");
+
+    }
+
+    function batchSelection(flag) {
+        var rows = $('#food_table').datagrid("getChecked");
+        console.log(rows);
+        var items = [];
+        if(rows){
+            $.each(rows,function (index,item) {
+                items.push(item.id);
+            });
+            // console.log("flag-items");
+            // console.log(flag);
+             console.log(items);
+            if(flag == 0){
+                //修改全部信息
+                if(items.length > 1){
+                    alert("修改全部信息请选择一项！")
+                    return ;
+                }
+                var row = $('#food_table').datagrid('getSelected');
+
+                var id  = row.id;
+                var foodName = row.foodName;
+                var foodCuisine = row.foodCuisine;
+                var foodPrice = row.foodPrice;
+                var foodIntroduce = row.foodIntroduce;
+                var foodType = row.foodType;
+                var foodStatus = row.foodStatus;
+                var foodKey = row.foodKey;
+                var foodImgUrl = row.foodImgUrl;
+
+                $("#modifuMenu").form('load',{
+                    id:id,
+                    foodName:foodName,
+                    foodCuisine:foodCuisine,
+                    foodPrice:foodPrice,
+                    foodIntroduce:foodIntroduce,
+                    foodType:foodType,
+                    foodStatus:foodStatus,
+                    foodKey:foodKey,
+                    foodImgUrl:foodImgUrl
+                });
+                $('#modify_id').attr('readonly',true);
+                $("#modifyWindow").dialog("open").window("center");
+
+            }else{
+                var newStatus = $("#userStatusNew").combobox("getValue");
+                console.log(items.toString());
+                $.get("/htm/modifyFoodStatus.htm",{ids:items.toString(),flag:newStatus},function(data) {
+                    if(data){
+                        if(data.message){
+                            alert(data.message);
+                            cancel();
+                            searchFood();
+                        }
+                    }
+                });
+
+            }
+
+        }
+    }
+    
+    function openFoodStatusWindow() {
+        $("#dlgModifyFoodStatus").dialog("open").window("center");
+    }
+    
+    function submitUpdateInfo() {
+        $("#modifuMenu").form("submit",{
+            url:'htm/modifyFood.htm',
+            onsubmit:function (param) {
+                
+            },
+            success:function (data) {
+                var response_data = $.parseJSON(data);
+                alert(response_data.message);
+                if(response_data.status == true){
+                    $('#modifyWindow').dialog("close");
+                }
+            }
+        });
+    }
+
+</script>

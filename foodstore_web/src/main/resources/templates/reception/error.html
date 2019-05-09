@@ -2,11 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Document</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+    <title>异常提示页面</title>
 </head>
 <body>
-	<h1 style="color: red"> 操作错误，请联系管理人员！ </h1>
+<h1>错误页面</h1>
+	<h1 style="color: red"  th:value='${#request.getAttribute("message")}'>  </h1>
 </body>
 </html>

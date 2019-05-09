@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header">
+</head>
+<body style="margin: 0px">
+    <table id="order_table" class="easyui-datagrid" title="订单管理" toolbar="#order_search">
+        <thead>
+            <tr>
+                <th field="select" align="center" checkbox="true"></th>
+                <th field="orderId"  align="center" width="8%"></th>
+                <th field="count"  align="center" width="8%"></th>
+                <th field="userId"  align="center" width="8%"></th>
+                <th field="orderStatus"  align="center" width="8%"></th>
+                <th field="realPrice"  align="center" width="8%"></th>
+                <th field="isDelete"  align="center" width="8%"></th>
+                <th field="notes"  align="center" width="8%"></th>
+                <th field="orderAddress"  align="center" width="8%"></th>
+            </tr>
+        </thead>
+    </table>
+    <div id="order_search">
+        <div>
+        <form id="order_condition">
+            <input type="hidden" name="pageSize" id="pageSize" />
+            <input type="hidden" name="pageNumber" id="pageNumber" />
+            <input type="text" name="orderId" />
+
+            <input type="submit" name="搜索"  onclick="searchOrder()"/>
+
+        </form>
+        </div>
+        <div>
+            <form id="down_form">
+                <select name="year">
+                    <option value="2019">2019年</option>
+                    <option value="2018">2018年</option>
+                </select>
+                <select name="month">
+                    <option value="1">1月</option>
+                    <option value="2">2月</option>
+                    <option value="3">3月</option>
+                    <option value="4">4月</option>
+                    <option value="5">5月</option>
+                    <option value="6">6月</option>
+                    <option value="7">7月</option>
+                    <option value="8">8月</option>
+                    <option value="9">9月</option>
+                    <option value="10">10月</option>
+                    <option value="11">11月</option>
+                    <option value="12">12月</option>
+                </select>
+                <input name="customerId" type="text"/>
+                <input type="button"  name="downFlag"  value="下载订单" id="downButton" onclick="downOrder()" />
+            </form>
+        </div>
+    </div>
+</body>
+
+<footer th:replace="footer :: footer"></footer>
+<script type="text/javascript">
+    $("#order_table").datagrid( {
+        url:'htm/orderManageInfo.htm',
+        striped: true,
+        rownumbers:true,
+        pagination: true,
+        pageSize: 10,
+        pageList: [10, 20, 50, 100, 150, 200],
+        border : false,
+        showFooter : true,
+        loadMsg:'数据加载中，请稍等...',
+        columns:[[
+            {field:'select',checkbox:true},
+            {field:'orderId',title:'菜品id',width:'8%'},
+            {field:'count',title:'菜名',width:'8%',align:'right'},
+            {field:'userId',title:'菜品类型',width:'10%',align:'right'},
+            {field:'orderStatus',title:'菜价',width:'10%',align:'right'},
+            {field:'realPrice',title:'菜品状态',width:'8%',align:'right'},
+            {field:'isDelete',title:'菜系',width:'10%',align:'right'},
+            {field:'notes',title:'菜品关键字',width:'10%',align:'right'},
+            {field:'orderAddress',title:'菜品介绍',width:'10%',align:'right'}
+        ]],
+        onBeforeLoad:function(param){
+            console.log(param);
+        },
+        onLoadSuccess: function (data){
+            console.log(data);
+        },
+        onLoadError: function (){
+            alert("数据加载失败！");
+        }
+    });
+    
+    function searchOrder() {
+        $("#order_table").datagrid("loading");
+        $.get("htm/orderManageInfo.htm",$("order_condition").serialize(),function () {
+            $("#order_table").datagrid("loadData",{total:pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
+            $("#order_table").datagrid("loaded");
+        });
+    }
+    
+    function downOrder() {
+        var year = $("#year").val();
+        var month = $("#month").val();
+        var customerId = $("customerId").val();
+        if(customerId){
+            $.ajax("htm/download.htm",{year:year,month:month,customerId:customerId},function () {
+                success: function f() {
+                    alert("下载成功。");
+                }
+            });
+        }else {
+            alert("请输入用户！");
+        }
+
+    }
+</script>
+</html>

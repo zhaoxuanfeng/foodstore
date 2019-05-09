@@ -45,7 +45,7 @@ public class FoodController  extends  BaseController{
 
     @RequestMapping("/htm/cookerOrderInfo.htm")
     public String cookerMain(){
-        return "/backstage/cookerMain";
+        return "backstage/cookerMain";
     }
 
 
@@ -197,6 +197,12 @@ public class FoodController  extends  BaseController{
         }
         logger.info("访问状态："+pageMsg.toString());
         return  pageMsg;
+    }
+
+    @RequestMapping("/htm/error.htm")
+    public String redirectErrorPage(HttpServletRequest request){
+        request.setAttribute("message","权限不足");
+        return "reception/error";
     }
 
     //解析参数

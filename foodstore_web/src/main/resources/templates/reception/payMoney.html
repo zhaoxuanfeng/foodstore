@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!--<head th:replace="header :: header">-->
 <head>
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
@@ -9,82 +8,57 @@
     <meta http-equiv="description" content="This is my page">
     <meta charset="UTF-8">
     <title>餐饮管理系统</title>
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" type="text/css" href="/css/css.css" />
-    <link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.5/themes/bootstrap/easyui.css" />
-    <link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.5/themes/icon.css" />
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/css.css" />
+    <link rel="stylesheet" type="text/css" href="/static/js/jquery-easyui-1.5/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="/static/js/jquery-easyui-1.5/themes/icon.css" />
 </head>
 <body>
-
-<div style="margin:10px 0;"></div>
 <div id= "main_layout" class="easyui-layout" data-options="collapsedSize:'12'" style="width:100%;height:1040px;">
-    <div data-options="region:'north',split:false" style="height:50px" class="self_head">
-        <a href="/" id="self_left" class="self_logo"><h3>哭脸餐饮管理系统</h3></a>
-        <div  th:if="null != ${session.userInfo}" class="self_head">
-            <span th:text="${session.userInfo.accountName}" class="self_head_span"> </span>
-            <a href="/htm/logout.htm"><span class="self_head_span">退出</span></a>
-        </div>
-        <div th:if="null == ${session.userInfo}" class="self_head">
-            <a href="/htm/userlogin.action"><span>请登录</span> </a>
-        </div>
-    </div>
-    <div data-options="region:'south',split:false" style="height:50px;">主页底部
-
-    </div>
-    <div id="trolley_layout" data-options="region:'east',split:true,expandMode:'float'" title="购物车" style="width:180px;border: none"   >
-        <form class="easyui-datagrid" id="tolley_from">
-            <table id="tolley_table">
-                <thead>
-                <tr>
-                    <th field="select" align="center" checkbox="true"></th>
-                    <th field="foodName"  align="left"   width="40%"></th>
-                    <th field="foodPrice"  align="left"  width="10%"></th>
-                    <th field="count"  align="left"  width="30%"></th>
-                </tr>
-                </thead>
-            </table>
-        </form>
-    </div>
-    <div id="menu_layout" data-options="region:'west',split:false" title="菜单" style="width:100px;">
-        <div class="easyui-accordion" data-options="fit:true,border:false">
-            <div title="热门美食" style="padding:10px">
-                <span class="menu-item"><a href="#" onclick="" th:value="1">热门小吃</a></span><br/>
-                <span class="menu-item"><a href="#" onclick="" th:value="2">热门风味</a></span><br/>
-                <span class="menu-item"><a href="#" onclick="" th:value="3">销量排行</a></span><br/>
-            </div>
-            <div title="八大菜系" style="padding:10px;">
-                <span><a href="#" onclick="" th:value="1">鲁菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="2">川菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="3">浙菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="4">粤菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="5">苏菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="6">闽菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="7">湘菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="8">徽菜</a></span><br/>
-            </div>
-            <div title="美食分类" data-options="selected:true" style="padding:10px;">
-                <span><a href="#" onclick="" th:value="1">饮品</a></span><br/>
-                <span><a href="#" onclick="" th:value="2">主菜</a></span><br/>
-                <span><a href="#" onclick="" th:value="3">主食</a></span><br/>
-            </div>
-        </div>
-    </div>
-    <div class="products" data-options="region:'center',title:'付款页面',split:true" style="border: none">
-        <form action="self/pay.action"
-              method="post">
-            订单号：<INPUT TYPE="text" name="orderid" value="${tmpId}">
-            支付金额：<INPUT TYPE="text" name="money" value="${sumPrice}">元
-            <!--<input type="hidden" name="userOrderList" value="${userOrderList}">-->
+    <form id="payForm" action=""    method="post">
+        <br/>
+        <p>订单号：</p>  <input class="easyui-linkbutton"  type="text" name="orderId"  th:value="${session.tmpId}"/>
+          <p>支付金额：</p>  <input class="easyui-linkbutton"  type="text" name="money" th:value="${session.sumPrice}"/>元
+        <input class="easyui-linkbutton"  type="hidden" name="name"  th:value="${session.tmpId}"/>
+            <input class="easyui-linkbutton"  type="hidden" name="userOrderList" th:value="${session.tmpUserOders}">
             <div style="margin: 40px;">
-                <INPUT TYPE="submit" value="确定支付">
+                <input class="easyui-linkbutton"  type="button" value="确定支付" onclick="submitPay()"/>
             </div>
 
         </form>
-    </div>
+
 </div>
 </body>
 <footer th:replace="footer :: footer"></footer>
-<script type="text/javascript" src="/js/jquery.cookie.js"></script>
-<script type="text/javascript"  th:inline="javascript"></script>
+<script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
+<script type="text/javascript"  th:inline="javascript">
+    var orderid =  [[${session.tmpId}]];
+    var money =  [[${session.money}]];
+    var userOrderList =  [[${session.tmpUserOders}]];
+
+    function submitPay() {
+            console.log(userOrderList);
+            // $("#payForm").form("pay.action",$("#payForm").serialize());
+            $.ajax({
+                url:"pay.action",
+                data:$("#payForm").serialize(),
+                dataType:"text",
+                type:"post",
+                success:function(data){
+                    // console.log(data);
+                    addForm(data);
+                },
+                error:function (message) {
+                    console.log("2222");
+                    console.log(message);
+                }
+            });
+        }
+
+    function addForm(data){
+        $("#main_layout").children().remove();
+        $("#main_layout").append(data);
+    }
+</script>
 
 </html>

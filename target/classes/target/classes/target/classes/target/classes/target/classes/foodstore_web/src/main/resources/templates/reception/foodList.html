@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: header">
+</head>
+<body>
+<div th:if='!${#request.getAttribute("flag")}'>
+    <p style="color: red" th:value='${#request.getAttribute("message")}'></p>
+</div>
+<ul th:if='${#request.getAttribute("flag")}' id="infoUl" th:each='recipes,recipesStat:${#request.getAttribute("foodListInfo")}'>
+    <a href="#" onclick="findFoodDetail()" >
+        <input type="hidden" id="hidText" th:value="${recipes.id}"/>
+    <li class="inLi">
+
+        <img th:src="${recipes.foodImgUrl}" style="height: 50px;width: 40px"/>
+        <p th:value="${recipes.foodName}"></p>
+        <p th:value="${recipes.foodIntroduce}"></p>
+    </li>
+    </a>
+</ul>
+</body>
+<footer th:replace="footer :: footer"></footer>
+<script type="text/javascript" >
+    function findFoodDetail() {
+        var infoId = $("#hidText").val();
+        infoUrl = "/view/detailData.action?id="+infoId;
+        $("#center_layout").panel('setTitle',"商品信息详情");
+        $("#center_layout").title="确认";
+        $("#pageurl").attr("src",infoUrl);
+        $('#pageurl').show();
+    }
+
+</script>
+</html>
