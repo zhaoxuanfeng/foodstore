@@ -5,19 +5,22 @@
 <body>
 <div id= "main_layout" class="easyui-layout" data-options="collapsedSize:'12'" style="width:100%;height:1040px;">
     <div data-options="region:'north',split:false" style="height:50px" class="self_head">
-        <a href="/" id="self_left" class="self_logo"><h3>哭脸餐饮管理系统</h3></a>
+        <a href="/" id="self_left" class="self_logo" data-options="border:'none'"><h3>哭脸餐饮管理系统</h3></a>
         <div  th:if="null != ${session.userInfo}" class="self_head">
             <span th:text="${session.userInfo.accountName}" class="self_head_span"> </span>
-            <a href="htm/logout.htm"><span class="self_head_span">退出</span></a>
+            <a href="/htm/logout.htm" class="easyui-linkbutton" data-options="plain:true">
+                <span class="self_head_span">退出</span></a>
         </div>
         <div th:if="null == ${session.userInfo}" class="self_head">
-            <a href="htm/userlogin.action"><span>请登录</span> </a>
+            <a href="/htm/userlogin.action" class="easyui-linkbutton" data-options="plain:true"><span>请登录</span> </a>
         </div>
     </div>
     <div data-options="region:'south',split:false" style="height:50px;">
-        <p>主页底部<br>本系统为毕业设计专业系统</p>
+        <div id="footDiv">
+            <p class="foodInyroP">主页底部<br>本系统为毕业设计专业系统</p>
+        </div>
     </div>
-    <div id="trolley_layout" class="easyui-panel"  data-options="region:'east',split:true,expandMode:'float'" title="购物车" style="width:180px;border: none;"   >
+    <div id="trolley_layout" class="easyui-panel"  data-options="region:'east',split:true,expandMode:'float'" style="width:180px;height:80%;border: none;"   >
        <!-- <form  id="tolley_from" >
             <table id="tolley_table" class="easyui-datagrid"  singleSelect="false" fitColumns="true" nowrap="false" striped="true"
                    SelectOnCheck="true" CheckOnSelect="true" rownumbers="true"
@@ -36,39 +39,40 @@
                 </thead>
             </table>
         </form>-->
-        <iframe id="trolleyPage" name="frame1" style="width: 100%; height: 100%;display:none" frameborder='0' ></iframe>
+        <iframe id="trolleyPage" name="frame1" style="width: 100%; height: 100%;display:none" frameborder='0'  ></iframe>
     </div>
-    <div id="buy_div" >
-        <!--<input type="button" value="刷新购物车" onclick="refeshTolley()"/>
-        <input class="easyui-linkbutton" form="tolley_from" type="button" value="确定购买" onclick="addOrder()" >
-        <p>购物车总价为：</p><input type="text" id="sum_price" readonly="readonly" name="sumPrice" value="0">
-        -->
+    <!--<div id="buy_div" >
+      <input type="button" value="刷新购物车" onclick="refeshTolley()"/>
+       <input class="easyui-linkbutton" form="tolley_from" type="button" value="确定购买" onclick="addOrder()" >
+       <p>购物车总价为：</p><input type="text" id="sum_price" readonly="readonly" name="sumPrice" value="0">
+
     </div>
-    <div id="menu_layout" data-options="region:'west',split:false" title="菜单" style="width:100px;">
+     -->
+    <div id="menu_layout"  class="easyui-layout"  data-options="region:'west',split:false" title="菜单" style="width:100px;">
         <div class="easyui-accordion" data-options="fit:true,border:false">
             <div title="热门美食" style="padding:10px">
-                <span class="menu-item"><a href="#" onclick="" th:value="1">热门小吃</a></span><br/>
-                <span class="menu-item"><a href="#" onclick="" th:value="2">热门风味</a></span><br/>
-                <span class="menu-item"><a href="#" onclick="" th:value="3">销量排行</a></span><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(3,'热门小吃')" >热门小吃</a></div><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(3,'热门风味')" >热门风味</a></div><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(3,'销量排行')" >销量排行</a></div><br/>
             </div>
             <div title="八大菜系" style="padding:10px;">
-                <span><a href="#" onclick="selectInfo(1,'鲁菜')" th:value="1">鲁菜</a></span><br/>
-                <span><a href="#" onclick="selectInfo(1,'川菜')" th:value="2">川菜</a></span><br/>
-                <span><a href="#" onclick="selectInfo(1,'浙菜')" th:value="3">浙菜</a></span><br/>
-                <span><a href="#" onclick="selectInfo(1,'粤菜')" th:value="4">粤菜</a></span><br/>
-                <span><a href="#" onclick="selectInfo(1,'苏菜')" th:value="5">苏菜</a></span><br/>
-                <span><a href="#" onclick="selectInfo(1,'闽菜')" th:value="6">闽菜</a></span><br/>
-                <span><a href="#" onclick="selectInfo(1,'湘菜')" th:value="7">湘菜</a></span><br/>
-                <span><a href="#" onclick="selectInfo(1,'徽菜')" th:value="8">徽菜</a></span><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(1,'鲁菜')" >鲁菜</a></div><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(1,'川菜')" >川菜</a></div><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(1,'浙菜')" >浙菜</a></div><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(1,'粤菜')" >粤菜</a></div><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(1,'苏菜')" >苏菜</a></div><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(1,'闽菜')" >闽菜</a></div><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(1,'湘菜')" >湘菜</a></div><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(1,'徽菜')" >徽菜</a></div><br/>
             </div>
             <div title="美食分类" data-options="selected:true" style="padding:10px;">
-                <span><a href="#" onclick="selectInfo(2,'饮品')" th:value="1">饮品</a></span><br/>
-                <span><a href="#" onclick="selectInfo(2,'主菜')" th:value="2">主菜</a></span><br/>
-                <span><a href="#" onclick="selectInfo(2,'主食')" th:value="3">主食</a></span><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(2,'饮品')" >饮品</a></div><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(2,'主菜')" >主菜</a></div><br/>
+                <div style='width: 100%' align='center'><a class="easyui-linkbutton" data-options='plain:true' href="#" onclick="selectInfo(2,'主食')" >主食</a></div><br/>
             </div>
         </div>
     </div>
-    <div id="center_layout"  class="products" data-options="region:'center'" style="border: none">
+    <div id="center_layout"  class="easyui-layout"  data-options="region:'center'" style="border: none">
         <!--<ul id=' hotStore'></ul>-->
         <!--<from id="page_from" type="post" action="" target="pageurl"></from>-->
         <iframe id="pageurl" name="frame2" style="width: 100%; height: 100%;display:none" frameborder='0'></iframe>
@@ -154,6 +158,11 @@
             // recipes.foodKey = selectValue;
             infoUrl = infoUrl + "foodCuisine=&foodKey="+selectValue;
         }
+
+        if(3==selectType){
+            // recipes.foodKey = selectValue;
+            infoUrl = infoUrl + "foodCuisine=null&foodKey=null";
+        }
         console.log(recipes);
         $("#center_layout").panel('setTitle',"商品信息详情");
         $("#center_layout").title=selectValue+"食品信息列表";
@@ -164,6 +173,15 @@
         });*/
     }
 
+    
+    function loadTolleyPage() {
+        // $("#trolley_layout").siblings().remove();
+
+        $("#trolley_layout").panel('setTitle',"购物车信息");
+        $("#trolley_layout").title="确认";
+        $("#trolleyPage").attr("src","/view/redirectTrolley.action");
+        $('#trolleyPage').show();
+    }
 </script>
 <script type="text/javascript"  th:inline="javascript">
     var userInfo = [[${session.userInfo}]];
@@ -215,7 +233,7 @@
 
     $(function() {
         $.ajax({
-            url:"view/searchInedxData.action",
+            url:"/view/searchInedxData.action",
             async:true,
             type:"GET",
             dataType:"json",
@@ -232,19 +250,19 @@
                             hotRecipes.id
                             +')" class="item" >' +
                             '<img src="'+hotRecipes.foodImgUrl+
-                            '"  style="width:40px;height: 50px"/>'+
-                            '<div><p>'+hotRecipes.foodName
-                            +'</p><p>'+hotRecipes.foodIntroduce+
+                            '"  style="width:200px;height: 400px"/>'+
+                            '<div><p class="foodNameP">'+hotRecipes.foodName
+                            +'</p><p class="foodInyroP">'+hotRecipes.foodIntroduce+
                             '</p></div></a></li>';
                         $("#hotStore").append(childli);
                     }else {
-                        childli =  '<li><a href="href="#" onclick="infoDirect( ' +
+                        childli =  '<li><a href="#" onclick="infoDirect(' +
                             hotRecipes.id
                             +')" class="item" >' +
                             '<img src="'+hotRecipes.foodImgUrl+
-                            '" style="width:40px;height: 50px"/>'+
-                            '<div><p>'+hotRecipes.foodName
-                            +'</p><p>'+hotRecipes.foodIntroduce+
+                            '" style="width:200px;height: 400px"/>'+
+                            '<div><p class="foodNameP">'+hotRecipes.foodName
+                            +'</p><p class="foodInyroP">'+hotRecipes.foodIntroduce+
                             '</p></div></a></li>';
                         $("#hotStore").append(childli);
                     }
@@ -259,11 +277,12 @@
 
         selfdata();
 
+        type()
     });
     
     
     function infoDirect(infoId) {
-        infoUrl = "view/detailData.action?id="+infoId;
+        infoUrl = "/view/detailData.action?id="+infoId;
         $("#center_layout").panel('setTitle',"商品信息详情");
         $("#center_layout").title="确认";
         $("#pageurl").attr("src",infoUrl);
@@ -273,9 +292,11 @@
     
     function selfdata() {
         if(userInfo){
-            loadTolleyData();
+            // loadTolleyData();
+            loadTolleyPage();
         }else{
-            var trolleyInfo = '<div style="width: 100%;height: 100%"><a href="htm/userlogin.action"><span>请登录</span></a></div>';
+            var trolleyInfo = '<div style="width: 100px;height: 40px" id="tolleyLogin">' +
+                '<a  class="easyui-linkbutton" data-options="plain:true" href="/htm/userlogin.action"><span>请登录</span></a><br/><p class="foodInyroP">登陆后查看购物车信息</p></div>';
             $("#trolley_layout").append(trolleyInfo) ;
         }
     }
@@ -297,12 +318,12 @@
                 sumPrice = sumPrice + item.recipesPrice * item.count;
                 items.push(item);
             });
-            $.get("self/payDirect.action",{userOrderList:JSON.stringify(items),sumPrice:sumPrice.toString()},function (data) {
+            $.get("/self/payDirect.action",{userOrderList:JSON.stringify(items),sumPrice:sumPrice.toString()},function (data) {
                 // alert(data);
                 // window.location= data;
                 $("#center_layout").panel('setTitle',"订单信息确认");
                 $("#center_layout").title="确认";
-                $("#pageurl").attr("src","self/payDirectPage.action");
+                $("#pageurl").attr("src","/self/payDirectPage.action");
                 $('#pageurl').show();
             });
 

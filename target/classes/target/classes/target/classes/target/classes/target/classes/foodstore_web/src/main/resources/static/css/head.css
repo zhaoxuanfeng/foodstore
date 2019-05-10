@@ -1,7 +1,7 @@
 .self_head{
     position: relative;
     float: right;
-    right: 20px;
+    right: 0px;
 }
 #self_left{
     float: left;
@@ -15,4 +15,50 @@
 .self_logo{
     position: absolute;
     float: left;
+    left:5px;
+    text-decoration:none;
+    color: #1f637b;
+}
+
+.float_li{
+
+    position: relative;
+    left: 3px;
+    float: left;
+}
+
+.item{
+
+    position: relative;
+    left: 40px;
+    margin-left: 40px;
+    float: left;
+
+}
+
+.foodNameP{
+    font-family:"微软雅黑 Light";
+    font-size:large ;
+    color: #1E282C;
+
+}
+
+.foodInyroP{
+    font-family: "微软雅黑 Light";
+    font-size: small;
+    color: #9F9F9F;
+}
+
+#tolleyLogin{
+    position: relative;
+    float: left;
+    top: 10px;
+    left: 10px;
+}
+
+#footDiv{
+    position: relative;
+    float: left;
+    top: 20%;
+    left: 48%;
 }

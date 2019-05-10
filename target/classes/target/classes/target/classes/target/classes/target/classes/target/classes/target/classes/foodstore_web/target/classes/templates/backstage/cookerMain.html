@@ -82,8 +82,8 @@
                 }},
             {field:'orderRecipesStatus',title:'制作状态',width:'20%',align:'right',formatter: function (value,row,index) {
                     var res = '';
-                    console.log("---");
-                    console.log(row);
+                    // console.log("---");
+                    // console.log(row);
 
                     switch (row.recipes.foodStatus) {
                         case '4':
@@ -107,10 +107,10 @@
 
         ]],
         onBeforeLoad:function(param){
-            console.log(param);
+            // console.log(param);
         },
         onLoadSuccess: function (data){
-            console.log(data);
+            // console.log(data);
         },
         onLoadError: function (){
             alert("数据加载失败！");
@@ -125,7 +125,7 @@
         $("#formSearch").form('submit',{
             url:"/htm/searchRecipesByOrder.htm",
             onSubmit: function(param){
-                console.log(param);
+                // console.log(param);
             },
             success:function (data) {
                 alert(data);

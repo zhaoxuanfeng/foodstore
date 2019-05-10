@@ -9,12 +9,16 @@
 <ul th:if='${#request.getAttribute("flag")}' id="infoUl" th:each='recipes,recipesStat:${#request.getAttribute("foodListInfo")}'>
     <a href="#" onclick="findFoodDetail()" >
         <input type="hidden" id="hidText" th:value="${recipes.id}"/>
-    <li class="inLi">
-
-        <img th:src="${recipes.foodImgUrl}" style="height: 50px;width: 40px"/>
-        <p th:value="${recipes.foodName}"></p>
-        <p th:value="${recipes.foodIntroduce}"></p>
+    <li  th:if="${recipesStat.index}%4 == 0" th:class="float_li" >
+        <img th:src="${recipes.foodImgUrl}" style="height: 400px;width: 200px"/>
+        <p class="foodNameP"  th:value="${recipes.foodName}" th:text="${recipes.foodName}"></p>
+        <p class="foodInyroP" th:value="${recipes.foodIntroduce}" th:text="${recipes.foodIntroduce}"></p>
     </li>
+        <li  th:if="${recipesStat.index}%4 != 0" th:class="item" >
+            <img th:src="${recipes.foodImgUrl}" style="height: 400px;width: 200px"/>
+            <p class="foodNameP"  th:value="${recipes.foodName}" th:text="${recipes.foodName}"></p>
+            <p class="foodInyroP" th:value="${recipes.foodIntroduce}" th:text="${recipes.foodIntroduce}"></p>
+        </li>
     </a>
 </ul>
 </body>

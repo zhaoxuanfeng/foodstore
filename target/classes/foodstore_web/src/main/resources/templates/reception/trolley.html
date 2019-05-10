@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <title>购物车</title>
     <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/css.css" />
+    <link rel="stylesheet" type="text/css" href="/static/js/jquery-easyui-1.5/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="/static/js/jquery-easyui-1.5/themes/icon.css" />
+    <script src="/static/js/jquery-3.3.1.js"></script>
 </head>
 <body>
-<div id="trolley_layout" class="easyui-panel"  data-options="region:'east',split:true,expandMode:'float'" title="购物车" style="width:180px;border: none;"   >
+<div id="trolley_layout" class="easyui-panel"  data-options="region:'east',expandMode:'float'"  style="width:100%;height:940px;border: none;"   >
     <form  id="tolley_from" >
         <table id="tolley_table" class="easyui-datagrid"  singleSelect="false" fitColumns="true" nowrap="false" striped="true"
                SelectOnCheck="true" CheckOnSelect="true" rownumbers="true"
@@ -27,12 +31,14 @@
     </form>
 </div>
 <div id="buy_div" >
-    <input type="button" value="刷新购物车" onclick="refeshTolley()"/>
+    <input type="button" class="easyui-linkbutton" value="刷新购物车" onclick="refeshTolley()"/>
     <input class="easyui-linkbutton" form="tolley_from" type="button" value="确定购买" onclick="addOrder()" >
     <p>购物车总价为：</p><input type="text" id="sum_price" readonly="readonly" name="sumPrice" value="0">
 </div>
 
 </body>
+<footer th:replace="footer::footer">
+</footer>
 <script type="text/javascript" th:inline="none">
     $(function () {
         loadTolleyData();
@@ -40,7 +46,7 @@
 
     function loadTolleyData(){
         $("#tolley_table").datagrid( {
-            url:'self/tolleyData.action',
+            url:'/self/tolleyData.action',
             height:'100%',
             striped: true,
             rownumbers:true,
@@ -91,6 +97,7 @@
     }
 </script>
 <script type="text/javascript" th:inline="javascript">
+    var userInfo = [[${session.userInfo}]];
     function addOrder() {
 
         $("#pageurl").siblings().remove();
@@ -110,15 +117,15 @@
                 sumPrice = sumPrice + item.recipesPrice * item.count;
                 items.push(item);
             });
-            $.get("self/payDirect.action",{userOrderList:JSON.stringify(items),sumPrice:sumPrice.toString()},function (data) {
+            $.get("/self/payDirect.action",{userOrderList:JSON.stringify(items),sumPrice:sumPrice.toString()},function (data) {
                 // alert(data);
                 // window.location= data;
 
-               if(null != parent){
-                   parent.document.getElementById("center_layout").panel('setTitle',"订单信息确认");
-                   parent.document.getElementById("center_layout")
-                   parent.frames["frame2"].attr("src","self/payDirectPage.action");
-                   parent.frames["frame2"].show();
+               if(top != self){
+                   // console.log($("#center_layout",parent.document));
+                   $("#center_layout",parent.document).title = "订单信息确认";
+                   $("#pageurl",parent.document).attr("src","/self/payDirectPage.action");
+                   $("#pageurl",parent.document).show();
                }
 
 

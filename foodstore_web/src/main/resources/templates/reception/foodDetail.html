@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>餐饮管理系统</title>
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" type="text/css" href="/css/css.css" />
-    <link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.5/themes/bootstrap/easyui.css" />
-    <link rel="stylesheet" type="text/css" href="/js/jquery-easyui-1.5/themes/icon.css" />
-    <script src="/js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/css.css" />
+    <link rel="stylesheet" type="text/css" href="/static/js/jquery-easyui-1.5/themes/bootstrap/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="/static/js/jquery-easyui-1.5/themes/icon.css" />
+    <script src="/static/js/jquery-3.3.1.js"></script>
 </head>
 
 <body>
@@ -84,7 +84,7 @@
 
         var count = $("#quantity").val();
         var orderNote = $("#orderNoteText").val();
-        var orderPrice = $("#foodSumPriceText").val();
+        var orderPrice = parseInt($("#foodSumPriceText").val());
         var orderAddress = $("#orderAddressText").val();
 
         var orderInfo = {
@@ -121,9 +121,9 @@
             $("#quantity").value=num_add-1;
             alert("商品数量不能大于10");
         }else{
-            $("#quantity").value=num_add;
+            $("#quantity").val(num_add);
             var Num=foodPrice*num_add;
-            $("#foodSumPriceText").val(Num.toFixed(2));
+            $("#foodSumPriceText").val(parseInt(Num));
         }
     }
     /*商品数量-1*/
@@ -131,9 +131,9 @@
         var quantity = $("#quantity").val();
         var num_dec = parseInt(quantity) - 1;
         if (num_dec > 0) {
-            $("#quantity").value = num_dec;
+            $("#quantity").val(num_dec);
             var Num = foodPrice * num_dec;
-            $("#foodSumPriceText").val( Num.toFixed(2));
+            $("#foodSumPriceText").val( parseInt(Num));
         }
     }
 

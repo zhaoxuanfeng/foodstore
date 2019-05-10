@@ -95,8 +95,11 @@ public class ViewDataController {
         logger.info(request.getRequestURI());
         logger.info(id.toString());
         UserInfo currUser = (UserInfo) request.getSession().getAttribute("userInfo");
+        if(null == currUser){
+            return "login";
+        }
         if(!ObjectUtils.allNotNull(id)){
-            return null;
+            return "reception/error";
         }
         Recipes recipes = foodInfoBussiness.findFoodInfoById(id);
         if(ObjectUtils.allNotNull(recipes)){
@@ -177,5 +180,12 @@ public class ViewDataController {
             }
         }
         return "reception/foodList";
+    }
+
+
+
+    @RequestMapping("/view/redirectTrolley.action")
+    public String redirectTrolley(){
+        return "reception/trolley";
     }
 }

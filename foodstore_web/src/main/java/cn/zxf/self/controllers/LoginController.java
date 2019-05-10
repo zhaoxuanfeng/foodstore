@@ -130,7 +130,7 @@ public class LoginController extends  BaseController{
      **/
     @RequestMapping(value="/htm/main.htm")
     public String userMain(HttpServletRequest request){
-        return  "main";
+        return  "backstage/main";
     }
 
     //动态加载
@@ -218,7 +218,7 @@ public class LoginController extends  BaseController{
                     response.addCookie(cookie);
                 }
         }
-        return "backstage/main";
+        return "/";
     }
 
     /***

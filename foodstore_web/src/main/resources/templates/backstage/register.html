@@ -72,7 +72,7 @@
 					</tr>
 					<tr>
 						<td>
-							<input type="button" value="提交"  onclick="register()" />
+							<input type="button" class="easyui-linkbutton" value="提交"  onclick="register()" />
 						</td>
 						<td><input type="reset"  id="reset" value="重置"  /></td>
 					</tr>
@@ -80,7 +80,7 @@
 			</form>
 		</div>
 
-	</body>
+</body>
 
 <footer th:replace="footer :: footer"></footer>
 
@@ -96,7 +96,7 @@
 
                 $.post("/htm/registerUser.htm", $("#register_form").serialize(), function (data) {
                     if(data.status == true && data.message=="成功" ) {
-                        window.location.href = "/htm/login.htm";
+                        window.location = "/htm/login.htm";
                     } else if(data.status == false){
                         $.messager.progress("close");
 
