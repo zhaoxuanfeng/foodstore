@@ -13,7 +13,8 @@ import org.springframework.stereotype.Component;
  * @Author zxf
  * @DATE 2019/3/21
  */
-@Component("userOrderListener")
+@Deprecated
+//@Component("userOrderListener")
 public class UserOrderListener  implements ChannelAwareMessageListener {
 
     private static final Logger logger = LoggerFactory.getLogger(UserOrderListener.class);

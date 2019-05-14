@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @Author zxf
  * @DATE 2019/5/3
  */
+@Deprecated
 //@Configuration
 public class MvcConfigurer extends WebMvcConfigurerAdapter {
 

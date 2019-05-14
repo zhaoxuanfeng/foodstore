@@ -25,8 +25,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * 虽然@Component默认是单例模式的，但springboot还是会为每个websocket连接初始化一个bean，所以可以用一个静态set保存起来。
  */
-@ServerEndpoint("/ws/yxd/{userId}") //WebSocket客户端建立连接的地址
-@Component
+@Deprecated
+//@ServerEndpoint("/ws/yxd/{userId}") //WebSocket客户端建立连接的地址
+//@Component
 public class WebSocketServerEndpoint {
 
     private  static final Logger logger = LoggerFactory.getLogger(WebSocketServerEndpoint.class);

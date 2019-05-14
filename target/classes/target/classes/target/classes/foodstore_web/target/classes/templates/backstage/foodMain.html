@@ -33,6 +33,7 @@
                 <input type="text" id="searchUserId" name="foodName" class="easyui-textbox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;
                 <span>菜品类型：
                      <select class="easyui-combobox" name="foodType" style="width:100px;">
+                               <option value="" >无</option>
                                 <option value="20">面食</option>
                                 <option value="30">粥品</option>
                                 <option value="10">主食</option>
@@ -46,6 +47,7 @@
                     </span>&nbsp;&nbsp;
                 <span>
                     菜系： <select class="easyui-combobox" name="foodCuisine" style="width:100px;">
+                                <option value="" >无</option>
                                 <option value="川菜">川菜</option>
                                 <option value="鲁菜">鲁菜</option>
                                 <option value="粤菜">粤菜</option>
@@ -108,6 +110,7 @@
                     <td>
                         <!--<input type="text"  name="foodType" class="easyui-textbox easyui-validatebox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;-->
                         <select class="easyui-combobox" name="foodType" style="width:100px;">
+                            <option value="" >无</option>
                             <option value="20">面食</option>
                             <option value="30">粥品</option>
                             <option value="10">主食</option>
@@ -125,6 +128,7 @@
                     <td>
                         <!--<input type="text" name="foodCuisine" class="easyui-textbox easyui-validatebox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;-->
                         <select class="easyui-combobox" name="foodCuisine" style="width:100px;">
+                            <option value="" >无</option>
                             <option value="川菜">川菜</option>
                             <option value="鲁菜">鲁菜</option>
                             <option value="粤菜">粤菜</option>
@@ -196,6 +200,7 @@
                     <td>菜品类型：</td>
                     <td>
                         <select class="easyui-combobox" id="modify_foodType" name="foodType" style="width:100px;">
+                            <option value="" >无</option>
                             <option value="20">面食</option>
                             <option value="30">粥品</option>
                             <option value="10">主食</option>
@@ -213,6 +218,7 @@
                     <td>
                         <!--<input type="text" name="foodCuisine" class="easyui-textbox easyui-validatebox" maxlength="20" style="width:150px"/>&nbsp;&nbsp;-->
                         <select class="easyui-combobox" id="modify_foodCuisine" name="foodCuisine" style="width:100px;">
+                            <option value="" >无</option>
                             <option value="川菜">川菜</option>
                             <option value="鲁菜">鲁菜</option>
                             <option value="粤菜">粤菜</option>
@@ -307,9 +313,15 @@
 
     function searchFood() {
         $("#food_table").datagrid("loading");
+        console.log($("#formSearch").serialize());
         $.get("/htm/foodInfoData.htm",$("#formSearch").serialize(),function (pager) {
-            $("#food_table").datagrid("loadData",{total:pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
-            $("#food_table").datagrid("loaded");
+            if(pager.rows != null){
+                $("#food_table").datagrid("loadData",{total:pager.total,rows:pager.rows,pageNumber:pager.pageNumber,pageSize:pager.pageSize});
+                $("#food_table").datagrid("loaded");
+            }else {
+                alert("未查到信息！");
+            }
+
         });
     }
     
@@ -406,7 +418,7 @@
     
     function submitUpdateInfo() {
         $("#modifuMenu").form("submit",{
-            url:'htm/modifyFood.htm',
+            url:'/htm/modifyFood.htm',
             onsubmit:function (param) {
                 
             },

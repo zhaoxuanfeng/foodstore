@@ -6,6 +6,7 @@ import cn.zxf.self.dto.StateInfo;
 import cn.zxf.self.entry.Orders;
 import cn.zxf.self.entry.Recipes;
 import cn.zxf.self.utils.RabbitSenderUtils;
+import cn.zxf.self.utils.UserOrderSender;
 import cn.zxf.self.vo.PagerModel;
 import cn.zxf.self.vo.UserOrder;
 import com.alipay.api.AlipayApiException;
@@ -80,12 +81,13 @@ public class OrderController {
         byte[] message = "message".getBytes();
 
         logger.info("订单加入未完成队列");
-        rabbitTemplate.setExchange(env.getProperty("basic.info.mq.exchange.name"));
+       /* rabbitTemplate.setExchange(env.getProperty("basic.info.mq.exchange.name"));
         rabbitTemplate.setRoutingKey(env.getProperty("basic.info.mq.routing.key.name"));
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         Message msg=MessageBuilder.withBody(message).setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT)
                 .build();
         rabbitTemplate.convertAndSend(msg);
+        */
         logger.info("订单加入队列");
         return pagerModel;
     }
@@ -316,9 +318,11 @@ public class OrderController {
             logger.info("stateInfo"+stateInfo.toString());
             if(stateInfo.isState()){
                 //将需要做的菜品信息放入队列
-                RabbitSenderUtils rabbitSenderUtils = new RabbitSenderUtils();
+//                RabbitSenderUtils rabbitSenderUtils = new RabbitSenderUtils();
+                UserOrderSender userOrderSender = new UserOrderSender();
                 for (UserOrder userOrder:userOrdersList) {
-                    rabbitSenderUtils.send(userOrder);
+//                    rabbitSenderUtils.send(userOrder);
+                    userOrderSender.sendOrderQueue(userOrder);
                 }
                 request.setAttribute("message","支付成功，已完成下单");
                 return "reception/message";

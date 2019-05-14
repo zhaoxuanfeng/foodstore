@@ -16,7 +16,8 @@ import org.springframework.stereotype.Component;
  * @Author zxf
  * @DATE 2019/3/20
  */
-@Component
+@Deprecated
+//@Component
 public class OrderListener {
 
     private Logger logger = LoggerFactory.getLogger(OrderListener.class);

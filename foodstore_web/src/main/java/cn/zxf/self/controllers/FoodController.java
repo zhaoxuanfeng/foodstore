@@ -5,13 +5,16 @@ import cn.zxf.self.bussiness.OrderInfoBussiness;
 import cn.zxf.self.entry.Recipes;
 import cn.zxf.self.dto.StateInfo;
 import cn.zxf.self.entry.UserInfo;
+import cn.zxf.self.enums.RabbitConstant;
 import cn.zxf.self.vo.PageMsg;
 import cn.zxf.self.vo.PagerModel;
+import cn.zxf.self.vo.UserOrder;
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -166,19 +169,18 @@ public class FoodController  extends  BaseController{
        *@Param [request]
        *@Return  java.lang.String
     **/
-    @RequestMapping("/htm/foodInfo.htm")
-    public String foodMain(HttpServletRequest request){
+   @RequestMapping("/htm/foodInfo.htm")
+   public String foodMain(HttpServletRequest request){
         return "backstage/foodMain";
-    }
-
-    /***
+   }
+   /***
         *@Description  //TODO  根据条件获取所有食物信息
         *@Param [request]
         *@Return  cn.zxf.self.vo.PageMsg
-     **/
-    @RequestMapping("/htm/foodInfoData.htm")
-    @ResponseBody
-    public PageMsg foodAllInfo(HttpServletRequest request){
+    **/
+   @RequestMapping("/htm/foodInfoData.htm")
+   @ResponseBody
+   public PageMsg foodAllInfo(HttpServletRequest request){
         logger.info("url:"+request.getRequestURI());
 
         PageMsg pageMsg = new PageMsg();
@@ -193,27 +195,28 @@ public class FoodController  extends  BaseController{
             pageMsg.setRows((List<Recipes>) stateInfo.getData());
             pageMsg.setTotal(((List<Recipes>) stateInfo.getData()).size());
         }else {
+
             pageMsg.setTotal(0L);
         }
         logger.info("访问状态："+pageMsg.toString());
         return  pageMsg;
-    }
+   }
 
-    @RequestMapping("/htm/error.htm")
-    public String redirectErrorPage(HttpServletRequest request){
+   @RequestMapping("/htm/error.htm")
+   public String redirectErrorPage(HttpServletRequest request){
         request.setAttribute("message","权限不足");
         return "reception/error";
-    }
+   }
 
-    //解析参数
-    private Map<String,Object> resolveParams(HttpServletRequest request) {
+   //解析参数
+   private Map<String,Object> resolveParams(HttpServletRequest request) {
         logger.info("解析参数--resolveParams");
         Map<String,Object> map = new HashMap<>();
         String foodName = request.getParameter("foodName");
         if(null != foodName && StringUtils.isNotBlank(foodName)){
             map.put("foodName",foodName);
         }
-        Integer foodType = (Integer) request.getAttribute("foodType");
+        Integer foodType = Integer.parseInt(request.getParameter("foodType")) ;
         if(null != foodType && foodType != 0){
             map.put("foodType",foodType);
         }
@@ -225,8 +228,8 @@ public class FoodController  extends  BaseController{
         if (null != foodKey && StringUtils.isNotBlank(foodKey)){
             map.put("foodKey",foodKey);
         }
-        if(null != request.getAttribute("lowPrice")){
-            Integer lowPrice = Integer.parseInt(new java.text.DecimalFormat("0").format((double)request.getAttribute("lowPrice")));
+        if(null != request.getParameter("lowPrice")){
+            Integer lowPrice = Integer.parseInt(new java.text.DecimalFormat("0").format(Double.parseDouble(request.getParameter("lowPrice"))));
 
             if(null != lowPrice ){
                 map.put("lowPrice",lowPrice);
@@ -234,12 +237,23 @@ public class FoodController  extends  BaseController{
         }
         if(null != request.getAttribute("highPrice")) {
 
-            Integer highPrice = Integer.parseInt(new java.text.DecimalFormat("0").format((double) request.getAttribute("highPrice")));
+            Integer highPrice = Integer.parseInt(new java.text.DecimalFormat("0").format(Double.parseDouble(request.getParameter("highPrice"))));
             if (null != highPrice) {
                 map.put("highPrice", highPrice);
             }
         }
         return map;
-    }
+   }
 
+
+   @RabbitListener(queues = RabbitConstant.QUEUE_BASE_ORDER)
+   private Boolean acceptOrderQueue(UserOrder userOrder){
+       System.out.println(userOrder.toString());
+        /*
+            取出订单，
+            修改订单状态
+            显示到页面
+         */
+       return true;
+   }
 }

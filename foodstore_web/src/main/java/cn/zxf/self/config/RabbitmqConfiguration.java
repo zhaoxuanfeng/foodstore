@@ -29,7 +29,8 @@ import javax.annotation.Resource;
  * @Author zxf
  * @DATE 2019/3/20
  */
-@Configuration
+@Deprecated
+//@Configuration
 public class RabbitmqConfiguration  {
 
 

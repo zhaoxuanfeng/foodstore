@@ -25,7 +25,7 @@ public class FoodInfoBussiness extends BaseBussiness {
         RecipesExample recipesExample = new RecipesExample();
         RecipesExample.Criteria criteria = recipesExample.createCriteria();
         if(null != map.get("foodName")){
-            criteria.andFoodNameLike((String) map.get("foodName"));
+            criteria.andFoodNameLike(DataUtils.likeAdd((String) map.get("foodName")));
         }
         if(null != map.get("foodType")){
             criteria.andFoodTypeEqualTo((Integer) map.get("foodType"));
@@ -34,7 +34,7 @@ public class FoodInfoBussiness extends BaseBussiness {
             criteria.andFoodCuisineEqualTo((String) map.get("foodCuisine"));
         }
         if(null != map.get("foodKey")){
-            criteria.andFoodNameLike((String) map.get("foodKey"));
+            criteria.andFoodNameLike(DataUtils.likeAdd((String) map.get("foodKey")));
         }
         if(null != map.get("lowPrice")){
             criteria.andFoodPriceGreaterThanOrEqualTo((Integer) map.get("lowPrice"));

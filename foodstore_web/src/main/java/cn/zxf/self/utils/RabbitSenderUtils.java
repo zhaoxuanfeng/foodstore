@@ -23,7 +23,8 @@ import java.util.UUID;
  * @Author zxf
  * @DATE 2019/4/12
  */
-@Component
+@Deprecated
+//@Component
 public class RabbitSenderUtils implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnCallback {
     private static final Logger logger  = LoggerFactory.getLogger(RabbitSenderUtils.class);
 

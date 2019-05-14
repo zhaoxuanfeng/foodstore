@@ -12,6 +12,7 @@ public class RabbitConstant {
     public final static  String EXCHANGE  = "exchange_test";
     public final static String EXCHANGE_EXPRESS = "exchange_express";
     public final static String EXCHANGE_WAITER = "exchange_waiter";
+    public final static String EXCHANGE_ORDER = "exchange_order";
 
     //队列名称
     public final static String QUEUE_BASE_ORDER = "basicOrderQueue";
@@ -22,4 +23,8 @@ public class RabbitConstant {
     public final static String RK_TRANSACTION = "transaction";
     public final static String RK_CONTRACT = "contract";
     public final static String RK_QUALIFICATION = "qualification";
+
+
+
+    public final static String RK_ORDER = "routeKey_order";
 }
