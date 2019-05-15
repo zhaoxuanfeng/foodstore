@@ -81,7 +81,8 @@ public class OrderController {
         byte[] message = "message".getBytes();
 
         logger.info("订单加入未完成队列");
-       /* rabbitTemplate.setExchange(env.getProperty("basic.info.mq.exchange.name"));
+       /*
+        rabbitTemplate.setExchange(env.getProperty("basic.info.mq.exchange.name"));
         rabbitTemplate.setRoutingKey(env.getProperty("basic.info.mq.routing.key.name"));
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         Message msg=MessageBuilder.withBody(message).setDeliveryMode(MessageDeliveryMode.NON_PERSISTENT)
