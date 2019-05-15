@@ -4,13 +4,13 @@
     <bookmark url="file://$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/controllers/LoginController.java" line="80" />
   </component>
   <component name="ChangeListManager">
+    <list id="038e4b51-1071-4c3d-9fb2-98dbb0d0280c" name="ignoreList" comment="" />
     <list default="true" id="cfff2c45-36f4-4fdc-a302-1a6f57be0b33" name="Default" comment="整理结构，整理jar包及版本">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/controllers/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/src/main/java/cn/zxf/self/controllers/OrderController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/foodstore_web/target/classes/cn/zxf/self/controllers/OrderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/foodstore_web/target/classes/cn/zxf/self/controllers/OrderController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/.idea/workspace.xml" afterDir="false" />
     </list>
-    <list id="038e4b51-1071-4c3d-9fb2-98dbb0d0280c" name="ignoreList" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/foodstore_web/target/" />
     <ignored path="$PROJECT_DIR$/foodstore_controller/target/" />
@@ -225,7 +225,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="31" />
     <option name="y" value="2" />
     <option name="width" value="1346" />
@@ -666,7 +666,7 @@
       <workItem from="1557796660590" duration="355000" />
       <workItem from="1557820389537" duration="1961000" />
       <workItem from="1557885179573" duration="168000" />
-      <workItem from="1557885460800" duration="308000" />
+      <workItem from="1557885460800" duration="638000" />
     </task>
     <task id="LOCAL-00001" summary="基本架构完成">
       <created>1548815720976</created>
@@ -684,7 +684,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="565252000" />
+    <option name="totallyTimeSpent" value="565582000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -696,7 +696,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="31" y="2" width="1346" height="688" extended-state="0" />
+    <frame x="31" y="2" width="1346" height="688" extended-state="1" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5007776" side_tool="true" weight="0.32358003" />
